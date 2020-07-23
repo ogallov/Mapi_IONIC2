@@ -1,19 +1,29 @@
 ion-header {
-  ion-buttons {
-    ion-button {
-      ion-icon {
-        color: var(--ion-color-darkBlue);
+  background: #000;
+  ion-toolbar {
+    --background: transparent;
+
+    ion-buttons {
+      ion-button {
+        ion-icon {
+          // color: var(--ion-color-darkBlue);
+          color: var(--ion-color-light);
+        }
       }
     }
   }
 }
 
 ion-content {
+  --background: #000;
+
   [custom-chckbox] {
     height: 20px;
     width: 20px;
-    --background-checked: var(--ion-color-darkBlue) !important;
-    --border-color-checked: var(--ion-color-darkBlue) !important;
+    // --background-checked: var(--ion-color-darkBlue) !important;
+    --background-checked: var(--ion-color-green) !important;
+    // --border-color-checked: var(--ion-color-darkBlue) !important;
+    --border-color-checked: var(--ion-color-green) !important;
   }
   ion-item {
     ion-label {

@@ -12,9 +12,10 @@ import { TranslateService } from "@ngx-translate/core";
 export class LoginPage implements OnInit {
   user: any = {
     provider: "LOCAL",
-    email: "user-foodlands@saasmonks.in",
+    email: "prueba@mapifood.com",
     password: "123456",
   };
+  
   err: any = {};
   public remember: boolean = false;
   public showPassword: boolean = false;

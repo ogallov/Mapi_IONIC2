@@ -1,12 +1,28 @@
+ion-header {
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
 ion-content {
+  --background: #000;
+
   .main-container {
     .choose-address-title {
       font-size: 15px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
       padding: 16px 0px;
       border-bottom: 1px solid var(--ion-color-borderline);
     }
+
     .select-addres-div {
       padding: 16px 20px 10px 20px;
       ion-row {
@@ -14,8 +30,10 @@ ion-content {
           padding: 5px 8px;
           .back-image-div {
             background: url(http://placehold.it/85x50);
+            background-color: var(--ion-color-green);
             height: 50px;
             border-radius: 8px;
+
             div {
               padding-top: 16px;
               font-size: 15px;
@@ -48,8 +66,10 @@ ion-content {
       opacity: 1 !important;
       --padding-top: 16px;
       --padding-end: 16px;
+
       .select-placeholder {
-        color: var(--ion-placeholder-color);
+        // color: var(--ion-placeholder-color);
+        color: var(--ion-color-light);
       }
     }
     ion-button {
@@ -63,15 +83,17 @@ ion-content {
   font-family: "Poppins-Regular";
   border-bottom: solid 1px var(--ion-border-color);
   --padding-start: 14px;
-  --placeholder-color: var(--ion-placeholder-color);
+  // --placeholder-color: var(--ion-placeholder-color);
+  --placeholder-color: var(--ion-color-light);
   --placeholder-font-style: "Poppins-Regular";
   font-size: 17px;
 }
 [custom-chckbox] {
   height: 20px;
   width: 20px;
-  --background-checked: var(--ion-color-darkBlue) !important;
-  --border-color-checked: var(--ion-color-darkBlue) !important;
+  // --background-checked: var(--ion-color-darkBlue) !important;
+  --background-checked: var(--ion-color-green) !important;
+  --border-color-checked: var(--ion-color-green) !important;
 }
 .err {
   padding-top: 0px;

@@ -1,52 +1,60 @@
-ion-content{
+ion-header {
+    background: #000;
+
+    ion-toolbar {
+        --background: transparent;
+    }
+
+    ion-title {
+        color: var(--ion-color-light);
+    }
+}
+
+ion-content {
+    --background: #000;
+
     ion-slides {
         height: 550px;
-            ion-slide {
-                display: block;
-                height: 375px;
-                .img_div{
-                    margin-top: 60px;
-                    margin-left: 16px;
-                    margin-right: 16px;
-                .slide_name{
+        ion-slide {
+            display: block;
+            height: 375px;
+            .img_div {
+                margin-top: 60px;
+                margin-left: 16px;
+                margin-right: 16px;
+                .slide_name {
                     font-size: 22px;
-                    font-family: 'Poppins-SemiBold';
-                    color: var(--ion-color-darkBlue);
+                    font-family: "Poppins-SemiBold";
+                    // color: var(--ion-color-darkBlue);
+                    color: var(--ion-color-light);
                     margin-top: 70px;
                 }
-                .slide_info{
+                .slide_info {
                     font-size: 16px;
-                    font-family: 'Poppins-Regular';
-                    color: var(--ion-color-darkgray);
+                    font-family: "Poppins-Regular";
+                    // color: var(--ion-color-darkgray);
+                    color: var(--ion-color-light);
                 }
-            
             }
         }
-      
     }
-    .skip{
+    .skip {
         margin: 0px;
         height: 46px;
         width: 100px;
         font-size: 16px;
-        font-family: 'Poppins-Medium';
-        --background:var(--ion-color-green);
+        font-family: "Poppins-Medium";
+        --background: var(--ion-color-green);
         --border-radius: 24px 0px 0px 24px;
     }
 }
 
-
-
-
-
-
-
 .slides-md {
-    --bullet-background: var(--ion-color-green)!important;
-    --bullet-background-active: var(--ion-color-green)!important;
+    --bullet-background: var(--ion-color-green) !important;
+    --bullet-background-active: var(--ion-color-green) !important;
 }
 
 .slides-ios {
-    --bullet-background: var(--ion-color-green)!important;
-    --bullet-background-active: var(--ion-color-green)!important;
+    --bullet-background: var(--ion-color-green) !important;
+    --bullet-background-active: var(--ion-color-green) !important;
 }

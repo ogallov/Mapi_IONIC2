@@ -7,10 +7,12 @@ import { BehaviorSubject } from "rxjs";
 })
 export class UtilService {
   public isUpdateProfile = new BehaviorSubject(true);
+
   constructor(
     private toastController: ToastController,
     private loadingController: LoadingController
   ) {}
+  
   isLoading = false;
   async presentToast(msg) {
     const toast = await this.toastController.create({

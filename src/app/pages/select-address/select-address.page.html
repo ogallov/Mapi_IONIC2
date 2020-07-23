@@ -3,7 +3,7 @@
         <ion-buttons slot="start">
             <ion-back-button defaultHref="home" icon="ios-arrow-back" mode="md"></ion-back-button>
         </ion-buttons>
-        <ion-title> {{'select_address_page.title' | translate}} </ion-title>
+        <ion-title color="light"> {{'select_address_page.title' | translate}} </ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="addAddress()">
                 <ion-icon name="add"></ion-icon>
@@ -15,7 +15,7 @@
 <ion-content>
 
     <div no-data *ngIf="addressList?.length == 0">
-        <img src="../../../assets/image/no-data-icon-10.jpg" alt="no data">
+        <img src="./assets/image/no-data-icon-10.jpg" alt="no data">
     </div>
     <ng-container *ngIf="addressList && addressList.length > 0">
 

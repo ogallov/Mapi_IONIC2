@@ -20,6 +20,7 @@ export class AppComponent {
   timePeriodToExit = 2000;
 
   @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
+
   public appPages = [
     {
       title: "Home",
@@ -110,15 +111,18 @@ export class AppComponent {
               this.api.currency = res.data.currency_symbol;
               this.api.currencyType = res.data.currency;
               this.api.request_duration = res.data.request_duration;
+
               if (this.platform.is("cordova")) {
                 this.oneSignal.startInit(
                   res.data.onesignal_app_id,
                   res.data.onesignal_project_number
                 );
+                
                 this.oneSignal
                   .getIds()
                   .then((ids) => (this.api.deviceToken = ids.userId));
                 this.oneSignal.endInit();
+                
               } else {
                 this.api.deviceToken = null;
               }

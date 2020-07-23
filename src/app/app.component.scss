@@ -29,7 +29,9 @@ ion-content {
     margin-top: 15px;
     height: 25px;
     margin-bottom: 10px;
+
     ion-icon {
+      color: var(--ion-color-light);
       margin-left: 10px;
     }
   }

@@ -23,29 +23,35 @@
                             {{type.name}}
                         </div>
                     </div>
-                    <ion-checkbox class="ion-margin-top" custom-chckbox [disabled]="type.checked" [checked]="type.checked" mode="ios"></ion-checkbox>
+                    <ion-checkbox class="ion-margin-top" custom-chckbox [disabled]="type.checked"
+                        [checked]="type.checked" mode="ios"></ion-checkbox>
                 </ion-col>
             </ion-row>
         </div>
 
         <agm-map [latitude]="agmMap.lat" [longitude]="agmMap.lng">
 
-            <agm-marker [markerDraggable]="true" (dragEnd)="centerChange($event)" [latitude]="agmMap.lat" [longitude]="agmMap.lng">
+            <agm-marker [markerDraggable]="true" (dragEnd)="centerChange($event)" [latitude]="agmMap.lat"
+                [longitude]="agmMap.lng">
 
             </agm-marker>
         </agm-map>
         <form #f="ngForm">
             <div class="input-section">
-                <ion-input input-text name="building" [(ngModel)]="addressData.soc_name" placeholder="Building/Society Name" type="text" required>
+                <ion-input color="light" input-text name="building" [(ngModel)]="addressData.soc_name"
+                    placeholder="Building/Society Name" type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.soc_name">{{err?.soc_name}}*</p>
-                <ion-input input-text name="street" [(ngModel)]="addressData.street" placeholder="Street" type="text" required>
+                <ion-input color="light" input-text name="street" [(ngModel)]="addressData.street" placeholder="Street"
+                    type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.street">{{err?.street}}*</p>
-                <ion-input input-text name="city" [(ngModel)]="addressData.city" placeholder="City" type="text" required>
+                <ion-input color="light" input-text name="city" [(ngModel)]="addressData.city" placeholder="City"
+                    type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.city">{{err?.city}}*</p>
-                <ion-input input-text name="zipcode" [(ngModel)]="addressData.zipcode" placeholder="Zip Code" type="text" required>
+                <ion-input color="light" input-text name="zipcode" [(ngModel)]="addressData.zipcode"
+                    placeholder="Zip Code" type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.zipcode">{{err?.zipcode}}*</p>
             </div>
