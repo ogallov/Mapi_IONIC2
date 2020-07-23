@@ -113,7 +113,7 @@ export class PayMethodPage implements OnInit {
       currency: this.currencyType,
       key: this.data.razorPublishKey,
       amount: this.gpi.info.toPay * 100,
-      name: "Foodlands",
+      name: "Mapifood",
 
       theme: {
         color: "#94b92d",
