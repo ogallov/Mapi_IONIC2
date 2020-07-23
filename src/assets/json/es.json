@@ -1,0 +1,396 @@
+{
+    "app_name": "Mapifoop",
+    "add_edit_address_page": {
+      "add_title": "Añade la dirección",
+      "edit_title": "Editar la dirección",
+      "address_type": "Elija su tipo de dirección",
+      "save_btn": "Guardar"
+    },
+    "cancel_order_alert": {
+      "title": "Cancelar el pedido",
+      "text": "¿Quiere cancelar esta orden?",
+      "yes": "Si",
+      "no": "No"
+    },
+    "add_card_page": {
+      "title": "Agregar tarjeta",
+      "card_number": "NÚMERO DE TARJETA",
+      "expiration_date": "FECHA DE CADUCIDAD",
+      "cvv": "CVV",
+      "card_holders_name": "NOMBRE DEL TITULAR DE LA TARJETA",
+      "add_card": "Añade la tarjeta"
+    },
+    "cancel_order_page": {
+      "title": "¿Por qué cancelas tu pedido?"
+    },
+    "cart_page": {
+      "title": "carrito",
+      "apply_coupon": "APLICAR CUPÓN",
+      "bill_details": "Detalles de la factura",
+      "item_total": "Total del artículo",
+      "total_discount": "Descuento total",
+      "restaurant_charges": "Cargos del restaurante",
+      "delivery_fee": "Cuota de entrega",
+      "cancellation_fee": "Cuota de cancelación",
+      "to_pay": "Para pagar",
+      "saved_text": {
+        "txt1": "Has salvado",
+        "txt2": "en la factura"
+      },
+      "select_address": "Seleccione la dirección",
+      "change_address_btn": "Cambiar la dirección",
+      "select_pay_method": "Seleccione el método de pago"
+    },
+    "category_page": {
+      "title": "Lista de restaurantes",
+      "min": "min",
+      "for_two": "para dos"
+    },
+    "filter_page": {
+      "title": "FILTROS",
+      "apply_btn": "Aplicar el filtro",
+      "Top Rated": "Los más votados...",
+      "Open Now": "Abrir ahora",
+      "Nearest Me": "Más cerca de mí",
+      "Most Popular": "El más popular",
+      "Cost High to Low": "Costo alto a bajo",
+      "Cost Low to High": "Coste bajo a alto"
+    },
+    "forgot_password_page": {
+      "title": "Olvidé la contraseña",
+      "text": "Ingresa tu correo electrónico y te enviaremos instrucciones sobre cómo restablecerlo",
+      "send_btn": "Envía",
+      "email_placeholder": "Correo electrónico"
+    },
+    "otp_page": {
+      "enter_otp_text": "Introduzca su código OTP aquí",
+      "resend_btn": "¿Reenviar?",
+      "confirm_btn": "confirmar"
+    },
+    "home_page": {
+      "restaurant": "RESTAURANTE",
+      "filter": "FILTROS",
+      "offer": "OFERTA",
+      "min": "min",
+      "for_two": "para dos",
+      "popular_this_week": "Popular esta semana",
+      "no_data": "No hay datos",
+      "pocket_friendly": "Pocket Friendly",
+      "Most Popular": "El más popular",
+      "Great Offers": "Grandes ofertas",
+      "Pure Veg Places": "Lugares de vegetales puros",
+      "Pocket Friendly": "Pocket Friendly",
+      "food": "Alimentos",
+      "grocery": "Tienda de comestibles",
+      "store": "Tienda",
+      "categories": "Categorías",
+      "view_more": "Ver más",
+      "Nearest Me": "Más cerca de mí"
+    },
+    "invite_Friends_page": {
+      "title": "Invitar a los amigos",
+      "text": "Cuando tu amigo instale la aplicación con tu código de referencia y un pedido completo, ambos harán un pedido gratis",
+      "referral_code": "Código de referencia",
+      "invite_btn": "Invite Your Friends"
+    },
+    "item_review_page": {
+      "title": "Revisar"
+    },
+    "login_page": {
+      "title": "INICIAR SESIÓN",
+      "placeholder": {
+        "email": "Correo electrónico",
+        "password": "Contraseña"
+      },
+      "remember_me": "Recuérdame",
+      "forgot_password_btn": "¿Olvidó la contraseña?",
+      "sign_in_btn": "Acceder",
+      "new_user_txt": "Si eres un nuevo usuario?",
+      "sign_up_btn": "Inscríbete."
+    },
+    "register_page": {
+      "title": "INSCRÍBETE",
+      "placeholder": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "password": "Contraseña",
+        "confirm_password": "Cconfirmar contraseña",
+        "referral_code": "Código de referencia"
+      },
+      "sign_up_btn": "Inscríbete.",
+      "already_have_account_txt": "Already have an account?",
+      "sign_in_btn": "Registrarse"
+    },
+    "notification_page": {
+      "title": "Notificación"
+    },
+    "order_detail_page": {
+      "title": "detalle de la orden",
+      "order_summary": "Resumen de pedido",
+      "restaurant_accepted": "Restaurante aceptado",
+      "on_the_way": "En camino",
+      "order_status": "Estado del pedidos",
+      "bill_detail": "DETALLES DE LA FACTURA",
+      "item_total": "Total",
+      "promo_code": "Promocode",
+      "del_charge": "Gastos de envío",
+      "rest_charge": "Cargo por restaurante",
+      "total": "Total",
+      "your_total_saving": "Su ahorro total",
+      "rate_meal": "Tarifa de comida",
+      "rate_delivery_boy": "Tasa de entrega del chico de la entrega",
+      "restaurant_review": "Reseña del restaurante",
+      "submit": "Envíe",
+      "Item Review": "Revisión del artículo"
+    },
+    "order_history_page": {
+      "title": "Historial de pedidos",
+      "current_order": "Orden actual",
+      "restaurant_accepted": "Restaurante aceptado",
+      "on_the_way": "En camino",
+      "items": "ARTÍCULOS",
+      "ordered_on": "PEDIDO EN",
+      "total_amount": "CANTIDAD TOTAL",
+      "cancel_order": "Cancelar orden",
+      "past_order": "Orden pasada",
+      "no_data": "Sin datos"
+    },
+    "pay_method_page": {
+      "title": "Método de pago",
+      "online_pay": "PAGO EN LINEA",
+      "cash": "EFECTIVO",
+      "razor_pay": "Razor Pay",
+      "pay_pal": "PayPal",
+      "continue_btn": "Continuar"
+    },
+    "profile_page": {
+      "edit": "editar",
+      "segment": {
+        "reviews": "Reseñas",
+        "photos": "Fotos",
+        "edit_profile": "Editar el perfil",
+        "setting": "Configuración",
+        "change_password": "Cambiar la contraseña"
+      },
+      "language": "Idioma",
+      "english": "Inglés",
+      "arabic": "Arabic",
+      "spanish": "Español",
+      "okay_text": "Ok",
+      "cancel_text": "Cancelar",
+      "no_data": "No hay datos",
+      "placeholder": {
+        "name": "Nombre",
+        "email": "Correo electrónico",
+        "phone_number": "Número de teléfono",
+        "location": "Ubicación",
+        "new_password": "Nueva contraseña",
+        "confirm_password": "Confirme la contraseña"
+      },
+      "notification": "Notificación",
+      "location": "Ubicación",
+      "call": "Llama a",
+      "default_address": "Dirección por defecto",
+      "change": "Cambiar",
+      "save_btn": "Guardar"
+    },
+    "promo_code_page": {
+      "title": "Promo Code",
+      "apply_btn": "Aplicar"
+    },
+    "restaurant_detail_page": {
+      "review": "Revisar",
+      "open_now": "Abrir ahora",
+      "mon_to_sun": "De lunes a domingo",
+      "rating": "rating",
+      "mins": "mins",
+      "delivery_time": "Tiempo de entrega",
+      "for_two": "Para dos",
+      "off": "OFF",
+      "veg_only": "Sólo Vegetales",
+      "non_veg": "No es vegetal.",
+      "best_sellers": "Los más vendidos",
+      "no_data": "No hay datos",
+      "exclusive": "Exclusivo",
+      "add": "añadir",
+      "special_combo": "Combo especial",
+      "votes": "votos",
+      "menu": "menu",
+      "view_cart": "VER CARRITO",
+      "item": "artículo"
+    },
+    "review_page": {
+      "review": "Revisar",
+      "open_now": "Abrir ahora",
+      "mon_to_sun": "De lunes a domingo",
+      "rating": "rating",
+      "mins": "mins",
+      "delivery_time": "El tiempo de entrega",
+      "for_two": "Para dos",
+      "off": "OFF",
+      "photos": "Fotos",
+      "no_data": "Sin datos",
+      "was_helpful": "¿Fue útil esto?",
+      "no": "No",
+      "yes": "Si"
+    },
+    "select_address_page": {
+      "title": "Seleccionar dirección",
+      "edit": "Editar",
+      "delete": "Eliminar",
+      "set_address": "Establecer dirección"
+    },
+    "success_modal": {
+      "congratulations": "FELICIDADES",
+      "text": "Su pedido es enviado al restaurante",
+      "thank_you": "Gracias"
+    },
+    "timeline_page": {
+      "title": "ESTADO DEL PEDIDO",
+      "text": "Su comida está siendo preparada y esperando al jinete",
+      "order_no": "Nro de orden:",
+      "del_text": {
+        "txt1": "Compañero de entrega",
+        "txt2": "está en camino y sus pedidos serán entregados lo antes posible."
+      },
+      "view_order": "VER PEDIDO",
+      "status": {
+        "order_confirm": "Confirmación de la orden",
+        "food_prepared": "Se está preparando la comida",
+        "rider_pickup_order": "Rider está recogiendo su pedido",
+        "food_on_the_way": "La comida está en camino",
+        "rider_near_your_place": "El jinete está cerca de tu casa",
+        "delivered": "Entregado"
+      },
+      "cancel_order": "cancelar la orden."
+    },
+    "verify_page": {
+      "text": {
+        "txt1": "Te hemos enviado un SMS con un código",
+        "txt2": "a su número"
+      },
+      "confirm_btn": "Confirme"
+    },
+    "slider": {
+      "slide1": {
+        "slide_name": {
+          "txt1": "Descubra el restaurante",
+          "txt2": "Cerca de ti"
+        },
+        "slide_info": "Hacemos que sea sencillo encontrar comida para ti, sólo tienes que introducir tu dirección y hacer el resto."
+      },
+      "slide2": {
+        "slide_name": {
+          "txt1": "Restaurante a su casa",
+          "txt2": "entrega inmediata"
+        },
+        "slide_info": "Proveemos servicio de puerta a puerta en su tiempo con la mejor calidad de comida"
+      },
+      "slide3": {
+        "slide_name": {
+          "txt1": "Recoger su entregay",
+          "txt2": "con una dulce sonrisa"
+        },
+        "slide_info": "Hacemos que los pedidos de comida sean rápidos, sencillos y gratuitos, no importa si los pides en línea o en efectivo."
+      },
+      "skip": "Saltar"
+    },
+    "side_menu": {
+      "Home": "Inicio",
+      "Notification": "Notificación",
+      "Promo Code": "Promo Code",
+      "Invite Friends": "Invitar a los amigos",
+      "Order History": "historial de pedidos",
+      "Logout": "Cerrar sesión",
+      "Setting": "Configuración",
+      "Grocery Order": "Pedido de comida"
+    },
+    "toasts": {
+      "logged_in_success": "Se ha conectado con éxito",
+      "address_update": "Dirección actualizada",
+      "order_is_out_range": "El orden está fuera del alcance de la zona",
+      "review_add_success": "Añadido con éxito Revisión del artículo",
+      "shop_review_add_success": "Añadido con éxito Revisión de la tienda",
+      "driver_review_add_success": "Añadido con éxito Revisión del conductor",
+      "payment_not_possible": "El pago no es posible",
+      "setting_set_success": "Establezca con éxito su configuración",
+      "profile_set_success": "guardar con éxito su perfil",
+      "cart_empty": "El carro está vacío",
+      "select_default_address": "Seleccione la dirección predeterminada"
+    },
+    "store_detail": {
+      "today": "Hoy",
+      "store": "Tienda",
+      "product": "Producto",
+      "view_more": "Ver más",
+      "votes": "Votos",
+      "category": "Categoria",
+      "review": "Revisar",
+      "add_in_cart": "Añadir a la cesta",
+      "searchPlace": "Busque el restaurante y los platos"
+    },
+    "grocery_cart": {
+      "cart": "carrito",
+      "delivery": "entrega",
+      "pickup": "recogida",
+      "bill_details": "Detalles de la factura",
+      "total_payable": "Total a pagar",
+      "total_discount": "Descuento total",
+      "delivery_fee": "Cuota de entrega",
+      "to_pay": "Para pagar",
+      "you_have_saved": "Has salvado",
+      "on_the_bill": "en la factura",
+      "select_address": "Seleccione la dirección",
+      "change_address": "Cambiar la direccións",
+      "select_payment_method": "seleccione el método de pago",
+      "apply_coupon": "APLICAR CUPÓN"
+    },
+    "pay_method": {
+      "payment_method": "Método de pago",
+      "cash": "EFECTIVO",
+      "online_pay": "PAGO EN LÍNEA",
+      "razor_pay": "Razor Pay",
+      "PayPal": "PayPal",
+      "pay": "pay"
+    },
+    "grocery_success": {
+      "CONGRATULATIONS": "FELICITACIONES",
+      "msg": " Su pedido se envía a la tienda ",
+      "ty": "  Gracias."
+    },
+    "grocery_status": {
+      "order_status": "estado del pedido",
+      "view_order": "VER PEDIDO",
+      "order_confirm": " Confirmación de la orden",
+      "ready": "La comida está lista en la tienda",
+      "delivery": "El pedido está fuera de entrega",
+      "place": "El pedido está cerca de tu casa",
+      "delivered": "Entregado"
+    },
+    "grocer_order_detail": {
+      "order_detail": "detalle de la orden",
+      "order_summery": "Resumen de Ordene",
+      "accepted": "Tienda aceptada",
+      "way": "En camino",
+      "BILL_DETAILS": "DETALLES DE LA FACTURA",
+      "total": " Total",
+      "code": "Promo code",
+      "charge": "Gastos de envío",
+      "Total": "Total",
+      "saving": "Su ahorro total",
+      "Delivered": "Entregado",
+      "review": "Revisión de la orden",
+      "Submit": "Envíe"
+    },
+    "grocery_history": {
+      "order_history": "Pedido de Comida",
+      "current": "Orden actual",
+      "accepted": "Se acepta la tienda",
+      "way": "En camino",
+      "order_on": "PEDIDO EN",
+      "amount": "CANTIDAD TOTAL",
+      "past": "Orden pasado...",
+      "no_data": "No hay datos"
+    }
+  }
+  
