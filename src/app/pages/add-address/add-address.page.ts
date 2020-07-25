@@ -77,20 +77,26 @@ export class AddAddressPage implements OnInit {
   }
 
   ngOnInit() {}
+  
   setAddressType(type) {
     this.addressType.forEach(element => {
       element.checked = false;
     });
     type.checked = true;
   }
+
   closeModal() {
     this.isEdit = false;
     this.api.parseData = {};
     this.modalController.dismiss();
   }
+
   saveAddress() {
+    
     if (this.isEdit == true) {
       this.addressType.forEach(element => {
+        console.log(element);
+        
         if (element.checked) {
           this.addressData.address_type = element.name;
         }
@@ -102,9 +108,10 @@ export class AddAddressPage implements OnInit {
       this.addressData.lang = this.TCenterlng;
       this.api
         .postDataWithToken("editAddress", this.addressData)
-
         .subscribe(
           (res: any) => {
+            console.log(res);
+            
             if (res.success) {
               this.util.dismissLoader();
               this.translate.get('toasts').subscribe(async val => {  

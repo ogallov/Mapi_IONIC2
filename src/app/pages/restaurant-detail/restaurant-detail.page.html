@@ -53,13 +53,13 @@
             <h3 class="rate">{{data?.delivery_time}} {{'restaurant_detail_page.mins' | translate}}</h3>
             <h3 class="rating">{{'restaurant_detail_page.delivery_time' | translate}}</h3>
         </div>
-        <div class="first_col ion-text-center dot_div">
+        <!-- <div class="first_col ion-text-center dot_div">
             <div class="dot"></div>
         </div>
         <div class="first_col">
             <h3 class="rate">{{currency}}{{data?.avarage_plate_price}}</h3>
             <h3 class="rating">{{'restaurant_detail_page.for_two' | translate}}</h3>
-        </div>
+        </div> -->
     </div>
 
     <div class="coopan_div">
@@ -102,7 +102,7 @@
           </span>
                 </p>
                 <div class="add_div">
-                    <p class="price" [ngStyle]="{'color':item.isPopular ? 'var(--ion-color-light)' : 'var(--ion-color-green)'}">
+                    <p class="price" [ngStyle]="{'color':item.isPopular ? 'var(--ion-color-light)' : 'var(--ion-color-light)'}">
                         {{currency}} {{item?.price}}
                         <span *ngIf="item?.sprice"> ${{item?.sprice}}</span>
                     </p>

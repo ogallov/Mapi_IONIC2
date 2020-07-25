@@ -5,9 +5,9 @@
         <ion-icon src="../../../assets/icon-image/close_b.svg">
         </ion-icon>
       </ion-button> -->
-      <ion-back-button defaultHref="home" icon="../../../assets/icon-image/close_b.svg" text=""></ion-back-button>
+      <ion-back-button color="light" defaultHref="home" icon="./assets/icon-image/close_b.svg" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{"store_detail.store" | translate}} </ion-title>
+    <ion-title color="light">{{"store_detail.store" | translate}} </ion-title>
   </ion-toolbar>
   <div class="search_div">
     <ion-searchbar placeholder="Search for Restaurant and dishes" clearIcon="string" [(ngModel)]="term"></ion-searchbar>
@@ -32,7 +32,7 @@
         <p class="or_lbl">Groceries</p>
       </div> -->
       <p class="away_lbl">
-        <ion-icon src="../../../assets/icon-image/gro_pin.svg"></ion-icon>
+        <ion-icon src="./assets/icon-image/gro_pin.svg"></ion-icon>
         {{item?.away}}
       </p>
     </div>

@@ -33,7 +33,8 @@ ion-content {
             .name {
                 font-family: "Poppins-Medium";
                 font-size: 20px;
-                color: var(--ion-color-green);
+                // color: var(--ion-color-green);
+                color: var(--ion-color-white);
             }
         }
     }
@@ -51,7 +52,8 @@ ion-content {
             padding-right: 50px;
         }
         .address {
-            font-size: 10.5px;
+            // font-size: 10.5px;
+            font-size: 11px;
             font-family: "Poppins-Regular";
             // color: var(--ion-color-darkgray);
             color: var(--ion-color-white);
@@ -59,9 +61,11 @@ ion-content {
             margin-bottom: 3px;
         }
         .open {
-            font-size: 10.5px;
+            // font-size: 10.5px;
+            font-size: 12px;
             font-family: "Poppins-Regular";
-            color: var(--ion-color-green);
+            // color: var(--ion-color-green);
+            color: var(--ion-color-light);
             margin: 0px;
             span {
                 // color: var(--ion-color-darkgray);
@@ -93,7 +97,8 @@ ion-content {
                 display: grid;
                 justify-content: center;
                 .ascii {
-                    font-size: 8px;
+                    font-size: 11px;
+                    // font-size: 8px;
                     font-family: "Poppins-Regular";
                     margin-top: 2.5px;
                     margin-bottom: 0px;
@@ -211,7 +216,8 @@ ion-content {
                 width: 48px;
                 height: 15px;
                 position: absolute;
-                font-size: 8px;
+                font-size: 11px;
+                // font-size: 8px;
                 font-family: "Poppins-Regular";
                 color: var(--ion-color-white);
                 background-color: var(--ion-color-btn-color);
@@ -229,7 +235,8 @@ ion-content {
                 margin-bottom: 0px;
             }
             .vote {
-                font-size: 10.5px;
+                // font-size: 10.5px;
+                font-size: 12px;
                 font-family: "Poppins-Regular";
                 // color: var(--ion-color-darkgray);
                 color: var(--ion-color-white);
@@ -260,8 +267,10 @@ ion-content {
             }
             ion-button {
                 height: 20px;
-                width: 57px;
-                font-size: 8px;
+                // width: 57px;
+                width: 90px;
+                font-size: 11px;
+                // font-size: 8px;
                 font-family: "Poppins-Regular";
                 // --color: var(--ion-color-green);
                 --color: var(--ion-color-light);
@@ -272,6 +281,7 @@ ion-content {
                 --border-radius: 2px;
                 margin: 0px;
                 margin-right: 8px;
+                
                 ion-icon {
                     margin-left: 5px;
                 }
@@ -339,18 +349,20 @@ ion-content {
                 .btn_store {
                     ion-button {
                         height: 20px;
-                        width: 57px;
-                        font-size: 8px;
+                        width: 90px;
+                        font-size: 12px;
+                        // font-size: 8px;
                         font-family: "Poppins-Regular";
-                        // --color: var(--ion-color-green);
                         --color: var(--ion-color-light);
                         --padding-start: 0px;
                         --padding-end: 0px;
                         --border-width: 1px;
-                        --border-color: var(--ion-color-light-gray);
+                        --border-color: var(--ion-color-light);
                         --border-radius: 2px;
                         margin: 0px;
                         margin-right: 8px;
+                        // width: 57px;
+
                         ion-icon {
                             margin-left: 5px;
                         }
@@ -402,7 +414,8 @@ ion-content {
                 margin: 0px;
             }
             .type {
-                font-size: 10.5px;
+                // font-size: 10.5px;
+                font-size: 12px;
                 font-family: "Poppins-Regular";
                 color: var(--ion-color-darkgray);
                 margin: 0px;

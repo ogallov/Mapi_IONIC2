@@ -45,7 +45,9 @@ ion-content {
       }
       .item {
         font-size: 14px;
-        color: var(--ion-color-darkBlue);
+        // color: var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
+
         font-family: "Poppins-SemiBold";
         margin-top: 4px;
         margin-bottom: 5px;
@@ -53,7 +55,8 @@ ion-content {
       .type {
         font-size: 10.5px;
         font-family: "Poppins-Regular";
-        color: var(--ion-color-darkgray);
+        // color: var(--ion-color-darkgray);
+        color: var(--ion-color-light);
         margin-top: 0px;
         margin-bottom: 3px;
       }

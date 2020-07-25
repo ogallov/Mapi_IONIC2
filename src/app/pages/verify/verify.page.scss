@@ -1,4 +1,18 @@
+ion-header {
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
 ion-content {
+  --background: #000;
+  
   .logo_div {
     margin-top: 25px;
 
@@ -23,7 +37,8 @@ ion-content {
     .msg {
       font-family: "Poppins-Regular";
       font-size: 14px;
-      color: var(--ion-color-darkgray);
+      // color: var(--ion-color-darkgray);
+      color: var(--ion-color-light);
     }
   }
 

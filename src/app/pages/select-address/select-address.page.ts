@@ -21,6 +21,8 @@ export class SelectAddressPage implements OnInit {
   ) {
     this.util.startLoad();
     this.api.getDataWithToken("userAddress").subscribe((res: any) => {
+      console.log(res);
+      
       if (res.success) {
         this.addressList = res.data;
         this.util.dismissLoader();
@@ -36,6 +38,7 @@ export class SelectAddressPage implements OnInit {
   }
 
   ngOnInit() {}
+
   async addAddress() {
     this.isAddadress = true;
     const modal = await this.modalController.create({
@@ -46,6 +49,8 @@ export class SelectAddressPage implements OnInit {
         if (data) {
           this.util.startLoad();
           this.api.getDataWithToken("userAddress").subscribe((res: any) => {
+            console.log(res);
+            
             if (res.success) {
               this.addressList = res.data;
               this.util.dismissLoader();
@@ -63,12 +68,14 @@ export class SelectAddressPage implements OnInit {
     });
     return await modal.present();
   }
+
   setAddress(name) {
     this.addressList.forEach(element => {
       element.checked = false;
     });
     name.checked = true;
   }
+
   async editAddress(address) {
     address.action = "edit";
     this.api.parseData = address;
@@ -78,6 +85,7 @@ export class SelectAddressPage implements OnInit {
     });
     return await modal.present();
   }
+
   deleteAddress(address) {
     this.util.startLoad();
     this.api
@@ -100,6 +108,7 @@ export class SelectAddressPage implements OnInit {
         }
       });
   }
+
   setDefaultAddress() {
     let selectedAddress: any;
     this.addressList.forEach(element => {

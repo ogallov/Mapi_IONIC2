@@ -89,8 +89,10 @@ ion-content {
         border-radius: 0px 0px 2px 2px;
         display: grid;
         justify-content: center;
+        
         .ascii {
-          font-size: 8px;
+          font-size: 11px;
+          // font-size: 8px;
           font-family: "Poppins-Regular";
           margin-top: 2.5px;
           margin-bottom: 0px;

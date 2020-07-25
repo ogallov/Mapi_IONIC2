@@ -1,22 +1,33 @@
 ion-header {
-  ion-title {
-    font-family: "fivo-regular";
-    text-transform: uppercase;
-  }
-  ion-back-button {
-    --icon-font-size: 16px;
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+
+    ion-title {
+      font-family: "fivo-regular";
+      text-transform: uppercase;
+    }
+
+    ion-back-button {
+      --icon-font-size: 16px;
+    }
   }
   .search_div {
     padding: 0px 8px;
   }
 }
+
 ion-content {
+  --background: #000;
+
   .store_div {
     display: flex;
     flex-wrap: wrap;
     padding: 0px 16px 10px 16px;
     flex: 1 1;
     justify-content: space-between;
+
     .product_div {
       width: 48%;
       border-radius: 5px;
@@ -24,6 +35,7 @@ ion-content {
       padding: 10px 7px;
       margin-bottom: 20px;
       position: relative;
+
       .new_div {
         width: 51px;
         height: 17px;
@@ -35,13 +47,16 @@ ion-content {
         right: 10px;
         top: 10px;
         border-radius: 2px;
+
         .new_p {
-          font-size: 8px;
+          font-size: 11px;
+          // font-size: 8px;
           color: var(--ion-color-white);
           font-family: "Poppins-Medium";
           margin: 0;
         }
       }
+
       .img_div {
         text-align: center;
         padding: 45px 0px 20px 0px;
@@ -55,16 +70,19 @@ ion-content {
 
       .name {
         font-size: 18px;
-        color: var(--light-black-color);
+        // color: var(--light-black-color);
+        color: var(--ion-colo-light);
         font-family: "fivo-regular";
         margin-top: 0;
         margin-bottom: 5px;
         text-align: center;
       }
+
       .organic_div {
         padding: 5px 0px;
         display: flex;
         align-items: center;
+
         .dot_div {
           height: 5px;
           width: 5px;
@@ -72,13 +90,16 @@ ion-content {
           background-color: var(--green-color);
           margin: 0px 5px;
         }
+
         .or_lbl {
           font-size: 14px;
-          color: var(--border-color);
+          // color: var(--border-color);
+          color: var(--ion-color-light);
           font-family: "fivo-regular";
           margin: 0;
         }
       }
+
       .away_lbl {
         font-size: 12px;
         font-family: "fivo-regular";

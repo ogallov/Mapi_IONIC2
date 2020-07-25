@@ -1,15 +1,15 @@
 <ion-header no-border>
   <ion-toolbar mode="md">
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
+      <ion-back-button color="light" defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
     </ion-buttons>
-    <ion-title>{{"store_detail.product" | translate }}</ion-title>
+    <ion-title color="light">{{"store_detail.product" | translate }}</ion-title>
     <ion-buttons slot="end">
       <ion-button (click)="cart()">
-        <ion-icon src="../../../assets/icon-image/cart_ic.svg"> </ion-icon>
+        <ion-icon color="light" src="./assets/icon-image/cart_ic.svg"> </ion-icon>
       </ion-button>
       <ion-button (click)="presentPopover($event)">
-        <ion-icon src="../../../assets/icon-image/equalizer.svg"> </ion-icon>
+        <ion-icon color="light" src="./assets/icon-image/equalizer.svg"> </ion-icon>
       </ion-button>
     </ion-buttons>
   </ion-toolbar>
@@ -29,14 +29,14 @@
       <div class="btn_div">
         <div class="qty_div">
           <ion-button class="add_btn trans-btn" (click)="remove(item)">
-            <ion-icon src="../../../assets/icon-image/minus-sign.svg">
+            <ion-icon src="./assets/icon-image/minus-sign.svg">
             </ion-icon>
           </ion-button>
           <p class="qty_p">
             {{item?.qty}}
           </p>
           <ion-button class="add_btn trans-btn" (click)="AddCart(item)">
-            <ion-icon src="../../../assets/icon-image/plus-signs.svg">
+            <ion-icon src="./assets/icon-image/plus-signs.svg">
             </ion-icon>
           </ion-button>
         </div>

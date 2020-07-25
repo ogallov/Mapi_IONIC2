@@ -3,6 +3,10 @@ ion-header {
   ion-toolbar {
     --background: transparent;
 
+    ion-title {
+      color: var(--ion-color-light);
+    }
+
     ion-buttons {
       ion-button {
         ion-icon {
@@ -26,6 +30,7 @@ ion-content {
     --border-color-checked: var(--ion-color-green) !important;
   }
   ion-item {
+    --background: transparent;
     ion-label {
       white-space: normal;
       .title {

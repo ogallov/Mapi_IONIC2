@@ -93,7 +93,10 @@ export class ProfilePage implements OnInit {
     if (this.changeAddressBtn) {
       this.api.getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {
+          console.log(res.data);
+          
           if (res.success) {
+            console.log(res.data);
             this.data.userAddress.soc_name = res.data.soc_name;
             this.data.userAddress.street = res.data.street;
             this.data.userAddress.city = res.data.city;

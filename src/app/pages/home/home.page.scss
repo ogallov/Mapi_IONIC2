@@ -501,8 +501,10 @@ $colors: (
         right: 10px;
         top: 10px;
         border-radius: 2px;
+        
         .new_p {
-          font-size: 8px;
+          // font-size: 8px;
+          font-size: 11px;
           color: var(--ion-color-white);
           font-family: "Poppins-Medium";
           margin: 0;
