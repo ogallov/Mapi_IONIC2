@@ -7,6 +7,7 @@ ion-header {
         ion-title {
             font-family: "fivo-regular";
             text-transform: uppercase;
+            color: var(--ion-color-light);
         }
         ion-back-button {
             color: var(--ion-color-light);
@@ -24,17 +25,20 @@ ion-content {
         color: var(--ion-color-light);
         align-self: center;
     }
+
     .main_heading {
         font-size: 16px;
         font-family: "fivo-medium";
         // color: var(--ion-color-darkBlue);
         color: var(--ion-color-light);
     }
+
     .card_div {
         border-radius: 5px;
         box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
         padding: 5px 10px 13px 10px;
         margin-bottom: 20px;
+
         ion-item {
             padding-top: 10px;
             --padding-start: 0px;
@@ -50,6 +54,7 @@ ion-content {
                 width: 56px;
                 object-fit: scale-down;
             }
+
             .status {
                 font-size: 12px;
                 font-family: "fivo-regular";
@@ -57,10 +62,12 @@ ion-content {
                 color: var(--ion-color-light);
                 align-self: center;
             }
+
             ion-label {
                 margin-left: 10px;
                 margin-bottom: 0px;
                 margin-top: 2px;
+
                 .name {
                     font-size: 14px;
                     font-family: "fivo-medium";
@@ -69,6 +76,7 @@ ion-content {
                     display: flex;
                     justify-content: space-between;
                 }
+
                 .address {
                     font-size: 10px;
                     font-family: "fivo-regular";
@@ -78,11 +86,13 @@ ion-content {
                 }
             }
         }
+
         .menu {
             font-size: 12px;
             font-family: "fivo-regular";
             color: var(--ion-color-light);
         }
+
         .order {
             // color: var(--light-black-color);
             color: var(--ion-color-light);
@@ -90,6 +100,7 @@ ion-content {
             font-size: 12px;
             font-family: "Poppins-Medium";
         }
+
         .order_btn {
             --color: var(--ion-color-red);
             font-size: 12px;
@@ -98,6 +109,7 @@ ion-content {
             --ripple-color: var(--ion-color-white);
             --background-focused: none;
         }
+        
         .order_Date {
             margin-bottom: 10px;
         }

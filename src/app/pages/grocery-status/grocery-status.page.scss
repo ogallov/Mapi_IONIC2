@@ -1,21 +1,31 @@
 ion-header {
+  background: #000;
+
   ion-toolbar {
+      --background: transparent;
+
     ion-title {
       font-family: "fivo-regular";
       text-transform: uppercase;
+      color: var(--ion-color-light);
     }
+
     ion-back-button {
-      color: var(--ion-color-green);
+      color: var(--ion-color-light);
     }
   }
 }
+
 ion-content {
+  --background: #000;
+
   .store_detail {
     border-radius: 5px;
     box-shadow: 0px 2px 4px 0px rgba(0, 2, 4, 0.16);
     height: 100px;
     display: flex;
     margin: 0px 16px 20px 16px;
+
     .img_div {
       width: 100px;
       height: 100%;
@@ -25,34 +35,41 @@ ion-content {
       display: flex;
       justify-content: center;
       align-items: center;
+
       img {
         height: 70px;
         width: 70px;
         object-fit: scale-down;
       }
     }
+
     .detail_div {
       padding: 20px 10px 10px 15px;
 
       .name {
         font-size: 16px;
         font-family: "fivo-medium";
-        color: var(--light-black-color);
+        // color: var(--light-black-color);
+        color: var(--ion-color-light);
         margin-top: 0;
         margin-bottom: 5px;
       }
+
       .address {
         font-size: 12px;
-        color: var(--border-color);
+        // color: var(--border-color);
+        color: var(--ion-color-light);
         font-family: "fivo-regular";
         margin: 0;
         line-height: 17px;
       }
     }
   }
+
   .status_div {
     padding: 29px 32px 0px;
     position: relative;
+
     .order_btn {
       position: absolute;
       right: 0;
@@ -64,20 +81,25 @@ ion-content {
       font-size: 10px;
       font-family: "fivo-regular";
     }
+
     .timeline {
       display: flex;
       position: relative;
+
       .lines {
         transition: all 1s ease;
         background: var(--ion-color-green);
         width: 5px;
+
         &.disbale {
           background: var(--light-gray);
         }
+
         &.last {
           opacity: 0;
         }
       }
+
       .dot {
         height: 11px;
         background: var(--ion-color-green);
@@ -86,22 +108,27 @@ ion-content {
         position: absolute;
         top: 0px;
         left: -3px;
+
         &.disbale {
           background: var(--light-gray);
         }
       }
+
       .text {
         font-size: 16px;
         font-family: "fivo-regular";
-        color: var(--ion-color-darkBlue);
+        // color: var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
         margin: 0;
         padding-bottom: 28px;
         margin-left: 22px;
       }
+
       .pulsating-circle {
         left: 2px;
         top: 5px;
         transform: translateX(-50%) translateY(-50%);
+
         &:before {
           content: "";
           position: relative;
@@ -116,6 +143,7 @@ ion-content {
           animation: pulse-ring 1.25s cubic-bezier(0.215, 0.61, 0.355, 1)
             infinite;
         }
+
         &:after {
           content: "";
           position: absolute;
@@ -131,22 +159,27 @@ ion-content {
             infinite;
         }
       }
+
       @keyframes pulse-ring {
         0% {
           transform: scale(0.33);
         }
+
         80%,
         100% {
           opacity: 0;
         }
       }
+
       @keyframes pulse-dot {
         0% {
           transform: scale(0.8);
         }
+
         50% {
           transform: scale(1);
         }
+
         100% {
           transform: scale(0.8);
         }

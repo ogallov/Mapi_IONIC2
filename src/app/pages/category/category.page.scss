@@ -74,7 +74,8 @@ ion-content {
         font-size: 10.5px;
         display: flex;
         font-family: "Poppins-Regular";
-        color: var(--ion-color-darkgray);
+        // color: var(--ion-color-darkgray);
+        color: var(--ion-color-light);
 
         ion-icon {
           color: var(--ion-color-yellow);

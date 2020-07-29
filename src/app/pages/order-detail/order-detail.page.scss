@@ -1,33 +1,55 @@
+ion-header {
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
 ion-content {
+  --background: #000;
+
   .main_heading {
     font-size: 16px;
     font-family: "Poppins-Medium";
-    color: var(--ion-color-darkBlue);
+    // color: var(--ion-color-darkBlue);
+    color: var(--ion-color-light);
   }
+
   .card_div {
     border-radius: 5px;
     box-shadow: 0px 2px 6px 0px rgba(0, 0, 0, 0.16);
     padding: 5px 10px 5px 10px;
     margin-bottom: 20px;
+
     ion-item {
+      --background: transparent;
       --padding-start: 0px;
       --inner-padding-end: 0;
       border-bottom: dashed 1px var(--ion-border-color);
       padding-bottom: 10px;
+
       img {
         height: 56px;
         width: 56px;
         border-radius: 3px;
       }
+
       .status {
         font-size: 12px;
         font-family: "Poppins-Medium";
         color: var(--ion-color-green);
         align-self: center;
       }
+
       .first_label {
         margin-left: 10px;
       }
+
       .trans-btn {
         color: var(--ion-color-green);
         position: absolute;
@@ -38,48 +60,62 @@ ion-content {
         bottom: 5px;
         font-family: "Poppins-Medium";
       }
+
       ion-label {
         width: 160px;
+
         .name {
           font-size: 14px;
           font-family: "Poppins-Medium";
-          color: var(--ion-color-darkBlue);
+          // color: var(--ion-color-darkBlue);
+          color: var(--ion-color-light);
           display: flex;
           justify-content: space-between;
         }
+
         .address {
           font-size: 10px;
           font-family: "Poppins-Regular";
-          color: var(--ion-color-darkgray);
+          // color: var(--ion-color-darkgray);
+          color: var(--ion-color-light);
           line-height: 15px;
           width: 160px;
         }
       }
     }
+
     .menu {
       font-size: 12px;
       font-family: "WorkSans-Medium";
-      color: var(--ion-color-darkgray);
+      // color: var(--ion-color-darkgray);
+      color: var(--ion-color-light);
     }
+
     .order {
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
       font-size: 12px;
       font-family: "Poppins-Medium";
     }
+
     .order_btn {
       --color: var(--ion-color-red);
       font-size: 12px;
     }
+
     .promocode {
       color: var(--ion-color-green);
     }
+
     .saving {
       font-size: 14px;
     }
+
     .last_item {
       border: none;
     }
   }
+
   .review_div {
     .btn_div {
       display: flex;
@@ -94,16 +130,19 @@ ion-content {
         --color-activated: var(--ion-color-green);
         font-family: "Poppins-Medium";
       }
+
       .rate_meal {
         --border-color: var(--ion-color-green);
         --color: var(--ion-color-green);
       }
+
       .delivery_btn {
         --background: var(--ion-color-green);
         --color: var(--ion-color-white);
         --border-color: var(--ion-color-green);
       }
     }
+
     .rate_delivery_div {
       .first_div {
         display: flex;
@@ -117,25 +156,31 @@ ion-content {
             border-radius: 50%;
           }
         }
+
         .text_div {
           padding-left: 15px;
           width: 82%;
           .name {
             font-size: 14px;
-            color: var(--ion-color-darkBlue);
+            // color: var(--ion-color-darkBlue);
+            color: var(--ion-color-light);
             font-family: "Poppins-Medium";
             margin-top: 7px;
             margin-bottom: 0px;
           }
+
           .text {
             font-size: 10px;
-            color: var(--ion-color-darkBlue);
+            // color: var(--ion-color-darkBlue);
+            color: var(--ion-color-light);
             font-family: "Poppins-Regular";
             margin-top: 5px;
           }
+
           .rate_star {
             margin-top: 8px;
             margin-bottom: 8px;
+
             ion-icon {
               color: var(--ion-color-green);
               height: 17px;
@@ -144,6 +189,7 @@ ion-content {
           }
         }
       }
+
       .star_div {
         text-align: center;
         ion-icon {
@@ -152,19 +198,22 @@ ion-content {
           color: var(--ion-color-green);
         }
       }
+
       ion-textarea {
-        border: solid 1px var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
+        border: solid 1px var(--ion-color-light);
         border-radius: 5px;
-        --placeholder-color: var(--ion-color-darkgray);
+        --placeholder-color: var(--ion-color-light);
         --placeholder-font-style: "Poppins-Italic";
         font-family: "Poppins-Italic";
         font-size: 13px;
         height: 50px;
       }
+
       .submit_btn {
         height: 50px;
         --border-radius: 25px 0px 0px 25px;
-        --background: var(--ion-color-btn-color);
+        --background: var(--ion-color-green);
         --color: var(--ion-color-white);
         text-transform: uppercase;
         margin-top: 30px;
@@ -173,10 +222,12 @@ ion-content {
         --box-shadow: none;
       }
     }
+
     .rate_meal_div {
       .text_p {
         font-size: 14px;
-        color: var(--ion-color-darkBlue);
+        // color: var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
         font-family: "Poppins-Medium";
         padding-left: 16px;
       }
@@ -185,6 +236,7 @@ ion-content {
         .rate_star {
           margin-top: 8px;
           margin-bottom: 8px;
+          
           ion-icon {
             color: var(--ion-color-green);
             height: 17px;
@@ -193,6 +245,7 @@ ion-content {
         }
       }
     }
+
     .submit_div {
       margin-bottom: 5px;
       text-align: end;
