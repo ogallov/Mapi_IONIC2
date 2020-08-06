@@ -24,6 +24,8 @@ export class ProductDetailPage implements OnInit {
     this.currency = this.api.currency;
   }
 
+  ngOnInit() { }
+
   ionViewWillEnter() {
     this.util.startLoad();
 
@@ -37,6 +39,7 @@ export class ProductDetailPage implements OnInit {
           this.review = res.data.review;
 
           const fCart = this.cartData.find((x) => x.id == this.data.id);
+          
           if (fCart && fCart.qty > 0) {
             this.data.qty = fCart.qty;
             console.log("from if", fCart);
@@ -67,9 +70,12 @@ export class ProductDetailPage implements OnInit {
     }
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
+
   remove(item) {
     let equalIndex;
-    if (item.qty == 0) return;
+    if (item.qty == 0)
+      return;
+
     item.qty = item.qty - 1;
 
     if (item.qty == 0) {
@@ -87,7 +93,7 @@ export class ProductDetailPage implements OnInit {
 
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
-  ngOnInit() {}
+
   cart() {
     if (this.cartData.length == 0) {
       this.util.presentToast("cart is empty");

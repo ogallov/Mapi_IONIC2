@@ -2,18 +2,16 @@
 
     <ion-toolbar mode="md">
         <ion-buttons slot="start">
-            <ion-back-button defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
+            <ion-back-button color="light" defaultHref="home" icon="ios-arrow-back" text=""></ion-back-button>
         </ion-buttons>
         <ion-title>{{data?.name}}</ion-title>
         <ion-buttons slot="end">
             <ion-button (click)="cart()">
-                <ion-icon src="../../../assets/icon-image/cart_ic.svg">
+                <ion-icon src="./assets/icon-image/cart_ic.svg">
                 </ion-icon>
             </ion-button>
-
         </ion-buttons>
     </ion-toolbar>
-
 
 </ion-header>
 <ion-content>
@@ -67,13 +65,13 @@
         <h3 class="cart_lbl"> {{"store_detail.add_in_cart" | translate }}</h3>
         <div class="qty_div">
             <ion-button class="add_btn trans-btn" (click)="remove(data)">
-                <ion-icon src="../../../assets/icon-image/minus-sign.svg"></ion-icon>
+                <ion-icon src="./assets/icon-image/minus-sign.svg"></ion-icon>
             </ion-button>
             <p class="qty_p">
                 {{data.qty}}
             </p>
             <ion-button class="add_btn trans-btn" (click)="AddCart(data)">
-                <ion-icon src="../../../assets/icon-image/plus-signs.svg"></ion-icon>
+                <ion-icon src="./assets/icon-image/plus-signs.svg"></ion-icon>
             </ion-button>
         </div>
     </div>

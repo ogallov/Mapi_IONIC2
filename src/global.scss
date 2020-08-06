@@ -46,7 +46,8 @@
 .no_data_p {
   text-align: center;
   font-size: 14px;
-  color: var(--ion-color-darkgray);
+  // color: var(--ion-color-darkgray);
+  color: var(--ion-color-light);
 }
 
 ion-button {
@@ -61,6 +62,7 @@ ion-button {
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     height: 150px;
     opacity: 0.2;
@@ -90,7 +92,8 @@ ion-header {
     ion-title {
       font-size: 18px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-green);
+      // color: var(--ion-color-green);
+      color: var(--ion-color-light);
       position: absolute;
       top: 0;
       left: 0;
@@ -100,16 +103,23 @@ ion-header {
       height: 100%;
       text-align: center;
     }
+
     ion-buttons {
       position: relative;
+
       ion-menu-button {
-        color: var(--ion-color-darkBlue) !important;
+        // color: var(--ion-color-darkBlue) !important;
+        color: var(--ion-color-light) !important;
       }
+
       ion-back-button {
-        color: var(--ion-color-black);
+        // color: var(--ion-color-black);
+        color: var(--ion-color-light);
       }
+
       ion-button {
-        color: var(--ion-color-black) !important;
+        // color: var(--ion-color-black) !important;
+        color: var(--ion-color-light) !important;
       }
     }
   }
@@ -211,10 +221,12 @@ app-payment {
   --placeholder-font-style: "Poppins-Italic";
   border: 1px solid transparent;
   box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.16) !important;
+
   ion-icon {
     right: 16px !important;
     left: auto !important;
-    color: var(--ion-color-gray);
+    // color: var(--ion-color-gray);
+    color: var(--ion-color-light);
   }
 }
 
@@ -230,6 +242,7 @@ app-payment {
   --max-height: 420px !important;
   padding: 0px 0px !important;
   --border-radius: 5px 5px 0px 0px !important;
+
   .modal-wrapper {
     position: absolute !important;
     bottom: 0 !important;
@@ -242,10 +255,12 @@ app-payment {
   --width: 100% !important;
   box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.25) !important;
   --border-radius: 5px 5px 0px 0px !important;
+
   .modal-wrapper {
     position: absolute;
     bottom: 0;
   }
+
   .popover-content {
     top: inherit !important;
     bottom: 105px !important;
@@ -262,6 +277,7 @@ app-payment {
 
   --border-radius: 5px !important;
   border: 1px solid var(--green-color);
+
   .popover-content {
     top: 50px !important;
     left: inherit !important;
@@ -275,6 +291,7 @@ app-payment {
   --max-height: 400px;
   --width: 100%;
   --border-radius: 10px 10px 0px 0px;
+
   .modal-wrapper {
     position: absolute;
     bottom: 0;
@@ -414,10 +431,12 @@ sk-chase {
 
 .custom-loader {
   --background: transparent;
+
   ion-backdrop {
     background-color: #000;
     opacity: 0.9 !important;
   }
+  
   .loading-wrapper {
     -webkit-animation: ld-vortex-out 2s ease-out infinite;
     animation: ld-vortex-out 2s ease-out infinite;

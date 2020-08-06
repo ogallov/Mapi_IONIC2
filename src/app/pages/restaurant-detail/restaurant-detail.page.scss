@@ -18,12 +18,15 @@ ion-content {
             }
         }
     }
+
     .img_div {
         img {
             width: -webkit-fill-available;
             height: 200px;
         }
+
         position: relative;
+
         .name_div {
             position: absolute;
             padding: 0 16px;
@@ -38,11 +41,13 @@ ion-content {
             }
         }
     }
+
     .menu_div {
         position: relative;
         margin-top: 15px;
         padding-bottom: 10px;
         border-bottom: dashed 1px var(--ion-border-color);
+
         .tittle {
             font-size: 14px;
             font-family: "Poppins-Medium";
@@ -51,6 +56,7 @@ ion-content {
             margin: 0px;
             padding-right: 50px;
         }
+
         .address {
             // font-size: 10.5px;
             font-size: 11px;
@@ -60,6 +66,7 @@ ion-content {
             margin-top: 5px;
             margin-bottom: 3px;
         }
+
         .open {
             // font-size: 10.5px;
             font-size: 12px;
@@ -72,10 +79,12 @@ ion-content {
                 color: var(--ion-color-white);
             }
         }
+
         .four {
             position: absolute;
             top: 2px;
             right: 0;
+
             .first_div {
                 height: 22px;
                 width: 30px;
@@ -83,12 +92,14 @@ ion-content {
                 border-radius: 2px 2px 0px 0px;
                 display: flex;
                 justify-content: center;
+
                 span {
                     font-size: 12px;
                     font-family: "Poppins-Regular";
                     color: var(--ion-color-white);
                 }
             }
+
             .last_div {
                 box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.16);
                 height: 22px;
@@ -96,6 +107,7 @@ ion-content {
                 border-radius: 0px 0px 2px 2px;
                 display: grid;
                 justify-content: center;
+
                 .ascii {
                     font-size: 11px;
                     // font-size: 8px;
@@ -104,6 +116,7 @@ ion-content {
                     margin-bottom: 0px;
                     text-align: center;
                 }
+
                 .review {
                     font-family: "Poppins-Regular";
                     font-size: 6.5px;
@@ -115,11 +128,14 @@ ion-content {
             }
         }
     }
+
     .rating_div {
         margin-top: 16px;
         display: flex;
+
         .first_col {
             width: 20%;
+
             .rate {
                 font-size: 12px;
                 font-family: "Poppins-Regular";
@@ -127,12 +143,14 @@ ion-content {
                 color: var(--ion-color-white);
                 margin: 0px;
                 text-align: center;
+
                 ion-icon {
                     // color: var(--ion-color-yellow);
                     color: var(--ion-color-white);
                     margin-right: 3px;
                 }
             }
+
             .rating {
                 margin-top: 3px;
                 font-size: 9.7px;
@@ -142,9 +160,11 @@ ion-content {
                 color: var(--ion-color-white);
             }
         }
+
         .dot_div {
             display: flex;
             justify-content: center;
+
             .dot {
                 height: 6px;
                 width: 6px;
@@ -163,12 +183,15 @@ ion-content {
         display: -webkit-box;
         overflow: scroll;
     }
+
     .coopan_div::-webkit-scrollbar {
         display: none;
     }
+
     .toggle_div {
         display: flex;
         justify-content: space-around;
+        
         .text {
             display: flex;
             justify-content: center;
@@ -179,17 +202,20 @@ ion-content {
             color: var(--ion-color-white);
             font-family: "Poppins-Regular";
             display: flex;
+
             ion-toggle {
                 padding-left: 7px;
                 --background-checked: var(--ion-toggle-color);
                 --handle-background-checked: var(--ion-color-green);
             }
+
             .last_toggle {
                 --background-checked: var(--ion-color-toggle-red);
                 --handle-background-checked: var(--ion-color-red);
             }
         }
     }
+
     .best_seller {
         .best_p {
             font-size: 14px;
@@ -197,6 +223,7 @@ ion-content {
             // color: var(--ion-color-darkBlue);
             color: var(--ion-color-white);
         }
+
         ion-row {
              :nth-child(even) {
                 padding-right: 0px;
@@ -205,13 +232,16 @@ ion-content {
                 padding-left: 0px;
             }
         }
+
         ion-col {
             position: relative;
+
             img {
                 width: 100%;
                 border-radius: 5px;
                 height: 90px;
             }
+
             .exclusive_div {
                 width: 48px;
                 height: 15px;
@@ -226,6 +256,7 @@ ion-content {
                 text-align: center;
                 text-transform: uppercase;
             }
+
             .item {
                 font-size: 12px;
                 font-family: "Poppins-Medium";
@@ -234,6 +265,7 @@ ion-content {
                 margin-top: 3px;
                 margin-bottom: 0px;
             }
+
             .vote {
                 // font-size: 10.5px;
                 font-size: 12px;
@@ -241,15 +273,18 @@ ion-content {
                 // color: var(--ion-color-darkgray);
                 color: var(--ion-color-white);
                 margin: 0px;
+
                 span {
                     margin-left: 5px;
                 }
+
                 ion-icon {
                     // color: var(--ion-color-yellow);
                     color: var(--ion-color-white);
                     margin-right: 3px;
                 }
             }
+
             .price {
                 font-size: 12px;
                 font-family: "Poppins-Regular";
@@ -265,6 +300,7 @@ ion-content {
                     text-decoration: line-through;
                 }
             }
+
             ion-button {
                 height: 20px;
                 // width: 57px;
@@ -286,10 +322,12 @@ ion-content {
                     margin-left: 5px;
                 }
             }
+
             .add_div {
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
+
                 .btn_store {
                     .btn_div {
                         margin-right: 8px;
@@ -299,6 +337,7 @@ ion-content {
                         border-color: var(--ion-color-light-gray);
                         height: 23px;
                         width: 77px;
+
                         .add-btn {
                             --padding-start: 0px;
                             --padding-end: 0px;
@@ -317,6 +356,7 @@ ion-content {
                                 width: 15px;
                             }
                         }
+
                         .one {
                             width: 25px;
                             padding-top: 2px;
@@ -332,20 +372,25 @@ ion-content {
             }
         }
     }
+
     .special_div {
         margin-bottom: 10px;
+
         .best_p {
             font-size: 14px;
             font-family: "Poppins-Medium";
             // color: var(--ion-color-darkBlue);
             color: var(--ion-color-white);
         }
+
         .combo_div {
             margin-bottom: 10px;
             position: relative;
+
             .add_div {
                 display: flex;
                 justify-content: space-between;
+
                 .btn_store {
                     ion-button {
                         height: 20px;
@@ -367,6 +412,7 @@ ion-content {
                             margin-left: 5px;
                         }
                     }
+
                     .btn_div {
                         // position: absolute;
                         right: 0;
@@ -376,6 +422,7 @@ ion-content {
                         border-color: var(--ion-color-light-gray);
                         height: 23px;
                         width: 77px;
+
                         .add-btn {
                             --padding-start: 0px;
                             --padding-end: 0px;
@@ -393,6 +440,7 @@ ion-content {
                                 width: 15px;
                             }
                         }
+
                         .one {
                             width: 25px;
                             padding-top: 2px;
@@ -406,6 +454,7 @@ ion-content {
                     }
                 }
             }
+
             .name {
                 font-size: 12.5px;
                 font-family: "Poppins-Medium";
@@ -413,6 +462,7 @@ ion-content {
                 color: var(--ion-color-white);
                 margin: 0px;
             }
+
             .type {
                 // font-size: 10.5px;
                 font-size: 12px;
@@ -426,6 +476,7 @@ ion-content {
                     color: var(--ion-star-color);
                 }
             }
+
             .price {
                 font-size: 12px;
                 font-family: "Poppins-Regular";
@@ -433,6 +484,7 @@ ion-content {
                 color: var(--ion-color-light);
                 margin: 0px;
             }
+
             .detail {
                 font-size: 10.5px;
                 font-family: "Poppins-Regular";
@@ -441,6 +493,7 @@ ion-content {
                 margin: 0px;
             }
         }
+        
         .menu_btn {
             height: 30px;
             width: 94px;

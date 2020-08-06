@@ -7,9 +7,10 @@ import { environment } from "./../../../environments/environment.prod";
 import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { GroceryService } from "./../../service/grocery.service";
-import { NavController } from "@ionic/angular";
+import { NavController, ModalController } from "@ionic/angular";
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { mapStyle } from "./../../../environments/environment.prod";
+import { GrocerySuccessPage } from '../grocery-success/grocery-success.page';
 
 @Component({
   selector: "app-grocery-cart",
@@ -41,31 +42,36 @@ export class GroceryCartPage implements OnInit {
   public styles = mapStyle;
   public markerOptions = {
     origin: {
-      icon: "../../../assets/image/map_start.png",
+      icon: "./assets/image/map_start.png",
     },
     destination: {
-      icon: "../../../assets/image/map.png",
+      icon: "./assets/image/map.png",
     },
     draggable: true,
   };
+
+  // new
+  payment_type: any = "LOCAL";
+  err: any;
+
   constructor(
     private nav: NavController,
     private gpi: GroceryService,
     private api: ApiService,
     private util: UtilService,
-    private nativeGeocoder: NativeGeocoder
+    private nativeGeocoder: NativeGeocoder,
+    private modalController: ModalController,
+
   ) {
     this.cuurecy = this.api.currency;
     this.cartData = this.gpi.cartData;
     this.data = JSON.parse(localStorage.getItem("store-detail"));
+
     this.data.forEach((element) => {
       this.totalItem += element.sell_price * element.qty;
     });
 
-    this.toPay =
-      this.totalItem +
-      (this.store.delivery_charge || 0) -
-      (this.data.discount || 0);
+    this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
 
     this.data.toPay = this.toPay;
 
@@ -80,6 +86,7 @@ export class GroceryCartPage implements OnInit {
             if (this.store.delivery_type == "Shop") {
               this.event = "pickup";
               this.store.delivery_charge = 0;
+              
             } else if (this.store.delivery_type == "Home") {
               this.event = "delivery";
             } else {
@@ -87,8 +94,7 @@ export class GroceryCartPage implements OnInit {
             }
             this.toPay =
               this.totalItem +
-              (this.store.delivery_charge || 0) -
-              (this.data.discount || 0);
+              (this.store.delivery_charge || 0) - (this.data.discount || 0);
             this.data.toPay = this.toPay;
             this.api
               .getDataWithToken(
@@ -115,6 +121,7 @@ export class GroceryCartPage implements OnInit {
         }
       );
   }
+
   ionViewWillEnter() {
     if (this.gpi.promocode) {
       this.countDiscount();
@@ -137,15 +144,20 @@ export class GroceryCartPage implements OnInit {
         );
     }
   }
-  initMap() {}
-  ngOnInit() {}
+
+  initMap() { }
+
+  ngOnInit() { }
+
   paymentMethod() {
     if (this.data.length) {
+
       if (this.event == "delivery") {
         this.delivery_type = "Home";
       } else {
         this.delivery_type = "Shop";
       }
+
       if (this.delivery_type == "Home") {
         this.radius = this.distance(
           this.data.userlat,
@@ -163,7 +175,11 @@ export class GroceryCartPage implements OnInit {
           this.data.delivery_charge = this.delivery_charge;
           this.gpi.info = this.data;
 
-          this.nav.navigateForward("/pay-method");
+          // this.nav.navigateForward("/pay-method");
+
+          // new
+          this.paymentMethodPayMethod();
+
         } else {
           this.gpi.cartData = this.data;
 
@@ -173,7 +189,10 @@ export class GroceryCartPage implements OnInit {
           this.data.delivery_charge = this.delivery_charge;
           this.gpi.info = this.data;
 
-          this.nav.navigateForward("/pay-method");
+          // this.nav.navigateForward("/pay-method");
+          // new
+          this.paymentMethodPayMethod();
+
         }
       } else {
         this.gpi.cartData = this.data;
@@ -182,7 +201,10 @@ export class GroceryCartPage implements OnInit {
         this.delivery_charge = this.store.delivery_charge;
         this.data.delivery_charge = this.delivery_charge;
         this.gpi.info = this.data;
-        this.nav.navigateForward("/pay-method");
+        // this.nav.navigateForward("/pay-method");
+
+        // new
+        this.paymentMethodPayMethod();
       }
     } else {
       this.gpi.promocode = {};
@@ -264,6 +286,7 @@ export class GroceryCartPage implements OnInit {
       });
       if (equalIndex >= 0) {
         if (item.qty == 0) {
+
           item.qty = 0;
           this.cartData.splice(equalIndex, 1);
           this.totalItem -= item.sell_price;
@@ -274,6 +297,7 @@ export class GroceryCartPage implements OnInit {
             (this.data.discount || 0);
           this.data.toPay = this.toPay;
           localStorage.setItem("store-detail", JSON.stringify(this.cartData));
+
         } else {
           this.cartData[equalIndex] = item;
           item.total = item.qty * item.sell_price;
@@ -379,5 +403,69 @@ export class GroceryCartPage implements OnInit {
         };
       })
       .catch((error: any) => console.log(error));
+  }
+
+  // <================================ new ======================>
+
+  paymentMethodPayMethod() {
+    /* 
+    return */
+    let rdata: any = {};
+    rdata.items = [];
+    rdata.itemData = [];
+    rdata.shop_id = this.gpi.storeID;
+    rdata.payment = this.gpi.info.toPay;
+    rdata.discount = this.gpi.info.discount;
+    rdata.delivery_charge = this.gpi.info.delivery_charge;
+    rdata.delivery_type = this.gpi.info.delivery_type;
+
+    if (this.gpi.promocode == undefined) {
+    } else {
+      rdata.coupon_id = this.gpi.promocode.id;
+    }
+
+    rdata.coupon_price = this.gpi.info.discount;
+
+    if (typeof this.data.items == "string") {
+      rdata.items = [];
+    }
+
+    this.gpi.cartData.forEach((element) => {
+      rdata.items.push(element.id);
+      let pusher: any = {
+        item_id: element.id,
+        price: element.total * element.qty,
+        quantity: element.qty,
+      };
+      rdata.itemData.push(pusher);
+    });
+    rdata.items = rdata.items.join();
+
+    rdata.payment_status = 0;
+    rdata.payment_type = this.payment_type;
+    this.util.startLoad();
+    this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.util.dismissLoader();
+          this.gpi.promocode = {};
+          this.gpi.orderId = res.data.id;
+          this.presentModal();
+        }
+      },
+      (err) => {
+        this.err = err.error.errors;
+        this.util.dismissLoader();
+      }
+    );
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: GrocerySuccessPage,
+      backdropDismiss: false,
+      cssClass: "SuccessModal",
+    });
+    return await modal.present();
   }
 }

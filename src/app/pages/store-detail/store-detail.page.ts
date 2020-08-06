@@ -97,7 +97,10 @@ export class StoreDetailPage implements OnInit {
   }
   remove(item) {
     let equalIndex;
-    if (item.qty == 0) return;
+
+    if (item.qty == 0)
+      return;
+
     item.qty = item.qty - 1;
 
     if (item.qty == 0) {
@@ -116,7 +119,8 @@ export class StoreDetailPage implements OnInit {
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+  
   viewMore() {
     this.nav.navigateForward("product");
   }

@@ -19,8 +19,8 @@ declare var RazorpayCheckout: any;
 export class PayMethodPage implements OnInit {
   currencyType: any;
   data: any = {};
-  online = 1;
-  cash = 0;
+  online = 0;
+  cash = 1;
   err: any;
   payment_type: any = "LOCAL";
   apdata: any = {};
@@ -42,9 +42,13 @@ export class PayMethodPage implements OnInit {
         this.util.dismissLoader();
       }
     });
+
+    // payment method cash
+    this.paymentMethod();
   }
 
   ngOnInit() {}
+
   paymentMethod() {
     /* 
     return */
@@ -56,15 +60,18 @@ export class PayMethodPage implements OnInit {
     rdata.discount = this.gpi.info.discount;
     rdata.delivery_charge = this.gpi.info.delivery_charge;
     rdata.delivery_type = this.gpi.info.delivery_type;
+
     if (this.gpi.promocode == undefined) {
     } else {
       rdata.coupon_id = this.gpi.promocode.id;
     }
+
     rdata.coupon_price = this.gpi.info.discount;
 
     if (typeof this.data.items == "string") {
       rdata.items = [];
     }
+
     this.gpi.cartData.forEach((element) => {
       rdata.items.push(element.id);
       let pusher: any = {
@@ -86,6 +93,7 @@ export class PayMethodPage implements OnInit {
           this.paypalPay(rdata);
         }
       }
+
     } else {
       rdata.payment_status = 0;
       rdata.payment_type = this.payment_type;
@@ -106,6 +114,7 @@ export class PayMethodPage implements OnInit {
       );
     }
   }
+
   payWithRazor(rdata) {
     var options = {
       description: "Credits towards consultation",
@@ -152,6 +161,7 @@ export class PayMethodPage implements OnInit {
 
     RazorpayCheckout.open(options, successCallback, cancelCallback);
   }
+
   paypalPay(rdata) {
     this.payPal
 
@@ -207,6 +217,7 @@ export class PayMethodPage implements OnInit {
         (e) => {}
       );
   }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: GrocerySuccessPage,

@@ -77,19 +77,19 @@ export class HomePage {
   trending = [
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },

@@ -1,10 +1,11 @@
 import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
-import { NavController } from "@ionic/angular";
+import { NavController, ModalController } from "@ionic/angular";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { NativeGeocoder } from "@ionic-native/native-geocoder/ngx";
 import { TranslateService } from "@ngx-translate/core";
+import { SuccessModalPage } from '../success-modal/success-modal.page';
 declare var google: any;
 @Component({
   selector: "app-cart",
@@ -29,11 +30,14 @@ export class CartPage implements OnInit {
   currency: any;
   geocoder = new google.maps.Geocoder();
   radius: any;
+  err: any;
+
   constructor(
     private ntrl: NavController,
     private api: ApiService,
     private util: UtilService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private modalController: ModalController,
   ) {
     this.currency = this.api.currency;
     this.data = this.api.cartData;
@@ -269,13 +273,13 @@ export class CartPage implements OnInit {
         this.map.setMapTypeId("styled_map");
         var icons = {
           start: new google.maps.MarkerImage(
-            "../../../assets/image/map_start.png",
+            "./assets/image/map_start.png",
             new google.maps.Size(40, 33),
             new google.maps.Point(0, 0),
             new google.maps.Point(0, 10)
           ),
           end: new google.maps.MarkerImage(
-            "../../../assets/image/map.png",
+            "./assets/image/map.png",
             new google.maps.Size(40, 33),
             new google.maps.Point(0, 0),
             new google.maps.Point(0, 10)
@@ -330,7 +334,11 @@ export class CartPage implements OnInit {
         "k"
       );
       if (this.radius <= this.data.radius) {
-        this.ntrl.navigateForward(["payment-method"]);
+        // this.ntrl.navigateForward(["payment-method"]);
+        
+        // new
+        this.paymentMethod();
+
       } else {
         this.translate.get("toasts").subscribe(async (val) => {
           this.util.presentToast(val.order_is_out_range);
@@ -407,7 +415,7 @@ export class CartPage implements OnInit {
     }
   }
 
-  getCartdata() {}
+  getCartdata() { }
 
   ionViewWillLeave() {
     this.api.cartData.cartDetail = this.data.cartData;
@@ -477,5 +485,95 @@ export class CartPage implements OnInit {
       }
       return dist;
     }
+  }
+
+  // <======================================  new  ==============================================>
+
+  paymentMethod() {
+
+    this.data.items = [];
+    this.data.package_id = [];
+    this.data.itemData = [];
+    this.data.shopName = this.api.cartData.name;
+    this.data.shop_id = this.api.cartData.id;
+    this.data.payment = this.api.cartData.toPay;
+    this.data.discount = this.api.cartData.discount;
+    this.data.shop_charge = this.api.cartData.rastaurant_charge;
+    this.data.delivery_charge = this.api.cartData.delivery_charge;
+    this.data.coupon_price = this.api.cartData.discount;
+    this.data.coupon_id = this.api.promocode.id;
+
+    if (typeof this.data.items == "string") {
+      this.data.items = [];
+      this.data.package_id = [];
+    }
+    this.api.cartData.cartData.forEach(element => {
+      if (element.type == "combo") {
+        this.data.package_id.push(element.id);
+        let pusher: any = {
+          item: "",
+          price: element.total,
+          quantity: element.qty,
+          package_id: element.id
+        };
+        this.data.itemData.push(pusher);
+      } else {
+        this.data.items.push(element.id);
+        let pusher: any = {
+          item: element.id,
+          price: element.total,
+          quantity: element.qty,
+          package_id: ""
+        };
+        this.data.itemData.push(pusher);
+      }
+    });
+    this.data.items = this.data.items.join();
+    this.data.package_id = this.data.package_id.join();
+
+    // if (this.online) {
+    //   localStorage.setItem("payment_type", "online");
+    //   if (this.razorPayment) {
+    //     this.payWithRazor();
+    //   } else {
+    //     if (this.currencyType == "INR") {
+    //       this.translate.get('toasts').subscribe(async val => {
+    //         this.util.presentToast(val.payment_not_possible);
+    //       })
+    //     } else {
+    //       this.paypalPay();
+    //     }
+    //   }
+    // } else {
+    localStorage.setItem("payment_type", "cash");
+
+    this.data.payment_status = 0;
+    this.data.payment_type = "LOCAL";
+
+    this.util.startLoad();
+    this.api.postDataWithToken("createOrder", this.data).subscribe(
+      (res: any) => {
+        if (res.success) {
+          this.api.promocode = {};
+          this.util.dismissLoader();
+          this.api.checkOrderStatus = res.data.id;
+          this.presentModal();
+        }
+      },
+      err => {
+        this.err = err.error.errors;
+        this.util.dismissLoader();
+      }
+    );
+    // }
+  }
+
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: SuccessModalPage,
+      backdropDismiss: false,
+      cssClass: "SuccessModal"
+    });
+    return await modal.present();
   }
 }

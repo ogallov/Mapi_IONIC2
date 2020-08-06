@@ -7,10 +7,12 @@ ion-header {
     ion-title {
       font-family: "fivo-regular";
       text-transform: uppercase;
+      color: var(--ion-color-light);
     }
 
     ion-back-button {
       --icon-font-size: 16px;
+      color: var(--ion-color-light);
     }
   }
   .search_div {
@@ -60,6 +62,7 @@ ion-content {
       .img_div {
         text-align: center;
         padding: 45px 0px 20px 0px;
+
         img {
           max-width: 115px;
           height: 60px;
@@ -104,7 +107,8 @@ ion-content {
         font-size: 12px;
         font-family: "fivo-regular";
         margin: 0;
-        color: var(--border-color);
+        // color: var(--border-color);
+        color: var(--ion-color-light);
         text-align: center;
       }
     }

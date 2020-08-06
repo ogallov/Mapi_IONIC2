@@ -52,22 +52,27 @@
         </p>
 
         <p class="total">
-            {{"cart_page.total_discount" | translate}}<span class="ion-float-right">-{{currency}}{{data?.discount}}</span>
+            {{"cart_page.total_discount" | translate}}<span
+                class="ion-float-right">-{{currency}}{{data?.discount}}</span>
         </p>
         <p class="bill_item">
-            {{"cart_page.restaurant_charges" | translate}}<span class="ion-float-right">{{currency}}{{data?.rastaurant_charge}}</span>
+            {{"cart_page.restaurant_charges" | translate}}<span
+                class="ion-float-right">{{currency}}{{data?.rastaurant_charge}}</span>
         </p>
         <p class="bill_item">
-            {{"cart_page.delivery_fee" | translate}}<span class="ion-float-right">{{currency}}{{data?.delivery_charge}}</span>
+            {{"cart_page.delivery_fee" | translate}}<span
+                class="ion-float-right">{{currency}}{{data?.delivery_charge}}</span>
         </p>
         <p class="bill_item cancel_fee">
-            {{"cart_page.cancellation_fee" | translate}}<span class="ion-float-right">{{currency}}{{data?.cancle_charge}}</span>
+            {{"cart_page.cancellation_fee" | translate}}<span
+                class="ion-float-right">{{currency}}{{data?.cancle_charge}}</span>
         </p>
         <p class="bill_item">
             {{"cart_page.to_pay" | translate}}<span class="ion-float-right">{{currency}}{{data?.toPay}}</span>
         </p>
         <div class="saved">
-            <span>{{"cart_page.saved_text.txt1" | translate}} {{currency}}{{data?.discount}} {{"cart_page.saved_text.txt2" | translate}}</span>
+            <span>{{"cart_page.saved_text.txt1" | translate}} {{currency}}{{data?.discount}}
+                {{"cart_page.saved_text.txt2" | translate}}</span>
         </div>
     </div>
     <div class="devider"></div>
@@ -80,11 +85,13 @@
             </div>
             <div class="adress">
                 <p class="adress_p">
-                    {{data?.Deafult_address?.soc_name}} {{data?.Deafult_address?.street}} {{data?.Deafult_address?.city}} {{data?.Deafult_address?.zipcode}}
+                    {{data?.Deafult_address?.soc_name}} {{data?.Deafult_address?.street}}
+                    {{data?.Deafult_address?.city}} {{data?.Deafult_address?.zipcode}}
                 </p>
             </div>
             <div class="change">
-                <ion-button class="trans-btn change_ad" (click)="change_Address()">{{"cart_page.change_address_btn" | translate}}</ion-button>
+                <ion-button class="trans-btn change_ad" (click)="change_Address()">
+                    {{"cart_page.change_address_btn" | translate}}</ion-button>
             </div>
         </div>
         <div #map id="map"></div>
@@ -92,6 +99,7 @@
 </ion-content>
 <ion-footer>
     <ion-button class="otp_btn" (click)="payment_method()">
-        {{"cart_page.select_pay_method" | translate}}
+        {{"pay_method_page.continue_btn" | translate}}
+        <!-- {{"cart_page.select_pay_method" | translate}} -->
     </ion-button>
 </ion-footer>

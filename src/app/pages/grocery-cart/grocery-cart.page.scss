@@ -1,11 +1,18 @@
 ion-header {
+  background: #000;
+
   ion-toolbar {
+    --background: transparent;
+    
     ion-title {
+      color: var(--ion-color-light);
       font-family: "fivo-regular";
       text-transform: uppercase;
     }
+
     ion-back-button {
-      color: var(--ion-color-green);
+      // color: var(--ion-color-green);
+      color: var(--ion-color-light);
     }
   }
 
@@ -13,6 +20,7 @@ ion-header {
     padding: 10px 0px;
     margin: 0px 16px;
   }
+
   ion-segment {
     --background: var(--white);
     // border-radius: 20px;
@@ -31,7 +39,10 @@ ion-header {
     }
   }
 }
+
 ion-content {
+  --background: #000;
+
   .card_item {
     display: flex;
     padding-bottom: 10px;
@@ -39,12 +50,14 @@ ion-content {
     border-bottom: dotted;
     border-bottom-width: 1px;
     border-bottom-color: var(--ion-border-color);
+
     .img_div {
       height: 56px;
       width: 56px;
       min-width: 56px;
       border-radius: 3px;
       background-color: var(--img_back);
+
       img {
       }
     }
@@ -52,22 +65,28 @@ ion-content {
     .info_div {
       padding-left: 15px;
       width: 100%;
+
       .name {
         font-size: 16px;
-        color: var(--light-black-color);
+        // color: var(--light-black-color);
+        color: var(--ion-color-light);
         font-family: "fivo-medium";
         margin: 0;
       }
+
       .type {
         font-size: 14px;
         font-family: "fivo-regular";
-        color: var(--border-color);
+        // color: var(--border-color);
+        color: var(--ion-color-light);
         margin-top: 3px;
         margin-bottom: 2px;
       }
+      
       .qty {
         font-size: 12px;
       }
+
       .price_div {
         display: flex;
         justify-content: space-between;
@@ -76,14 +95,17 @@ ion-content {
         .price {
           font-size: 12px;
           font-family: "fivo-medium";
-          color: var(--green-color);
+          // color: var(--green-color);
+          color: var(--ion-color-light);
           margin: 0;
         }
+
         .add_div {
           display: flex;
           align-items: center;
         }
       }
+
       .btn_div {
         display: flex;
         border: solid 1px;
@@ -92,6 +114,7 @@ ion-content {
         height: 25px;
         width: 77px;
         margin-left: 10px;
+
         .add-btn {
           --padding-start: 0px;
           --padding-end: 0px;
@@ -99,25 +122,31 @@ ion-content {
           width: 25px;
           height: 24px;
           --background: transparent;
-          --color: var(--ion-color-dark-gray);
+          // --color: var(--ion-color-dark-gray);
           --box-shadow: none;
           --border: none;
           --ripple-color: var(--ion-color-white);
           --background-activated: none;
+
           ion-icon {
-            color: var(--ion-color-darkgray);
+            // color: var(--ion-color-darkgray);
+            color: var(--ion-color-light);
             width: 15px;
           }
+
           .add {
-            color: var(--ion-color-green);
+            // color: var(--ion-color-green);
+            color: var(--ion-color-light);
           }
         }
+
         .one {
           width: 25px;
           padding-top: 1px;
           text-align: center;
           font-size: 12px;
-          color: var(--ion-color-green);
+          // color: var(--ion-color-green);
+          color: var(--ion-color-light);
           display: flex;
           justify-content: center;
           align-items: center;
@@ -125,14 +154,18 @@ ion-content {
       }
     }
   }
+  
   .couponItem {
-    --detail-icon-color: var(--ion-color-green);
+    --detail-icon-color: var(--ion-color-light);
     --detail-icon-opacity: 1;
     padding-bottom: 5px;
+    --background: transparent;
+
     .combo {
       font-family: "Poppins-Medium";
       font-size: 14px;
-      color: var(--ion-color-green);
+      // color: var(--ion-color-green);
+      color: var(--ion-color-light);
       display: flex;
       align-items: center;
       ion-icon {
@@ -140,35 +173,45 @@ ion-content {
       }
     }
   }
+
   .devider_div {
     height: 25px;
-    background-color: var(--divder);
+    // background-color: var(--divder);
+    background: transparent;
     margin-bottom: 5px;
   }
+
   .bill_detail {
     .combo {
       font-size: 14px;
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
       font-family: "fivo-medium";
     }
+
     .bill_item {
       font-size: 12px;
       font-family: "fivo-medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
     }
+
     .total {
-      color: var(--ion-color-green);
+      // color: var(--ion-color-green);
+      color: var(--ion-color-light);
       font-size: 12px;
       font-family: "fivo-medium";
       border-bottom: dashed 1px var(--ion-border-color);
       margin-bottom: 0px;
       padding-bottom: 10px;
     }
+
     .cancel_fee {
       margin-bottom: 0px;
       padding-bottom: 10px;
       border-bottom: dashed 1px var(--ion-border-color);
     }
+
     .saved {
       background-color: var(--ion-color-light-green);
       border: dashed 1px var(--ion-color-green);
@@ -180,38 +223,49 @@ ion-content {
       margin-bottom: 15px;
     }
   }
+
   .last_div {
     .sel_lbl {
       font-size: 12px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
     }
+
     .address_div {
       display: flex;
+
       .pin_div {
         padding-top: 3px;
         width: 8%;
+
         ion-icon {
           color: var(--ion-color-green);
         }
       }
+
       .adress {
         width: 66%;
+
         .adress_p {
           font-size: 12px;
           font-family: "Poppins-Regular";
-          color: var(--ion-color-darkgray);
+          // color: var(--ion-color-darkgray);
+          color: var(--ion-color-light);
           margin-top: 0;
           margin-bottom: 7px;
         }
       }
+
       .change {
         display: flex;
         width: 24%;
+        
         .change_ad {
           font-size: 9px;
           font-family: "Poppins-Regular";
-          --color: var(--ion-color-green);
+          // --color: var(--ion-color-green);
+          --color: var(--ion-color-light);
           text-transform: capitalize;
           height: 15px;
           margin: 0;
@@ -220,6 +274,7 @@ ion-content {
         }
       }
     }
+
     #map {
       height: 140px;
       margin-bottom: 20px;
@@ -230,7 +285,10 @@ ion-content {
     }
   }
 }
+
 ion-footer {
+  --background: #000;
+
   ion-button {
     font-family: "fivo-regular";
   }

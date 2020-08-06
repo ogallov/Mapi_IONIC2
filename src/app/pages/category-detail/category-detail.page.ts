@@ -13,28 +13,30 @@ export class CategoryDetailPage implements OnInit {
   trending = [
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },
     {
       name: "Real Fruit Juice ,Litchi, (Pack of 2)",
-      img: "../../../assets/image/real_juice.png",
+      img: "./assets/image/real_juice.png",
       qty: "1Ltr",
       price: "$15.50",
     },
   ];
+
   data: any = [];
   err: any = {};
   cartData: any = [];
   currency: any;
   term = "";
+
   constructor(
     private api: ApiService,
     private util: UtilService,
@@ -43,24 +45,31 @@ export class CategoryDetailPage implements OnInit {
   ) {
     this.currency = this.api.currency;
   }
+
   ionViewWillEnter() {
+
     this.util.startLoad();
+
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
       (res: any) => {
         this.util.dismissLoader();
         this.data = res.data;
-
-        this.cartData = this.cartData =
-          JSON.parse(localStorage.getItem("store-detail")) || [];
+        console.log(this.data);
+        this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
         this.getdata();
+        console.log(this.data);
       },
       (err) => {
+        console.log(err);
         this.util.dismissLoader();
       }
     );
+
   }
-  ngOnInit() {}
+  ngOnInit() { }
+
   getdata() {
+
     if (this.cartData.length > 0) {
       this.data.forEach((el1) => {
         const fCart = this.cartData.find((x) => x.id == el1.id);
@@ -95,7 +104,10 @@ export class CategoryDetailPage implements OnInit {
         });
       });
     }
+
+
   }
+
   AddCart(item) {
     item.qty = item.qty + 1;
     item.total = item.qty * item.sell_price;
@@ -110,9 +122,12 @@ export class CategoryDetailPage implements OnInit {
     }
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
+
   remove(item) {
     let equalIndex;
-    if (item.qty == 0) return;
+    if (item.qty == 0)
+      return;
+
     item.qty = item.qty - 1;
 
     if (item.qty == 0) {
@@ -123,6 +138,7 @@ export class CategoryDetailPage implements OnInit {
       item.total = item.qty * item.sell_price;
       this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
       const fCart = this.cartData.find((x) => x.id == item.id);
+
       if (fCart) {
         fCart.qty = item.qty;
       }
@@ -130,6 +146,7 @@ export class CategoryDetailPage implements OnInit {
 
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
+
   cart() {
     if (this.cartData.length == 0) {
       this.util.presentToast("cart is empty");

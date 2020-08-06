@@ -47,7 +47,8 @@
             </ion-label>
         </div>
         <p class="main_heading" *ngIf="data?.past?.length > 0">{{"grocery_history.past" | translate }}</p>
-        <p *ngIf="data?.past?.length == 0 && data?.current?.length > 0" class="no_data_p">
+        <!-- <p *ngIf="data?.past?.length == 0 && data?.current?.length > 0" class="no_data_p"> -->
+            <p *ngIf="data?.past?.length == 0" class="no_data_p">
             {{"grocery_history.no_data" | translate }}</p>
         <div class="card_div" *ngFor="let item of data?.past">
             <ion-item lines="none" (click)="pastDetail(item.id)">

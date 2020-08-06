@@ -94,11 +94,11 @@ export class AppComponent {
         });
       }
     });
-    if (localStorage.getItem("token")) {
-      this.ntrl.navigateRoot("/home");
-    } else {
-      this.ntrl.navigateRoot("login");
-    }
+    // if (localStorage.getItem("token")) {
+    //   this.ntrl.navigateRoot("/home");
+    // } else {
+    //   this.ntrl.navigateRoot("login");
+    // }
   }
 
   initializeApp() {

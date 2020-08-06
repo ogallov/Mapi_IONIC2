@@ -11,7 +11,7 @@
 
 <ion-content>
     <div no-data *ngIf="data?.length == 0">
-        <img src="../../../assets/image/no-data-icon-10.jpg" alt="no data">
+        <img src="./assets/image/no-data-icon-10.jpg" alt="no data">
     </div>
     <div class="list" *ngFor="let i of data">
         <img src="{{i?.customer?.imagePath + i?.customer?.image}}">

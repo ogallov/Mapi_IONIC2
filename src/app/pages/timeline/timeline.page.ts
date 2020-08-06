@@ -206,16 +206,16 @@ export class TimelinePage {
   ];
   public markerOptions = {
     origin: {
-      icon: "../../../assets/image/red_marker.png",
+      icon: "./assets/image/red_marker.png",
     },
     destination: {
-      icon: "../../../assets/image/green_marker.png",
+      icon: "./assets/image/green_marker.png",
     },
     draggable: true,
   };
   isvisible = false;
   userAddress: any;
-  iconUrl = "../../../assets/image/bike.png";
+  iconUrl = "./assets/image/bike.png";
   constructor(
     private translate: TranslateService,
     private ntrl: NavController,
@@ -258,7 +258,7 @@ export class TimelinePage {
               this.data.order_status == "DriverReach" ||
               this.data.order_status == "Delivered"
             ) {
-              this.markerOptions.origin.icon = "../../../assets/image/bike.png";
+              this.markerOptions.origin.icon = "./assets/image/bike.png";
               this.isvisible = false;
             }
           } else {
@@ -281,11 +281,11 @@ export class TimelinePage {
             this.status = "3";
           } else if (this.data.order_status == "OnTheWay") {
             this.isvisible = false;
-            this.markerOptions.origin.icon = "../../../assets/image/bike.png";
+            this.markerOptions.origin.icon = "./assets/image/bike.png";
             this.status = "4";
           } else if (this.data.order_status == "DriverReach") {
             this.status = "5";
-            this.markerOptions.origin.icon = "../../../assets/image/bike.png";
+            this.markerOptions.origin.icon = "./assets/image/bike.png";
             this.isvisible = false;
           } else {
             this.status = "6";
@@ -391,9 +391,9 @@ export class TimelinePage {
             res.data.order_status == "DriverAtShop"
           ) {
             this.status = "3";
-            this.markerOptions.origin.icon = "../../../assets/image/bike.png";
+            this.markerOptions.origin.icon = "./assets/image/bike.png";
           } else if (res.data.order_status == "OnTheWay") {
-            this.markerOptions.origin.icon = "../../../assets/image/bike.png";
+            this.markerOptions.origin.icon = "./assets/image/bike.png";
             this.status = "4";
           } else if (res.data.order_status == "DriverReach") {
             this.status = "5";

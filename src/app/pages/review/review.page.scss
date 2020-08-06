@@ -1,5 +1,23 @@
+ion-header {
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
 ion-content {
+  --background: #000;
   position: relative;
+
+  ion-item {
+    --background: transparent;
+  }
+
   ion-header {
     position: fixed;
     top: 0px;
@@ -17,12 +35,15 @@ ion-content {
       }
     }
   }
+
   .img_div {
     img {
       height: 200px;
       width: -webkit-fill-available;
     }
+
     position: relative;
+
     .name_div {
       position: absolute;
       padding: 0 16px;
@@ -41,27 +62,34 @@ ion-content {
     margin-top: 15px;
     padding-bottom: 10px;
     border-bottom: dashed 1px var(--ion-border-color);
+
     .tittle {
       font-size: 14px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
       margin: 0px;
       padding-right: 50px;
     }
+
     .address {
       font-size: 10.5px;
       font-family: "Poppins-Regular";
-      color: var(--ion-color-darkgray);
+      // color: var(--ion-color-darkgray);
+      color: var(--ion-color-light);
       margin-top: 5px;
       margin-bottom: 3px;
     }
+
     .open {
       font-size: 10.5px;
       font-family: "Poppins-Regular";
       color: var(--ion-color-green);
       margin: 0px;
+
       span {
-        color: var(--ion-color-darkgray);
+        // color: var(--ion-color-darkgray);
+        color: var(--ion-color-light);
       }
     }
 
@@ -69,6 +97,7 @@ ion-content {
       position: absolute;
       top: 5px;
       right: 0;
+
       .first_div {
         height: 22px;
         width: 30px;
@@ -76,12 +105,14 @@ ion-content {
         border-radius: 2px 2px 0px 0px;
         display: flex;
         justify-content: center;
+
         span {
           font-size: 12px;
           font-family: "Poppins-Regular";
           color: var(--ion-color-white);
         }
       }
+
       .last_div {
         box-shadow: 0px 1px 3px 0px rgba(0, 0, 0, 0.16);
         height: 22px;
@@ -98,44 +129,55 @@ ion-content {
           margin-bottom: 0px;
           text-align: center;
         }
+
         .review {
           font-family: "Poppins-Regular";
           font-size: 6.5px;
-          color: var(--ion-color-darkgray);
+          // color: var(--ion-color-darkgray);
+          color: var(--ion-color-light);
           text-align: center;
           margin: 0px;
         }
       }
     }
   }
+
   .rating_div {
     margin-top: 16px;
     display: flex;
+
     .first_col {
       width: 20%;
 
       .rate {
         font-size: 12px;
         font-family: "Poppins-Regular";
-        color: var(--ion-color-darkgray);
+        // color: var(--ion-color-darkgray);
+        color: var(--ion-color-light);
         margin: 0px;
         text-align: center;
+
         ion-icon {
-          color: var(--ion-color-yellow);
+          // color: var(--ion-color-yellow);
+          color: var(--ion-color-light);
           margin-right: 3px;
         }
       }
+
       .rating {
         margin-top: 3px;
         font-size: 9.7px;
         font-family: "Poppins-Regular";
         text-align: center;
-        color: var(--ion-color-darkgray);
+        // color: var(--ion-color-darkgray);
+        color: var(--ion-color-light);
       }
     }
+
     .dot_div {
       display: flex;
       justify-content: center;
+      
       .dot {
         height: 6px;
         width: 6px;
@@ -149,29 +191,37 @@ ion-content {
   .coopan_div {
     padding-top: 10px;
     padding-bottom: 10px;
-    background-color: var(--ion-color-sky);
+    // background-color: var(--ion-color-sky);
+    background-color: transparent;
     padding-left: 16px;
     display: -webkit-box;
     overflow: scroll;
   }
+
   .coopan_div::-webkit-scrollbar {
     display: none;
   }
+
   .about_p {
     font-size: 12px;
     font-family: "Poppins-Regular";
-    color: var(--ion-color-darkgray);
+    // color: var(--ion-color-darkgray);
+    color: var(--ion-color-light);
     text-align: -webkit-center;
   }
+
   .photo_div {
     .p_text {
       font-size: 16px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
     }
+
     .gallary_img {
       display: flex;
       overflow-y: auto;
+
       img {
         margin-right: 10px;
         height: 90px;
@@ -180,73 +230,94 @@ ion-content {
         box-shadow: 0px 1px 6px 0px rgba(0, 0, 0, 0.3);
       }
     }
+
     .gallary_img::-webkit-scrollbar {
       display: none;
     }
   }
+
   .review_div {
     margin-bottom: 20px;
 
     .p_text {
       font-size: 16px;
       font-family: "Poppins-Medium";
-      color: var(--ion-color-darkBlue);
+      // color: var(--ion-color-darkBlue);
+      color: var(--ion-color-light);
     }
+
     .yes_div {
       margin-top: 10px;
+
       .yes_p {
         font-size: 12px;
         font-family: "Poppins-Medium";
-        color: var(--ion-color-darkBlue);
+        // color: var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
+
         .yes_btn {
           --background: var(--ion-btn-green);
         }
+
         .no_btn {
           --background: var(--ion-btn-color);
         }
+
         ion-button {
           height: 20px;
           width: 50px;
           --border-radius: 10px;
           font-size: 10px;
-          --color: var(--ion-color-darkBlue);
+          // --color: var(--ion-color-darkBlue);
+          --color: var(--ion-color-light);
           --box-shadow: none;
         }
       }
     }
+
     .review_item {
       ion-avatar {
         align-self: baseline;
+
         img {
           border: solid 3px var(--ion-color-white);
           box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.6);
         }
       }
+
       ion-label {
         white-space: normal;
+
         .name {
           font-size: 12px;
           font-family: "Poppins-Medium";
-          color: var(--ion-color-darkBlue);
+          // color: var(--ion-color-darkBlue);
+          color: var(--ion-color-light);
           margin: 0;
         }
+
         .ago {
           font-size: 10.5px;
           font-family: "Poppins-Medium";
-          color: var(--ion-color-darkgray);
+          // color: var(--ion-color-darkgray);
+          color: var(--ion-color-light);
           margin-top: 3px;
           margin-bottom: 3px;
         }
+
         .detail {
           font-size: 10.5px;
           font-family: "Poppins-Regular";
-          color: var(--ion-color-darkgray);
+          // color: var(--ion-color-darkgray);
+          color: var(--ion-color-light);
           margin: 0;
           line-height: 15px;
         }
+
         .first_icon {
           color: var(--ion-color-green);
         }
+
         .last_icon {
           color: var(--ion-star-color);
         }
@@ -255,16 +326,19 @@ ion-content {
 
     .last_div {
       height: 36px;
-      background-color: var(--ion-color-sky);
+      // background-color: var(--ion-color-sky);
+      background-color: transparent;
       border-radius: 18px;
       margin-top: 30px;
       margin-bottom: 10px;
       padding: 10px 15px 0px 15px;
+
       .last_p {
         font-size: 12px;
         margin: 0px;
         font-family: "Poppins-Medium";
-        color: var(--ion-color-darkBlue);
+        // color: var(--ion-color-darkBlue);
+        color: var(--ion-color-light);
       }
     }
   }
@@ -285,7 +359,8 @@ section {
 }
 .container .left:before {
   content: "";
-  background-color: var(--ion-color-sky);
+  // background-color: var(--ion-color-sky);
+  background-color: transparent;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -296,7 +371,8 @@ section {
 
 .container .left:after {
   content: "";
-  background-color: var(--ion-color-sky);
+  // background-color: var(--ion-color-sky);
+  background-color: transparent;
   width: 10px;
   height: 10px;
   border-radius: 50%;
@@ -328,7 +404,8 @@ section {
 
 .right_p {
   font-family: "Poppins-Regular";
-  color: var(--ion-color-darkgray);
+  // color: var(--ion-color-darkgray);
+  color: var(--ion-color-green);
   font-size: 11px;
   margin-top: 5px;
 }

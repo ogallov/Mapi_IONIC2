@@ -28,7 +28,7 @@ export class ProductPage implements OnInit {
     this.data = JSON.parse(localStorage.getItem("store-detail"));
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
   ionViewWillEnter() {
     this.util.startLoad();
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
@@ -116,7 +116,9 @@ export class ProductPage implements OnInit {
   }
   remove(item) {
     let equalIndex;
-    if (item.qty == 0) return;
+    if (item.qty == 0)
+      return;
+      
     item.qty = item.qty - 1;
 
     if (item.qty == 0) {
