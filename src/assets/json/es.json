@@ -1,17 +1,20 @@
 {
   "app_name": "Mapifood",
+
   "add_edit_address_page": {
     "add_title": "Agregar direccion",
     "edit_title": "Editar direccion",
     "address_type": "Escoja su direccion",
     "save_btn": "Guardar"
   },
+
   "cancel_order_alert": {
     "title": "Cancelar pedido",
     "text": "Deseas cancelar este pedido",
     "yes": "Si",
     "no": "No"
   },
+
   "add_card_page": {
     "title": "Agregar tarjeta",
     "card_number": "NUMERO TARJETA",
@@ -20,9 +23,11 @@
     "card_holders_name": "NOMBRE EN LA TARJETA",
     "add_card": "Agregar tarjeta"
   },
+
   "cancel_order_page": {
     "title": "Por qué desea cancelar su pedido?"
   },
+
   "cart_page": {
     "title": "Carrito",
     "apply_coupon": "APLICAR CUPON",
@@ -316,7 +321,8 @@
     "setting_set_success": "Configuracion exitosa",
     "profile_set_success": "Perfil actualizado",
     "cart_empty": "No ha pedido aun",
-    "select_default_address": "Seleccione su dirección principal"
+    "select_default_address": "Seleccione su dirección principal",
+    "The_selected_address_has_not_been_saved": "La dirección seleccionada no se ha guardo"
   },
   "store_detail": {
     "today": "Hoy",

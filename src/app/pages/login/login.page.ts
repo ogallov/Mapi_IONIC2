@@ -15,7 +15,7 @@ export class LoginPage implements OnInit {
     email: "prueba@mapifood.com",
     password: "123456",
   };
-  
+
   err: any = {};
   public remember: boolean = false;
   public showPassword: boolean = false;
@@ -34,15 +34,18 @@ export class LoginPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
   signup() {
     this.ntrl.navigateForward(["signup"]);
   }
+
   gotoSlide() {
     this.user.device_token = this.api.deviceToken ? this.api.deviceToken : null;
     this.util.startLoad();
     this.api.postData("login", this.user).subscribe(
       (res: any) => {
+
         if (res.success) {
           // for remember me
           if (this.remember) {
@@ -50,29 +53,37 @@ export class LoginPage implements OnInit {
               email: this.user.email,
               password: this.user.password,
             };
+
             localStorage.setItem("remember", JSON.stringify(temp));
+
           } else {
             localStorage.removeItem("remember");
           }
+
           this.err = {};
           localStorage.setItem("token", res.data.token);
           this.api.userToken = res.data.token;
           this.util.isUpdateProfile.next(true);
+
           this.translate.get("toasts").subscribe(async (val) => {
             this.util.presentToast(val.logged_in_success);
           });
+
           if (res.data.address_id) {
             localStorage.setItem("isaddress", res.data.address_id);
           } else {
             localStorage.setItem("isaddress", "false");
           }
+
           this.ntrl.navigateRoot("/home");
+
         } else {
           this.api.verifyId = res.data.id;
           this.ntrl.navigateForward("verify");
         }
         this.util.dismissLoader();
       },
+
       (err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);

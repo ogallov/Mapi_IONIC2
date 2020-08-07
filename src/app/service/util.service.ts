@@ -11,8 +11,8 @@ export class UtilService {
   constructor(
     private toastController: ToastController,
     private loadingController: LoadingController
-  ) {}
-  
+  ) { }
+
   isLoading = false;
   async presentToast(msg) {
     const toast = await this.toastController.create({
@@ -21,6 +21,7 @@ export class UtilService {
     });
     toast.present();
   }
+
   async startLoad() {
     this.isLoading = true;
     return await this.loadingController
@@ -40,11 +41,12 @@ export class UtilService {
       .then(a => {
         a.present().then(() => {
           if (!this.isLoading) {
-            a.dismiss().then(() => {});
+            a.dismiss().then(() => { });
           }
         });
       });
   }
+
   async dismissLoader() {
     this.isLoading = false;
     return await this.loadingController.dismiss();

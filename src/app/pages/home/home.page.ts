@@ -152,23 +152,34 @@ export class HomePage {
   }
 
   ionViewWillEnter() {
+
     if (localStorage.getItem("isaddress") != "false") {
-      this.util.startLoad();
-      this.api
-        .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-        .subscribe(
-          (res: any) => {
-            if (res.success) {
-              this.userAddress = res.data;
+
+      if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
+        this.util.startLoad();
+        this.api
+          .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+          .subscribe(
+            (res: any) => {
+              if (res.success) {
+                this.userAddress = res.data;
+                localStorage.setItem("isaddressBD", "false");
+                this.util.dismissLoader();
+              }
+            },
+            (err) => {
+              this.err = err;
               this.util.dismissLoader();
             }
-          },
-          (err) => {
-            this.err = err;
-            this.util.dismissLoader();
-          }
-        );
+          );
+
+      } else {
+        this.util.dismissLoader();
+      }
+
+
     } else {
+
       this.util.startLoad();
       this.geolocation
         .getCurrentPosition()
@@ -210,6 +221,7 @@ export class HomePage {
       cssClass: "filterModal",
       backdropDismiss: true,
     });
+
     modal.onDidDismiss().then((res) => {
       if (res["data"] != undefined) {
         let filetype;
@@ -218,6 +230,7 @@ export class HomePage {
             filetype = element.name;
           }
         });
+
         if (filetype == "Cost High to Low") {
           this.data.shop.sort((a, b) => {
             if (a.avarage_plate_price > b.avarage_plate_price) {
@@ -228,8 +241,10 @@ export class HomePage {
             }
             return 0;
           });
+
         } else if (filetype == "Top Rated" || filetype == "Most Popular") {
           this.data.shop.sort((a, b) => {
+
             if (a.rate > b.rate) {
               return -1;
             }
@@ -238,6 +253,7 @@ export class HomePage {
             }
             return 0;
           });
+
         } else if (filetype == "Cost Low to High") {
           this.data.shop.sort((a, b) => {
             if (a.avarage_plate_price < b.avarage_plate_price) {
@@ -248,6 +264,7 @@ export class HomePage {
             }
             return 0;
           });
+
         } else if (filetype == "Open Now") {
           this.currentTime = moment().format("HH:mm");
           this.data.shop = this.data.shop.filter((a) => {
@@ -260,8 +277,11 @@ export class HomePage {
               return a;
             }
           });
+
         } else {
+
           if (localStorage.getItem("isaddress") != "false") {
+
             this.api
               .getDataWithToken(
                 "getAddress/" + localStorage.getItem("isaddress")
@@ -307,7 +327,9 @@ export class HomePage {
                     .catch((error: any) => console.log(error));
                 }
               });
+
           } else {
+
             const options: NativeGeocoderOptions = {
               useLocale: true,
               maxResults: 5,
@@ -340,6 +362,7 @@ export class HomePage {
         }
       }
     });
+
     return await modal.present();
   }
 
@@ -391,6 +414,7 @@ export class HomePage {
   categoryData(id) {
     this.navCtrl.navigateForward("/category/" + id);
   }
+
   getGrocery() {
     this.api.getDataWithToken("groceryShop").subscribe(
       (res: any) => {
@@ -430,17 +454,21 @@ export class HomePage {
       }
     );
   }
+
   storeList() {
     this.navCtrl.navigateForward("store");
   }
+
   storeDetail(id) {
     this.gpi.storeID = id;
     this.navCtrl.navigateForward("/store-detail");
   }
+
   subcategory(id) {
     this.gpi.catId = id;
     this.navCtrl.navigateForward("store");
   }
+
   getCategory() {
     this.navCtrl.navigateForward("/grocery-category");
   }

@@ -1,7 +1,7 @@
 import { UtilService } from "./../../service/util.service";
 import { Camera } from "@ionic-native/camera/ngx";
 import { ApiService } from "./../../service/api.service";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { NavController, ActionSheetController } from "@ionic/angular";
 import * as moment from "moment";
 import { ActivatedRoute } from "@angular/router";
@@ -11,7 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: "./profile.page.html",
   styleUrls: ["./profile.page.scss"],
 })
-export class ProfilePage implements OnInit {
+
+export class ProfilePage implements OnInit, OnDestroy {
   public segment: number = 1;
   public subsegment: number = 1;
   userDetail: any = {};
@@ -28,7 +29,11 @@ export class ProfilePage implements OnInit {
   userLocation: any;
   isfrom: any;
   passwordData: any = {};
+  lastIsAdrress: string = localStorage.getItem("isaddress");
+  flagControlBtnOpen: boolean = false;
+
   public language: string = localStorage.getItem('app_language') ? localStorage.getItem('app_language') : 'en';
+
   constructor(
     private ntrl: NavController,
     private api: ApiService,
@@ -58,7 +63,8 @@ export class ProfilePage implements OnInit {
         }
 
         this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
-        this.data.address = localStorage.getItem("address");
+        // this.data.address = localStorage.getItem("address");
+        this.data.address = localStorage.getItem("isaddress");
 
         if (this.userDetail.enable_notification == 1) {
           this.userSetting.enable_notification = true;
@@ -89,12 +95,29 @@ export class ProfilePage implements OnInit {
 
   }
 
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+
+    if (this.lastIsAdrress !== '') {
+      // message
+      if (this.flagControlBtnOpen) {
+        this.translate.get('toasts').subscribe(async val => {
+          this.util.presentToast(val.The_selected_address_has_not_been_saved);
+        })
+      }
+      // set address last
+      localStorage.setItem('isaddress', this.lastIsAdrress);
+    }
+  }
+
   ionViewWillEnter() {
+
     if (this.changeAddressBtn) {
       this.api.getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {
           console.log(res.data);
-          
+
           if (res.success) {
             console.log(res.data);
             this.data.userAddress.soc_name = res.data.soc_name;
@@ -106,31 +129,41 @@ export class ProfilePage implements OnInit {
     }
   }
 
-  ngOnInit() { }
+  ngOnInit() {
+  }
 
   back() {
     this.ntrl.back();
   }
 
   editProfile() {
+
     if (this.segment == 3) {
+
       this.util.startLoad();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
         (res: any) => {
+
           if (res.success) {
+
             this.err = {};
             this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
             })
+
             this.util.isUpdateProfile.next(true);
+
             this.api.getDataWithToken("viewReview").subscribe((res: any) => {
+
               if (res.success) {
                 this.data = res.data;
                 this.util.dismissLoader();
+
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
                 });
+
                 this.userName = res.data.userDetail.name;
                 this.userLocation = res.data.userDetail.location;
                 this.userDetail = this.data.userDetail;
@@ -138,14 +171,13 @@ export class ProfilePage implements OnInit {
                 if (res.data.userDetail.cover_image == null) {
                   this.coverImage = false;
                 } else {
-                  this.coverImage =
-                    this.userDetail.imagePath +
-                    this.data.userDetail.cover_image;
+                  this.coverImage = this.userDetail.imagePath + this.data.userDetail.cover_image;
                 }
 
-                this.imgProfile =
-                  this.userDetail.imagePath + this.userDetail.image;
-                this.data.address = localStorage.getItem("address");
+                this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
+                // this.data.address = localStorage.getItem("address");
+                this.data.address = localStorage.getItem("isaddress");
+
                 if (this.userDetail.enable_notification == 1) {
                   this.userSetting.enable_notification = true;
                 } else {
@@ -174,7 +206,9 @@ export class ProfilePage implements OnInit {
           this.util.dismissLoader();
         }
       );
+
     } else if (this.segment == 5) {
+
       this.util.startLoad();
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
         (res: any) => {
@@ -191,7 +225,9 @@ export class ProfilePage implements OnInit {
           this.err = err.error.errors;
         }
       );
+
     } else {
+
       if (this.userSetting.enable_notification) {
         this.userSetting.enable_notification = 1;
       } else {
@@ -214,6 +250,8 @@ export class ProfilePage implements OnInit {
         .postDataWithToken("saveSetting", this.userSetting)
         .subscribe((res: any) => {
           if (res.success) {
+            this.lastIsAdrress = '';
+            localStorage.setItem("isaddressBD", "true");
             this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
@@ -225,6 +263,7 @@ export class ProfilePage implements OnInit {
 
   changeAddress() {
     this.changeAddressBtn = true;
+    this.flagControlBtnOpen = true;
     this.ntrl.navigateForward("/select-address");
   }
 
@@ -264,6 +303,7 @@ export class ProfilePage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true,
     };
+
     this.camera.getPicture(cameraOptions).then(
       (fileUri) => {
         this.imgProfile = "data:image/jpg;base64," + fileUri;
@@ -285,11 +325,13 @@ export class ProfilePage implements OnInit {
   }
 
   getCamera() {
+
     const cameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true,
     };
+
     this.camera.getPicture(cameraOptions).then(
       (fileUri) => {
         this.imgProfile = "data:image/jpg;base64," + fileUri;
@@ -298,6 +340,7 @@ export class ProfilePage implements OnInit {
       },
       (err) => { }
     );
+
   }
 
   editCoverimg() {
@@ -307,6 +350,7 @@ export class ProfilePage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true,
     };
+
     this.camera.getPicture(cameraOptions).then(
       (fileUri) => {
         this.coverImage = "data:image/jpg;base64," + fileUri;
@@ -332,13 +376,16 @@ export class ProfilePage implements OnInit {
       encodingType: this.camera.EncodingType.JPEG,
       correctOrientation: true,
     };
+
     this.camera.getPicture(cameraOptions).then(
       (fileUri) => {
         this.imageUri = fileUri;
         this.changeImage.image = this.imageUri;
+
         this.api
           .postDataWithToken("addPhoto", this.changeImage)
           .subscribe((res: any) => {
+
             if (res.success) {
               this.api.getDataWithToken("viewReview").subscribe((res: any) => {
                 if (res.success) {
@@ -348,12 +395,11 @@ export class ProfilePage implements OnInit {
                   });
 
                   this.userDetail = this.data.userDetail;
-                  this.coverImage =
-                    this.userDetail.imagePath +
-                    this.data.userDetail.cover_image;
-                  this.imgProfile =
-                    this.userDetail.imagePath + this.userDetail.image;
-                  this.data.address = localStorage.getItem("address");
+                  this.coverImage = this.userDetail.imagePath + this.data.userDetail.cover_image;
+                  this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
+                  // this.data.address = localStorage.getItem("address");
+                  this.data.address = localStorage.getItem("isaddress");
+
                   if (this.userDetail.enable_notification == 1) {
                     this.userSetting.enable_notification = true;
                   } else {

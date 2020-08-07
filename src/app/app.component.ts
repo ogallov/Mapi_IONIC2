@@ -94,11 +94,11 @@ export class AppComponent {
         });
       }
     });
-    // if (localStorage.getItem("token")) {
-    //   this.ntrl.navigateRoot("/home");
-    // } else {
-    //   this.ntrl.navigateRoot("login");
-    // }
+    if (localStorage.getItem("token")) {
+      this.ntrl.navigateRoot("/home");
+    } else {
+      this.ntrl.navigateRoot("login");
+    }
   }
 
   initializeApp() {
@@ -107,12 +107,14 @@ export class AppComponent {
         this.splashScreen.hide();
         this.api.getData("keySetting").subscribe(
           (res: any) => {
+            console.log(res);
             if (res.success) {
               this.api.currency = res.data.currency_symbol;
               this.api.currencyType = res.data.currency;
               this.api.request_duration = res.data.request_duration;
 
               if (this.platform.is("cordova")) {
+                
                 this.oneSignal.startInit(
                   res.data.onesignal_app_id,
                   res.data.onesignal_project_number
@@ -138,6 +140,9 @@ export class AppComponent {
     menuController.close();
     localStorage.removeItem("token");
     localStorage.removeItem("isaddress");
+    localStorage.removeItem("isaddressBD");
+    localStorage.removeItem("payment_type");
+    localStorage.removeItem("store-detail");
     this.ntrl.navigateRoot(["login"]);
   }
 
