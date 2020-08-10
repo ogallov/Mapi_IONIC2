@@ -68,27 +68,23 @@ export class CartPage implements OnInit {
     if (this.api.promocode.id) {
       this.countDiscount();
     }
+
     if (this.chaneAddress) {
       this.util.startLoad();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {
+          console.log(res);
           if (res.success) {
             this.data.Deafult_address = res.data;
           }
         });
     }
+
   }
 
   initMap() {
-    this.FindAddress =
-      this.data.Deafult_address.soc_name +
-      " " +
-      this.data.Deafult_address.street +
-      " " +
-      this.data.Deafult_address.city +
-      " " +
-      this.data.Deafult_address.zipcode;
+    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city + " " + this.data.Deafult_address.zipcode;
 
     this.geocoder.geocode({ address: this.FindAddress }, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {
@@ -260,15 +256,18 @@ export class CartPage implements OnInit {
             results[0].geometry.location.lat(),
             results[0].geometry.location.lng()
           ),
+
           zoom: 15,
           streetViewControl: false,
           disableDefaultUI: true,
           mapTypeId: google.maps.MapTypeId.ROADMAP,
         };
+
         this.map = new google.maps.Map(
           this.mapElement.nativeElement,
           mapoption
         );
+
         this.map.mapTypes.set("styled_map", styledMapType);
         this.map.setMapTypeId("styled_map");
         var icons = {
@@ -278,6 +277,7 @@ export class CartPage implements OnInit {
             new google.maps.Point(0, 0),
             new google.maps.Point(0, 10)
           ),
+
           end: new google.maps.MarkerImage(
             "./assets/image/map.png",
             new google.maps.Size(40, 33),
@@ -285,17 +285,17 @@ export class CartPage implements OnInit {
             new google.maps.Point(0, 10)
           ),
         };
-        let a =
-          results[0].geometry.location.lat() +
-          "," +
-          results[0].geometry.location.lng();
+
+        let a = results[0].geometry.location.lat() + "," + results[0].geometry.location.lng();
         let b = this.data.latitude + "," + this.data.longitude;
         this.dirRenderer.setMap(this.map);
+
         var request = {
           origin: a,
           destination: b,
           travelMode: google.maps.TravelMode.DRIVING,
         };
+
         this.dirService.route(request, (result, status) => {
           if (status == google.maps.DirectionsStatus.OK) {
             var leg = result.routes[0].legs[0];
@@ -333,17 +333,16 @@ export class CartPage implements OnInit {
         this.data.longitude,
         "k"
       );
+
       if (this.radius <= this.data.radius) {
-        // this.ntrl.navigateForward(["payment-method"]);
-        
-        // new
-        this.paymentMethod();
+        this.ntrl.navigateForward(["payment-method"]);
 
       } else {
         this.translate.get("toasts").subscribe(async (val) => {
           this.util.presentToast(val.order_is_out_range);
         });
       }
+
     } else {
       this.api.promocode = {};
       this.ntrl.back();
@@ -358,25 +357,20 @@ export class CartPage implements OnInit {
     item.qty++;
     this.totalItem += item.price;
     item.total = item.price * item.qty;
+
     if (this.api.promocode.discount) {
       this.countDiscount();
     }
-    this.data.toPay =
-      this.totalItem +
-      this.data.rastaurant_charge +
-      this.data.delivery_charge -
-      this.data.discount;
+
+    this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
   }
 
   minusQty(item) {
     if (item.qty != 1) {
       item.qty--;
       this.totalItem -= item.price;
-      this.data.toPay =
-        this.totalItem +
-        this.data.rastaurant_charge +
-        this.data.delivery_charge -
-        this.data.discount;
+      this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
+
     } else {
       let equalIndex;
       let equalType;
@@ -393,19 +387,13 @@ export class CartPage implements OnInit {
           this.data.cartData.splice(equalIndex, 1);
           this.totalItem -= item.price;
           item.total = item.qty * item.price;
-          this.data.toPay =
-            this.totalItem +
-            this.data.rastaurant_charge +
-            this.data.delivery_charge -
-            this.data.discount;
+          this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
+
         } else {
           this.data.cartData[equalIndex] = item;
           item.total = item.qty * item.price;
-          this.data.toPay =
-            this.totalItem +
-            this.data.rastaurant_charge +
-            this.data.delivery_charge -
-            this.data.discount;
+          this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
+
         }
       }
     }
@@ -426,6 +414,7 @@ export class CartPage implements OnInit {
   }
 
   applyCoupon() {
+
     if (this.data.cartData.length) {
       this.ntrl.navigateForward("/promocode/" + this.api.detailId);
     } else {
@@ -438,20 +427,14 @@ export class CartPage implements OnInit {
     if (this.api.promocode.type == "amount") {
       this.data.discount = this.api.promocode.discount;
       this.data.saving = this.data.discount;
-      this.data.toPay =
-        this.totalItem +
-        this.data.rastaurant_charge +
-        this.data.delivery_charge -
-        this.data.discount;
+      this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
+
     } else {
       this.data.discount = this.totalItem * this.api.promocode.discount;
       this.data.discount = this.data.discount / 100;
       this.data.saving = this.data.discount;
-      this.data.toPay =
-        this.totalItem +
-        this.data.rastaurant_charge +
-        this.data.delivery_charge -
-        this.data.discount;
+      this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
+
     }
   }
 
@@ -468,18 +451,20 @@ export class CartPage implements OnInit {
       let radlat2 = (Math.PI * lat2) / 180;
       let theta = lon1 - lon2;
       let radtheta = (Math.PI * theta) / 180;
-      let dist =
-        Math.sin(radlat1) * Math.sin(radlat2) +
-        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+
       if (dist > 1) {
         dist = 1;
       }
+
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
+
       if (unit == "K") {
         dist = dist * 1.609344;
       }
+
       if (unit == "N") {
         dist = dist * 0.8684;
       }
@@ -487,93 +472,4 @@ export class CartPage implements OnInit {
     }
   }
 
-  // <======================================  new  ==============================================>
-
-  paymentMethod() {
-
-    this.data.items = [];
-    this.data.package_id = [];
-    this.data.itemData = [];
-    this.data.shopName = this.api.cartData.name;
-    this.data.shop_id = this.api.cartData.id;
-    this.data.payment = this.api.cartData.toPay;
-    this.data.discount = this.api.cartData.discount;
-    this.data.shop_charge = this.api.cartData.rastaurant_charge;
-    this.data.delivery_charge = this.api.cartData.delivery_charge;
-    this.data.coupon_price = this.api.cartData.discount;
-    this.data.coupon_id = this.api.promocode.id;
-
-    if (typeof this.data.items == "string") {
-      this.data.items = [];
-      this.data.package_id = [];
-    }
-    this.api.cartData.cartData.forEach(element => {
-      if (element.type == "combo") {
-        this.data.package_id.push(element.id);
-        let pusher: any = {
-          item: "",
-          price: element.total,
-          quantity: element.qty,
-          package_id: element.id
-        };
-        this.data.itemData.push(pusher);
-      } else {
-        this.data.items.push(element.id);
-        let pusher: any = {
-          item: element.id,
-          price: element.total,
-          quantity: element.qty,
-          package_id: ""
-        };
-        this.data.itemData.push(pusher);
-      }
-    });
-    this.data.items = this.data.items.join();
-    this.data.package_id = this.data.package_id.join();
-
-    // if (this.online) {
-    //   localStorage.setItem("payment_type", "online");
-    //   if (this.razorPayment) {
-    //     this.payWithRazor();
-    //   } else {
-    //     if (this.currencyType == "INR") {
-    //       this.translate.get('toasts').subscribe(async val => {
-    //         this.util.presentToast(val.payment_not_possible);
-    //       })
-    //     } else {
-    //       this.paypalPay();
-    //     }
-    //   }
-    // } else {
-    localStorage.setItem("payment_type", "cash");
-
-    this.data.payment_status = 0;
-    this.data.payment_type = "LOCAL";
-
-    this.util.startLoad();
-    this.api.postDataWithToken("createOrder", this.data).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.api.promocode = {};
-          this.util.dismissLoader();
-          this.api.checkOrderStatus = res.data.id;
-          this.presentModal();
-        }
-      },
-      err => {
-        this.err = err.error.errors;
-        this.util.dismissLoader();
-      }
-    );
-    // }
-  }
-
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: SuccessModalPage,
-      backdropDismiss: false,
-      cssClass: "SuccessModal"
-    });
-    return await modal.present();
-  }
 }

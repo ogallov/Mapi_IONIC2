@@ -24,12 +24,15 @@ export class PaymentMethodPage implements OnInit {
     items: [],
     package_id: []
   };
-  online = 1;
-  cash = 0;
+  // online = 1;
+  online = 0;
+  // cash = 0;
+  cash = 1;
   paypalProductionkey: any;
   paypalSanboxkey: any;
   paypalPayment = 0;
-  razorPayment = 1;
+  // razorPayment = 1;
+  razorPayment = 0;
   currencyType: any;
   constructor(
     private ntrl: NavController,
@@ -41,17 +44,18 @@ export class PaymentMethodPage implements OnInit {
   ) {
     this.currencyType = this.api.currencyType;
     this.util.startLoad();
-    this.api.getDataWithToken("keySetting").subscribe((res: any) => {
-      if (res.success) {
-        this.razor_key = res.data.razorPublishKey;
-        this.paypalProductionkey = res.data.paypalProduction;
-        this.paypalSanboxkey = res.data.paypalSendbox;
-        this.util.dismissLoader();
-      }
-    });
+    // this.api.getDataWithToken("keySetting").subscribe((res: any) => {
+    //   if (res.success) {
+    //     this.razor_key = res.data.razorPublishKey;
+    //     this.paypalProductionkey = res.data.paypalProduction;
+    //     this.paypalSanboxkey = res.data.paypalSendbox;
+    //     this.util.dismissLoader();
+    //   }
+    // });
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
   paymentMethod() {
     this.data.items = [];
     this.data.package_id = [];
@@ -69,9 +73,11 @@ export class PaymentMethodPage implements OnInit {
       this.data.items = [];
       this.data.package_id = [];
     }
+
     this.api.cartData.cartData.forEach(element => {
       if (element.type == "combo") {
         this.data.package_id.push(element.id);
+        
         let pusher: any = {
           item: "",
           price: element.total,
@@ -79,6 +85,7 @@ export class PaymentMethodPage implements OnInit {
           package_id: element.id
         };
         this.data.itemData.push(pusher);
+
       } else {
         this.data.items.push(element.id);
         let pusher: any = {
@@ -90,6 +97,7 @@ export class PaymentMethodPage implements OnInit {
         this.data.itemData.push(pusher);
       }
     });
+
     this.data.items = this.data.items.join();
     this.data.package_id = this.data.package_id.join();
 
@@ -99,13 +107,14 @@ export class PaymentMethodPage implements OnInit {
         this.payWithRazor();
       } else {
         if (this.currencyType == "INR") {
-          this.translate.get('toasts').subscribe(async val => {  
+          this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.payment_not_possible);
           })
         } else {
           this.paypalPay();
         }
       }
+
     } else {
       localStorage.setItem("payment_type", "cash");
 
@@ -113,6 +122,7 @@ export class PaymentMethodPage implements OnInit {
       this.data.payment_type = "LOCAL";
 
       this.util.startLoad();
+
       this.api.postDataWithToken("createOrder", this.data).subscribe(
         (res: any) => {
           if (res.success) {
@@ -122,6 +132,7 @@ export class PaymentMethodPage implements OnInit {
             this.presentModal();
           }
         },
+        
         err => {
           this.err = err.error.errors;
           this.util.dismissLoader();
@@ -129,9 +140,11 @@ export class PaymentMethodPage implements OnInit {
       );
     }
   }
+
   back() {
     this.ntrl.back();
   }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: SuccessModalPage,
@@ -157,7 +170,7 @@ export class PaymentMethodPage implements OnInit {
         color: "#94b92d"
       },
       modal: {
-        ondismiss: function() {
+        ondismiss: function () {
           alert("dismissed");
         }
       }
@@ -185,7 +198,7 @@ export class PaymentMethodPage implements OnInit {
       );
     };
 
-    var cancelCallback = function(error) {
+    var cancelCallback = function (error) {
       alert(error.description + " (Error " + error.code + ")");
     };
 

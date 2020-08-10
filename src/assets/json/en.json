@@ -25,7 +25,8 @@
   },
 
   "cancel_order_page": {
-    "title": "Why do you cancel your order?"
+    "title": "Why do you cancel your order?",
+    "Are_you_sure_you_want_to_cancel_your_order": "Are you sure you want to cancel your order?"
   },
 
   "cart_page": {
@@ -360,7 +361,7 @@
     "profile_set_success": "successfully save your profile",
     "cart_empty": "The cart is empty",
     "select_default_address": "Select Default Address",
-    "The_selected_address_has_not_been_saved": "The selected address has not been saved"
+    "The_selected_address_has_not_been_saved": "The selected address was not saved"
   },
 
   "store_detail": {
@@ -374,6 +375,7 @@
     "add_in_cart": "Add In Cart",
     "searchPlace": "Search for Restaurant and dishes"
   },
+
   "grocery_cart": {
     "cart": "cart",
     "delivery": "delivery",
@@ -390,6 +392,7 @@
     "select_payment_method": "select payment method",
     "apply_coupon": "APPLY COUPON"
   },
+
   "pay_method": {
     "payment_method": "Payment Method",
     "cash": "CASH",
@@ -398,11 +401,13 @@
     "PayPal": "PayPal",
     "pay": "pay"
   },
+
   "grocery_success": {
     "CONGRATULATIONS": "CONGRATULATIONS",
     "msg": " Your order is send to Store ",
     "ty": "  Thank You"
   },
+
   "grocery_status": {
     "order_status": "order status",
     "view_order": "VIEW ORDER",
@@ -412,6 +417,7 @@
     "place": "Order is near your place",
     "delivered": "Delivered"
   },
+
   "grocer_order_detail": {
     "order_detail": "order detail",
     "order_summery": "Order Summery",
@@ -427,6 +433,7 @@
     "review": "Order Review",
     "Submit": "Submit"
   },
+  
   "grocery_history": {
     "order_history": "order history",
     "current": "Current Order",

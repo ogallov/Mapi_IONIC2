@@ -92,25 +92,25 @@
         <h3 class="combo">
             {{"grocery_cart.bill_details" | translate }}
         </h3>
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="totalItem > 0">
             {{"grocery_cart.total_payable" | translate }}
             <span class="ion-float-right">{{cuurecy}}{{totalItem}}</span>
         </p>
 
-        <p class="total">
+        <p class="total" *ngIf="data?.discount > 0">
             {{"grocery_cart.total_discount" | translate }}<span
                 class="ion-float-right">-{{cuurecy}}{{data?.discount || 0}}</span>
         </p>
 
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="store?.delivery_charge > 0">
             {{"grocery_cart.delivery_fee" | translate }}<span
                 class="ion-float-right">{{cuurecy}}{{store?.delivery_charge}}</span>
         </p>
 
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="data?.toPay > 0">
             {{"grocery_cart.to_pay" | translate }}<span class="ion-float-right">{{cuurecy}}{{data?.toPay}}</span>
         </p>
-        <div class="saved">
+        <div class="saved" *ngIf="data?.discount > 0">
             <span>{{"grocery_cart.you_have_saved" | translate }} {{cuurecy}}{{data?.discount || 0}}
                 {{"grocery_cart.on_the_bill" | translate }}</span>
         </div>
@@ -147,7 +147,6 @@
 </ion-content>
 <ion-footer>
     <ion-button class="otp_btn" (click)="paymentMethod()">
-        {{"pay_method_page.continue_btn" | translate}}
-        <!-- {{"grocery_cart.select_payment_method" | translate }} -->
+        {{"grocery_cart.select_payment_method" | translate }}
     </ion-button>
 </ion-footer>

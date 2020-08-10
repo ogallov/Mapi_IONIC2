@@ -42,9 +42,6 @@ export class PayMethodPage implements OnInit {
         this.util.dismissLoader();
       }
     });
-
-    // payment method cash
-    this.paymentMethod();
   }
 
   ngOnInit() {}

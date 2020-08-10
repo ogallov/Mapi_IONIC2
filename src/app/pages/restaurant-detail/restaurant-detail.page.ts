@@ -41,6 +41,7 @@ export class RestaurantDetailPage implements OnInit {
       .subscribe((res: any) => {
         if (res.success) {
           this.data = res.data;
+          console.log(this.data);
 
           this.data.bestSeller.forEach(element => {
             element.qty = 0;
@@ -85,7 +86,10 @@ export class RestaurantDetailPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+
+  }
+
   logScrolling(ev) {
     if (ev.detail.scrollTop >= 150) {
       this.state = 2;
@@ -113,7 +117,7 @@ export class RestaurantDetailPage implements OnInit {
         this.ntrl.navigateForward(["cart"]);
       }
     } else {
-      this.translate.get('toasts').subscribe(async val => {  
+      this.translate.get('toasts').subscribe(async val => {
         this.util.presentToast(val.cart_empty);
       })
     }

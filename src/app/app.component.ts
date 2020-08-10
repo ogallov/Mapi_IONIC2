@@ -65,6 +65,7 @@ export class AppComponent {
     private router: Router,
     private translate: TranslateService
   ) {
+    // blocked console.log
     console.log = function () {};
 
     document.documentElement.dir =
@@ -72,7 +73,7 @@ export class AppComponent {
     this.translate.setDefaultLang(
       localStorage.getItem("app_language")
         ? localStorage.getItem("app_language")
-        : "en"
+        : "es"
     );
 
     this.api.getData("keySetting").subscribe((res: any) => {
@@ -102,12 +103,12 @@ export class AppComponent {
   }
 
   initializeApp() {
+    
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();
         this.api.getData("keySetting").subscribe(
           (res: any) => {
-            console.log(res);
             if (res.success) {
               this.api.currency = res.data.currency_symbol;
               this.api.currencyType = res.data.currency;

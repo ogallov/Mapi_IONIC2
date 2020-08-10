@@ -18,6 +18,8 @@
             <p class="adress">{{data?.address}}</p>
         </ion-label>
     </ion-item>
+
+    <!-- init information product -->
     <ion-item lines="none" class="combo_item" *ngFor="let item of data?.cartData">
         <h3 class="combo">
             <span class="item_span">{{item?.name}}</span>
@@ -35,13 +37,20 @@
             </ion-button>
         </div>
     </ion-item>
+    <!-- end information product -->
+
+    <!-- init apply couon -->
     <ion-item lines="none" (click)="applyCoupon()">
         <h3 slot="start" class="combo">
             <ion-icon src="assets/icon-image/persentage.svg"></ion-icon> {{"cart_page.apply_coupon" | translate}}
         </h3>
         <ion-icon class="direction" name="ios-arrow-forward" slot="end"></ion-icon>
     </ion-item>
+    <!-- end apply couon -->
+
     <div class="devider"></div>
+
+    <!-- init detail buy -->
     <div class="bill_detail ion-margin-horizontal">
         <h3 class="combo">
             {{"cart_page.bill_details" | translate}}
@@ -51,23 +60,25 @@
             <span class="ion-float-right">{{currency}}{{totalItem}}</span>
         </p>
 
-        <p class="total">
-            {{"cart_page.total_discount" | translate}}<span
-                class="ion-float-right">-{{currency}}{{data?.discount}}</span>
+        <p class="total" *ngIf="data?.discount !== 0">
+            {{"cart_page.total_discount" | translate}}
+            <span class="ion-float-right">
+                -{{currency}}{{data?.discount}}
+            </span>
         </p>
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="data?.rastaurant_charge !== 0">
             {{"cart_page.restaurant_charges" | translate}}<span
                 class="ion-float-right">{{currency}}{{data?.rastaurant_charge}}</span>
         </p>
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="data?.delivery_charge !== 0">
             {{"cart_page.delivery_fee" | translate}}<span
                 class="ion-float-right">{{currency}}{{data?.delivery_charge}}</span>
         </p>
-        <p class="bill_item cancel_fee">
+        <p class="bill_item cancel_fee" *ngIf="data?.cancle_charge !== 0">
             {{"cart_page.cancellation_fee" | translate}}<span
                 class="ion-float-right">{{currency}}{{data?.cancle_charge}}</span>
         </p>
-        <p class="bill_item">
+        <p class="bill_item" *ngIf="data?.toPay !== 0">
             {{"cart_page.to_pay" | translate}}<span class="ion-float-right">{{currency}}{{data?.toPay}}</span>
         </p>
         <div class="saved">
@@ -75,7 +86,12 @@
                 {{"cart_page.saved_text.txt2" | translate}}</span>
         </div>
     </div>
+
+    <!-- end detail buy -->
+
     <div class="devider"></div>
+
+    <!-- init information address -->
     <div class="last_div ion-margin-horizontal">
         <h3 class="combo">{{"cart_page.select_address" | translate}}</h3>
 
@@ -96,10 +112,10 @@
         </div>
         <div #map id="map"></div>
     </div>
+    <!-- end information address -->
 </ion-content>
 <ion-footer>
     <ion-button class="otp_btn" (click)="payment_method()">
-        {{"pay_method_page.continue_btn" | translate}}
-        <!-- {{"cart_page.select_pay_method" | translate}} -->
+        {{"cart_page.select_pay_method" | translate}}
     </ion-button>
 </ion-footer>

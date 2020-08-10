@@ -128,7 +128,9 @@ export class HomePage {
 
     this.util.startLoad();
     this.api.getDataWithToken("home").subscribe(
+      
       (res: any) => {
+        console.log(res);
         if (res.success) {
           this.data = res.data;
           this.currency = this.api.currency;
@@ -161,6 +163,8 @@ export class HomePage {
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
             (res: any) => {
+              console.log(res);
+              
               if (res.success) {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");

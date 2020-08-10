@@ -13,13 +13,13 @@
 
 <ion-content>
     <div class="card_div ion-margin-horizontal">
-        <div class="online" [ngStyle]="{'background-color':online===1? 'var(--ion-color-green)'
+        <!-- <div class="online" [ngStyle]="{'background-color':online===1? 'var(--ion-color-green)'
     : 'var(--ion-color-white)' }" (click)="online=1 ;cash=0">
             <div class="img_div">
                 <img [src]="online==1 ? ' assets/image/online-pay.png' : 'assets/image/credit-cards.png'" />
                 <h3 [ngClass]="online==1 ? 'tittle' : 'cash_heading' ">{{"pay_method_page.online_pay" | translate}}</h3>
             </div>
-        </div>
+        </div> -->
         <div class="cash" [ngStyle]="{'background-color':cash===1? 'var(--ion-color-green)': 'var(--ion-color-white)' }" (click)="online=0;cash=1">
             <div class="img_div">
                 <img [src]="cash==1 ? 'assets/image/cash.png' : 'assets/image/cash-payment.png'" />
@@ -27,7 +27,7 @@
             </div>
         </div>
     </div>
-    <div class="card_div ion-margin-horizontal" *ngIf="online==1">
+    <!-- <div class="card_div ion-margin-horizontal" *ngIf="online==1">
         <div class="online" (click)="razorPayment=1 ; paypalPayment=0;" [ngStyle]="{'background-color':razorPayment===1? 'var(--ion-color-green)': 'var(--ion-color-white)' }">
             <div class="img_div">
                 <img src="./assets/image/Razorpay_logo.svg" class="pay_img" />
@@ -40,7 +40,7 @@
                 <h3 [ngClass]="paypalPayment==1 ? 'tittle' : 'cash_heading' ">{{"pay_method_page.pay_pal" | translate}}</h3>
             </div>
         </div>
-    </div>
+    </div> -->
     <div>
 
     </div>

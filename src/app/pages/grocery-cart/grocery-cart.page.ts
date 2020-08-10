@@ -86,7 +86,7 @@ export class GroceryCartPage implements OnInit {
             if (this.store.delivery_type == "Shop") {
               this.event = "pickup";
               this.store.delivery_charge = 0;
-              
+
             } else if (this.store.delivery_type == "Home") {
               this.event = "delivery";
             } else {
@@ -175,10 +175,7 @@ export class GroceryCartPage implements OnInit {
           this.data.delivery_charge = this.delivery_charge;
           this.gpi.info = this.data;
 
-          // this.nav.navigateForward("/pay-method");
-
-          // new
-          this.paymentMethodPayMethod();
+          this.nav.navigateForward("/pay-method");
 
         } else {
           this.gpi.cartData = this.data;
@@ -189,10 +186,7 @@ export class GroceryCartPage implements OnInit {
           this.data.delivery_charge = this.delivery_charge;
           this.gpi.info = this.data;
 
-          // this.nav.navigateForward("/pay-method");
-          // new
-          this.paymentMethodPayMethod();
-
+          this.nav.navigateForward("/pay-method");
         }
       } else {
         this.gpi.cartData = this.data;
@@ -201,10 +195,7 @@ export class GroceryCartPage implements OnInit {
         this.delivery_charge = this.store.delivery_charge;
         this.data.delivery_charge = this.delivery_charge;
         this.gpi.info = this.data;
-        // this.nav.navigateForward("/pay-method");
-
-        // new
-        this.paymentMethodPayMethod();
+        this.nav.navigateForward("/pay-method");
       }
     } else {
       this.gpi.promocode = {};
@@ -265,6 +256,7 @@ export class GroceryCartPage implements OnInit {
   }
 
   minusQty(item) {
+
     let equalIndex;
     if (item.qty != 1) {
       item.qty--;
@@ -277,14 +269,18 @@ export class GroceryCartPage implements OnInit {
       item.total = item.qty * item.sell_price;
 
       localStorage.setItem("store-detail", JSON.stringify(this.cartData));
+
     } else {
+
       let equalIndex;
       this.cartData.forEach((element, ind) => {
         if (element.id == item.id) {
           equalIndex = ind;
         }
       });
+
       if (equalIndex >= 0) {
+
         if (item.qty == 0) {
 
           item.qty = 0;
@@ -299,14 +295,13 @@ export class GroceryCartPage implements OnInit {
           localStorage.setItem("store-detail", JSON.stringify(this.cartData));
 
         } else {
+
           this.cartData[equalIndex] = item;
           item.total = item.qty * item.sell_price;
           item.total = item.qty * item.sell_price;
-          this.toPay =
-            this.totalItem +
-            (this.store.delivery_charge || 0) -
-            (this.data.discount || 0);
+          this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
           this.data.toPay = this.toPay;
+          
         }
       }
     }
@@ -319,6 +314,7 @@ export class GroceryCartPage implements OnInit {
     this.chaneAddress = true;
     this.nav.navigateForward("/select-address");
   }
+
   distance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 == lat2 && lon1 == lon2) {
       return 0;
@@ -371,6 +367,7 @@ export class GroceryCartPage implements OnInit {
       }
     }
   }
+
   mapData() {
     this.FindAddress =
       this.data.Deafult_address.soc_name +
@@ -403,69 +400,5 @@ export class GroceryCartPage implements OnInit {
         };
       })
       .catch((error: any) => console.log(error));
-  }
-
-  // <================================ new ======================>
-
-  paymentMethodPayMethod() {
-    /* 
-    return */
-    let rdata: any = {};
-    rdata.items = [];
-    rdata.itemData = [];
-    rdata.shop_id = this.gpi.storeID;
-    rdata.payment = this.gpi.info.toPay;
-    rdata.discount = this.gpi.info.discount;
-    rdata.delivery_charge = this.gpi.info.delivery_charge;
-    rdata.delivery_type = this.gpi.info.delivery_type;
-
-    if (this.gpi.promocode == undefined) {
-    } else {
-      rdata.coupon_id = this.gpi.promocode.id;
-    }
-
-    rdata.coupon_price = this.gpi.info.discount;
-
-    if (typeof this.data.items == "string") {
-      rdata.items = [];
-    }
-
-    this.gpi.cartData.forEach((element) => {
-      rdata.items.push(element.id);
-      let pusher: any = {
-        item_id: element.id,
-        price: element.total * element.qty,
-        quantity: element.qty,
-      };
-      rdata.itemData.push(pusher);
-    });
-    rdata.items = rdata.items.join();
-
-    rdata.payment_status = 0;
-    rdata.payment_type = this.payment_type;
-    this.util.startLoad();
-    this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-      (res: any) => {
-        if (res.success) {
-          this.util.dismissLoader();
-          this.gpi.promocode = {};
-          this.gpi.orderId = res.data.id;
-          this.presentModal();
-        }
-      },
-      (err) => {
-        this.err = err.error.errors;
-        this.util.dismissLoader();
-      }
-    );
-  }
-
-  async presentModal() {
-    const modal = await this.modalController.create({
-      component: GrocerySuccessPage,
-      backdropDismiss: false,
-      cssClass: "SuccessModal",
-    });
-    return await modal.present();
   }
 }

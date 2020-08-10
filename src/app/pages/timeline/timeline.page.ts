@@ -420,18 +420,13 @@ export class TimelinePage {
         .subscribe(
           (res: any) => {
             if (res.success) {
-              this.userAddress =
-                res.data.soc_name +
-                " " +
-                res.data.street +
-                " " +
-                res.data.city +
-                " " +
-                res.data.zipcode;
+              this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city + " " + res.data.zipcode;
+              
               this.geocoder.geocode(
                 { address: this.userAddress },
                 (results, status) => {
                   if (status == google.maps.GeocoderStatus.OK) {
+                    
                     this.destination = {
                       lat: results[0].geometry.location.lat(),
                       lng: results[0].geometry.location.lng(),

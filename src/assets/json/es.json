@@ -25,7 +25,8 @@
   },
 
   "cancel_order_page": {
-    "title": "Por qué desea cancelar su pedido?"
+    "title": "Por qué desea cancelar su pedido?",
+    "Are_you_sure_you_want_to_cancel_your_order": "¿Esta seguro que desea cancelar su pedido?"
   },
 
   "cart_page": {
@@ -46,11 +47,13 @@
     "change_address_btn": "Cambiar dirección",
     "select_pay_method": "Como desea pagar"
   },
+
   "category_page": {
     "title": "Restaurante Lista",
     "min": "min",
     "for_two": "para 2"
   },
+
   "filter_page": {
     "title": "FILTRAR",
     "apply_btn": "Aplicar filtro",
@@ -61,17 +64,20 @@
     "Cost High to Low": "Precio mas alto",
     "Cost Low to High": "Precio más bajo"
   },
+
   "forgot_password_page": {
     "title": "Olvido su contraseña",
     "text": "Ingrese su correo electrónico y le enviaremos instrucciones sobre cómo restablecerlo",
     "send_btn": "Enviar",
     "email_placeholder": "Correo electrónico"
   },
+
   "otp_page": {
     "enter_otp_text": "Ingrese el código enviado",
     "resend_btn": "Reenviar?",
     "confirm_btn": "confirmar"
   },
+
   "home_page": {
     "restaurant": "RESTAURANTES",
     "filter": "FILTRAR",
@@ -92,15 +98,18 @@
     "view_more": "Ver má",
     "Nearest Me": "Cerca"
   },
+
   "invite_Friends_page": {
     "title": "Invite a sus  amigos",
     "text": "Cuando su amigo instale la aplicación con su código de referencia y realice un pedido completo, ambos recibirán un pedido gratis",
     "referral_code": "Código de referido",
     "invite_btn": "Invitar amigos"
   },
+
   "item_review_page": {
     "title": "Opiniones"
   },
+
   "login_page": {
     "title": "INICIAR SESIÓN",
     "placeholder": {
@@ -113,6 +122,7 @@
     "new_user_txt": "Eres nuevo?",
     "sign_up_btn": "Registrese"
   },
+
   "register_page": {
     "title": "REGISTRO",
     "placeholder": {
@@ -129,6 +139,7 @@
   "notification_page": {
     "title": "Notificacion"
   },
+
   "order_detail_page": {
     "title": "detalle del pedido",
     "order_summary": "Resumen del pedido",
@@ -148,6 +159,7 @@
     "submit": "Enviar",
     "Item Review": "Opinión del producto"
   },
+
   "order_history_page": {
     "title": "Historial de pedidos",
     "current_order": "Pedido actual",
@@ -160,6 +172,7 @@
     "past_order": "Pedidos anteriores",
     "no_data": "Sin datos"
   },
+
   "pay_method_page": {
     "title": "Metodo de pago",
     "online_pay": "PAGO EN LINEA",
@@ -168,6 +181,7 @@
     "pay_pal": "PayPal",
     "continue_btn": "continuar"
   },
+
   "profile_page": {
     "edit": "editar",
     "segment": {
@@ -199,10 +213,12 @@
     "change": "Cambiar",
     "save_btn": "Guardar"
   },
+
   "promo_code_page": {
     "title": "Código de promo",
     "apply_btn": "Aplicar"
   },
+
   "restaurant_detail_page": {
     "review": "Opiniones",
     "open_now": "Abierto Ahora",
@@ -224,6 +240,7 @@
     "view_cart": "VER CARRITO",
     "item": "Producto"
   },
+
   "review_page": {
     "review": "Opiniones",
     "open_now": "Abierto",
@@ -239,17 +256,20 @@
     "no": "No",
     "yes": "Si"
   },
+
   "select_address_page": {
     "title": "Escoger direccion",
     "edit": "Editar",
     "delete": "Borrar",
     "set_address": "Establecer direccion"
   },
+
   "success_modal": {
     "congratulations": "FELICIDADES",
     "text": "Su pedido fue enviado al restaurante",
     "thank_you": "Gracias por su pedido"
   },
+
   "timeline_page": {
     "title": "ESTADO PEDIDO",
     "text": "Su comida está siendo preparada y espera al mapirider",
@@ -258,6 +278,7 @@
       "txt1": "Mapirider ",
       "txt2": "en camino su(s) pedido(s) será entregado lo antes posible"
     },
+
     "view_order": "VER PEDIDO",
     "status": {
       "order_confirm": "Pedido confirmado",
@@ -269,6 +290,7 @@
     },
     "cancel_order": "cancelar pedido"
   },
+
   "verify_page": {
     "text": {
       "txt1": "Le hemos enviado un SMS con un código.",
@@ -276,6 +298,7 @@
     },
     "confirm_btn": "Confirmar"
   },
+
   "slider": {
     "slide1": {
       "slide_name": {
@@ -284,6 +307,7 @@
       },
       "slide_info": "Hacemos que sea fácil encontrar su comida favorita, solo ingrese la dirección, escoja y pida"
     },
+
     "slide2": {
       "slide_name": {
         "txt1": "El restaurante en su casa",
@@ -291,6 +315,7 @@
       },
       "slide_info": "Brindamos servicio puerta a puerta, a tiempo con la mejor comida."
     },
+
     "slide3": {
       "slide_name": {
         "txt1": "Recoja su pedido",
@@ -300,6 +325,7 @@
     },
     "skip": "Avanzar"
   },
+
   "side_menu": {
     "Home": "Bienvenido",
     "Notification": "Notificacion",
@@ -310,6 +336,7 @@
     "Setting": "Configuracion",
     "Grocery Order": "Pedido de mercado"
   },
+
   "toasts": {
     "logged_in_success": "Ha ingresado correctamente",
     "address_update": "Direccion actualizada",
@@ -322,8 +349,9 @@
     "profile_set_success": "Perfil actualizado",
     "cart_empty": "No ha pedido aun",
     "select_default_address": "Seleccione su dirección principal",
-    "The_selected_address_has_not_been_saved": "La dirección seleccionada no se ha guardo"
+    "The_selected_address_has_not_been_saved": "La dirección seleccionada no se guardo"
   },
+
   "store_detail": {
     "today": "Hoy",
     "store": "Tienda",
@@ -335,6 +363,7 @@
     "add_in_cart": "Agregar al carrito",
     "searchPlace": "Busca restaurantes y platos"
   },
+
   "grocery_cart": {
     "cart": "carrito",
     "delivery": "domicilio",
@@ -351,6 +380,7 @@
     "select_payment_method": "seleccione metodo de pago",
     "apply_coupon": "APLICAR CUPON"
   },
+
   "pay_method": {
     "payment_method": "Metodo de pago",
     "cash": "EFECTIVO",
@@ -359,11 +389,13 @@
     "PayPal": "PayPal",
     "pay": "pagar"
   },
+
   "grocery_success": {
     "CONGRATULATIONS": "FELICIDADES",
     "msg": " Su pedido ha sido enviado a la tienda ",
     "ty": "  Gracias"
   },
+
   "grocery_status": {
     "order_status": "estado pedido",
     "view_order": "VER PEDIDO",
@@ -373,6 +405,7 @@
     "place": "El pedido esta cerca",
     "delivered": "Entregado"
   },
+
   "grocer_order_detail": {
     "order_detail": "detalle del pedido",
     "order_summery": "resumen del pedido",
@@ -388,6 +421,7 @@
     "review": "Opinion del pedido",
     "Submit": "Enviar"
   },
+
   "grocery_history": {
     "order_history": "historial de pedidos",
     "current": "Pedido actual",
