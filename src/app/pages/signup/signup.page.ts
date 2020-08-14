@@ -23,12 +23,14 @@ export class SignupPage implements OnInit {
   }
 
   ngOnInit() {}
+
   signUp() {
     this.ntrl.navigateRoot(["login"]);
   }
-  gotologin() {
-    this.util.startLoad();
-    this.api.postData("register", this.data).subscribe((res: any) => {
+
+  async gotologin() {
+    await this.util.startLoad();
+    this.api.postData("register", this.data).subscribe(async(res: any) => {
         if (res.success) { 
           if (res.data.address_id) {
             localStorage.setItem("isaddress", res.data.address_id);
@@ -44,13 +46,13 @@ export class SignupPage implements OnInit {
             this.ntrl.navigateForward("verify");
           }
         }
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
         this.err = {};
         this.util.presentToast(res.msg);
       },
-      err => {
+      async(err) => {
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
   }

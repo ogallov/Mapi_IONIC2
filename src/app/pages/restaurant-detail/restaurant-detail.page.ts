@@ -26,6 +26,7 @@ export class RestaurantDetailPage implements OnInit {
   nonVeg: any = true;
   tempData: any;
   currency: any;
+
   constructor(
     private popoverController: PopoverController,
     private ntrl: NavController,
@@ -34,11 +35,15 @@ export class RestaurantDetailPage implements OnInit {
     private modalController: ModalController,
     private translate: TranslateService
   ) {
+
+  }
+
+  async ngOnInit() {
     this.currency = this.api.currency;
-    this.util.startLoad();
+    await this.util.startLoad();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
-      .subscribe((res: any) => {
+      .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
           console.log(this.data);
@@ -54,18 +59,20 @@ export class RestaurantDetailPage implements OnInit {
 
           this.tempData = res.data.bestSeller;
           this.api.menu = res.data.menu;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       });
   }
 
   ionViewWillEnter() {
+
     this.getCartdata();
     if (this.api.cartData.cartDetail) {
       if (this.api.cartData.cartDetail.length >= 0) {
         if (this.data.bestSeller) {
           this.data.bestSeller.forEach(el1 => {
             let status = true;
+
             this.api.cartData.cartDetail.forEach(el2 => {
               if (el1.id == el2.id && el1.type == el2.type) {
                 el1.qty = el2.qty;
@@ -84,10 +91,6 @@ export class RestaurantDetailPage implements OnInit {
         });
       }
     }
-  }
-
-  ngOnInit() {
-
   }
 
   logScrolling(ev) {

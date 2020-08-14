@@ -29,12 +29,13 @@ export class ProductPage implements OnInit {
   }
 
   ngOnInit() { }
-  ionViewWillEnter() {
-    this.util.startLoad();
+  
+  async ionViewWillEnter() {
+    await this.util.startLoad();
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.Store = res.data;
           console.log(this.Store);
 
@@ -42,8 +43,8 @@ export class ProductPage implements OnInit {
           this.getdata();
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
       }
     );
   }

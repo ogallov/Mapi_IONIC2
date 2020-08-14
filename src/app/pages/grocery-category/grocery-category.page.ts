@@ -19,21 +19,24 @@ export class GroceryCategoryPage implements OnInit {
     private gpi: GroceryService,
     private nav: NavController
   ) {
+
+  }
+
+  ngOnInit() {
     this.util.startLoad();
     this.api.getDataWithToken("groceryCategory").subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.category = res.data;
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
       }
     );
-  }
+   }
 
-  ngOnInit() { }
   categoryDetail(id) {
     this.gpi.catId = id;
     this.nav.navigateForward("store");

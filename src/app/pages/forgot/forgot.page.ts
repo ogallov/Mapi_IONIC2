@@ -18,22 +18,23 @@ export class ForgotPage implements OnInit {
   ) {}
 
   ngOnInit() {}
-  Sendpassword() {
-    this.util.startLoad();
+
+  async Sendpassword() {
+    await this.util.startLoad();
     this.api.postData("forgetPassword", this.data).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.util.presentToast(res.msg);
           this.ntrl.navigateForward(["login"]);
         }
       },
-      err => {
+      async(err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
   }

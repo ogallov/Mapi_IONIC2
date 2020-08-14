@@ -29,13 +29,16 @@ export class OrderDetailPage implements OnInit {
     private util: UtilService,
     private translate: TranslateService
   ) {
+  }
+
+  async ngOnInit() {
     this.currency = this.api.currency;
-    this.util.startLoad();
+    await this.util.startLoad();
 
     this.api.getDataWithToken("singleOrder/" + this.api.orderID).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.data = res.data;
 
           this.itemtotal = 0;
@@ -56,14 +59,13 @@ export class OrderDetailPage implements OnInit {
           }
         }
       },
-      err => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
         this.err = err;
       }
     );
   }
 
-  ngOnInit() {}
   back() {
     this.ntrl.back();
   }
@@ -97,7 +99,7 @@ export class OrderDetailPage implements OnInit {
       .postDataWithToken("addItemReview", this.itemReview)
       .subscribe((res: any) => {
         if (res.success) {
-          this.translate.get('toasts').subscribe(async val => {  
+          this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.review_add_success);
           })
           this.data.review_status = 1;
@@ -112,7 +114,7 @@ export class OrderDetailPage implements OnInit {
       .postDataWithToken("addShopReview", this.shopReview)
       .subscribe((res: any) => {
         if (res.success) {
-          this.translate.get('toasts').subscribe(async val => {  
+          this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.shop_review_add_success);
           })
           this.data.shopReview_status = 1;
@@ -131,7 +133,7 @@ export class OrderDetailPage implements OnInit {
       (res: any) => {
         if (res.success) {
           this.err = {};
-          this.translate.get('toasts').subscribe(async val => {  
+          this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.driver_review_add_success);
           })
           this.data.driverReview_status = 1;

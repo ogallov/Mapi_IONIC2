@@ -26,29 +26,33 @@ export class CategoryPage implements OnInit {
     private ntrl: NavController,
     private route: ActivatedRoute
   ) {
+
+  }
+
+  async ngOnInit() {
     this.currency = this.api.currency;
 
-    this.route.params.subscribe(params => {
+    this.route.params.subscribe(async(params) => {
       this.isfrom = params["id"];
       if (this.isfrom) {
-        this.util.startLoad();
+        await this.util.startLoad();
         this.api
           .getDataWithToken("categoryShop/" + this.isfrom)
-          .subscribe((res: any) => {
+          .subscribe(async(res: any) => {
             if (res.success) {
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
               this.data = res.data;
             }
           });
       } else {
 
-        this.util.startLoad();
+        await this.util.startLoad();
         this.api.getDataWithToken("shops").subscribe(
-          (res: any) => {
+          async(res: any) => {
             if (res.success) {
               this.data = res.data;
               if (this.api.filterType == "popular") {
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
                 this.data.sort((a, b) => {
                   if (a.rate > b.rate) {
                     return -1;
@@ -59,14 +63,14 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else if (this.api.filterType == "pureveg") {
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
                 this.data = this.data.filter(a => {
                   if (a.veg > 0) {
                     return a;
                   }
                 });
               } else if (this.api.filterType == "lowcost") {
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
                 this.data.sort((a, b) => {
                   if (a.avarage_plate_price < b.avarage_plate_price) {
                     return -1;
@@ -77,7 +81,7 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else {
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
                 if (localStorage.getItem("isaddress") != "false") {
                   this.api
                     .getDataWithToken(
@@ -142,8 +146,6 @@ export class CategoryPage implements OnInit {
       }
     });
   }
-
-  ngOnInit() { }
   distance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 == lat2 && lon1 == lon2) {
       return 0;

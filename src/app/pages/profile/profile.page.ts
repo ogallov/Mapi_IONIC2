@@ -44,11 +44,16 @@ export class ProfilePage implements OnInit, OnDestroy {
     private translate: TranslateService
   ) {
 
-    this.util.startLoad();
-    this.api.getDataWithToken("viewReview").subscribe((res: any) => {
+  }
+
+  async ngOnDestroy() {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
+    await this.util.startLoad();
+    this.api.getDataWithToken("viewReview").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
         this.data.review.forEach((element) => {
           element.created_at = moment(element.created_at).fromNow();
         });
@@ -93,12 +98,6 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
     });
 
-  }
-
-  ngOnDestroy(): void {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
-
     if (this.lastIsAdrress !== '') {
       // message
       if (this.flagControlBtnOpen) {
@@ -136,29 +135,28 @@ export class ProfilePage implements OnInit, OnDestroy {
     this.ntrl.back();
   }
 
-  editProfile() {
+  async editProfile() {
 
     if (this.segment == 3) {
 
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
-        (res: any) => {
+        async(res: any) => {
 
           if (res.success) {
-
             this.err = {};
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
             })
 
             this.util.isUpdateProfile.next(true);
 
-            this.api.getDataWithToken("viewReview").subscribe((res: any) => {
+            this.api.getDataWithToken("viewReview").subscribe(async(res: any) => {
 
               if (res.success) {
                 this.data = res.data;
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
 
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
@@ -197,31 +195,31 @@ export class ProfilePage implements OnInit, OnDestroy {
             });
           }
         },
-        (err) => {
+        async(err) => {
           if (err.error.msg) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.util.presentToast(err.error.msg);
           }
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
 
     } else if (this.segment == 5) {
 
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.passwordData.password = "";
             this.passwordData.confirmPassword = "";
             this.err = {};
             this.util.presentToast(res.msg);
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
           this.err = err.error.errors;
         }
       );
@@ -245,14 +243,14 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
 
       this.userSetting.address_id = localStorage.getItem("isaddress");
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api
         .postDataWithToken("saveSetting", this.userSetting)
-        .subscribe((res: any) => {
+        .subscribe(async(res: any) => {
           if (res.success) {
             this.lastIsAdrress = '';
             localStorage.setItem("isaddressBD", "true");
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
             })

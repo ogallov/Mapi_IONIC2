@@ -101,23 +101,23 @@ export class GroceryCartPage implements OnInit {
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                (res: any) => {
+                async(res: any) => {
                   if (res.success) {
-                    this.util.dismissLoader();
+                    await this.util.dismissLoader();
                     this.data.Deafult_address = res.data;
                     this.mapData();
                     this.data.userlat = res.data.lat;
                     this.data.userlang = res.data.lang;
                   }
                 },
-                (err) => {
-                  this.util.dismissLoader();
+                async(err) => {
+                  await this.util.dismissLoader();
                 }
               );
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
         }
       );
   }
@@ -131,15 +131,15 @@ export class GroceryCartPage implements OnInit {
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe(
-          (res: any) => {
+          async(res: any) => {
             if (res.success) {
               this.data.Deafult_address = res.data;
               this.mapData();
             }
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
           },
-          (err) => {
-            this.util.dismissLoader();
+          async(err) => {
+            await this.util.dismissLoader();
           }
         );
     }

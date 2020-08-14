@@ -19,14 +19,20 @@ export class GroceryStatusPage implements OnInit {
     private util: UtilService,
     private gpi: GroceryService
   ) {
-    this.util.startLoad();
+
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
+
     this.api
       .getDataWithToken("trackGroceryOrder/" + this.gpi.orderId)
       .subscribe(
-        (res: any) => {
+        async (res: any) => {
           if (res.success) {
             this.data = res.data;
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
+
             if (
               this.data.order_status == "Pending" ||
               this.data.order_status == "Approved"
@@ -50,11 +56,12 @@ export class GroceryStatusPage implements OnInit {
             }
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
           this.util.presentToast("something went wrong");
         }
       );
+
     this.get_duration_interval = setInterval((interval) => {
       if (this.data.order_status == "Delivered") {
         clearInterval(this.get_duration_interval);
@@ -64,7 +71,6 @@ export class GroceryStatusPage implements OnInit {
     }, this.api.request_duration);
   }
 
-  ngOnInit() {}
   orderStatus() {
     this.nav.navigateForward("grocery-order-detail");
   }
@@ -99,8 +105,8 @@ export class GroceryStatusPage implements OnInit {
             }
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
           this.util.presentToast("something went wrong");
         }
       );

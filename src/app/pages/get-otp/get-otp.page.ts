@@ -51,7 +51,7 @@ export class GetOtpPage implements OnInit {
     this.nav.navigateBack("verify");
   }
 
-  goHome() {
+  async goHome() {
     this.data.otp =
       this.opt.a +
       this.opt.b +
@@ -59,11 +59,12 @@ export class GetOtpPage implements OnInit {
       this.opt.d +
       this.opt.e +
       this.opt.f;
-    this.util.startLoad();
+
+    await this.util.startLoad();
     this.api.postData("checkOtp", this.data).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           localStorage.setItem("token", res.data.token);
           this.api.userToken = res.data.token;
           if (res.data.address_id) {
@@ -75,12 +76,12 @@ export class GetOtpPage implements OnInit {
           this.nav.navigateRoot("slide");
         }
       },
-      err => {
+      async(err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
   }
@@ -88,15 +89,15 @@ export class GetOtpPage implements OnInit {
     this.data.code = this.api.verifynuberCode;
     this.util.startLoad();
     this.api.postData("resendOTP", this.data).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.util.presentToast(res.data);
         }
       },
-      err => {
+      async(err) => {
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
   }

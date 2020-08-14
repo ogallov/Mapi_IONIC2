@@ -46,22 +46,22 @@ export class CategoryDetailPage implements OnInit {
     this.currency = this.api.currency;
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
-    this.util.startLoad();
+    await this.util.startLoad();
 
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
-      (res: any) => {
-        this.util.dismissLoader();
+      async(res: any) => {
+        await this.util.dismissLoader();
         this.data = res.data;
         console.log(this.data);
         this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
         this.getdata();
         console.log(this.data);
       },
-      (err) => {
+      async(err) => {
         console.log(err);
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
 

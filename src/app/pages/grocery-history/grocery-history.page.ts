@@ -21,20 +21,23 @@ export class GroceryHistoryPage implements OnInit {
   ) {
     this.currency = this.api.currency;
 
+  }
+
+  ngOnInit() {
     this.util.startLoad();
     this.api.getDataWithToken("groceryOrder").subscribe(
-      (res: any) => {
+      async (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.data = res.data;
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async (err) => {
+        await this.util.dismissLoader();
       }
     );
   }
-  ngOnInit() {}
+
   orderDetail(id) {
     this.gpi.orderId = id;
     this.nav.navigateForward("grocery-status");

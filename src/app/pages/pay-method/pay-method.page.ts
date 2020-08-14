@@ -35,18 +35,19 @@ export class PayMethodPage implements OnInit {
 
     this.currencyType = this.api.currencyType;
 
-    this.util.startLoad();
-    this.api.getDataWithToken("keySetting").subscribe((res: any) => {
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
+    this.api.getDataWithToken("keySetting").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     });
   }
 
-  ngOnInit() {}
-
-  paymentMethod() {
+  async paymentMethod() {
     /* 
     return */
     let rdata: any = {};
@@ -94,19 +95,19 @@ export class PayMethodPage implements OnInit {
     } else {
       rdata.payment_status = 0;
       rdata.payment_type = this.payment_type;
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
           }
         },
-        (err) => {
+        async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     }
@@ -131,23 +132,25 @@ export class PayMethodPage implements OnInit {
       },
     };
 
-    var successCallback = (payment_id) => {
+    var successCallback = async(payment_id) => {
       rdata.payment_token = payment_id;
       rdata.payment_status = 1;
       rdata.payment_type = "RAZOR";
-      this.util.startLoad();
+
+      await this.util.startLoad();
+
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
           }
         },
-        (err) => {
+        async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     };
@@ -183,25 +186,26 @@ export class PayMethodPage implements OnInit {
                   "sale"
                 );
                 this.payPal.renderSinglePaymentUI(payment).then(
-                  (result) => {
+                  async(result) => {
                     rdata.payment_token = result.response.id;
                     rdata.payment_status = 1;
                     rdata.payment_type = "PAYPAL";
-                    this.util.startLoad();
+                    
+                    await this.util.startLoad();
                     this.api
                       .postDataWithToken("createGroceryOrder", rdata)
                       .subscribe(
-                        (res: any) => {
+                        async(res: any) => {
                           if (res.success) {
-                            this.util.dismissLoader();
+                            await this.util.dismissLoader();
                             this.gpi.promocode = {};
                             this.gpi.orderId = res.data.id;
                             this.presentModal();
                           }
                         },
-                        (err) => {
+                        async(err) => {
                           this.err = err.error.errors;
-                          this.util.dismissLoader();
+                          await this.util.dismissLoader();
                         }
                       );
                   },

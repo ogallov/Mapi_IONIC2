@@ -15,18 +15,20 @@ export class NotificationPage implements OnInit {
     private api: ApiService,
     private util: UtilService
   ) {
-    this.util.startLoad();
-    this.api.getDataWithToken("viewNotification").subscribe((res: any) => {
+
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
+    this.api.getDataWithToken("viewNotification").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
       }
-      this.util.dismissLoader();
-    }, () => {
-      this.util.dismissLoader();
+      await this.util.dismissLoader();
+    }, async() => {
+      await this.util.dismissLoader();
     });
   }
-
-  ngOnInit() {}
   back() {
     this.ntrl.back();
   }

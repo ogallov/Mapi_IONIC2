@@ -20,12 +20,16 @@ export class StorePage implements OnInit {
     private util: UtilService,
     private gpi: GroceryService
   ) {
+
+  }
+
+  async ngOnInit() {
     if (this.gpi.catId) {
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.getDataWithToken("groceryShop/" + this.gpi.catId).subscribe(
         (res: any) => {
           if (res.success) {
-            // this.util.dismissLoader();
+            // await this.util.dismissLoader();
             this.Store = res.data;
             this.gpi.catId = undefined;
             this.api
@@ -33,10 +37,10 @@ export class StorePage implements OnInit {
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                (res: any) => {
+                async(res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    this.util.dismissLoader();
+                    await this.util.dismissLoader();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -50,34 +54,34 @@ export class StorePage implements OnInit {
                     });
                   }
                 },
-                (err) => {
+                async(err) => {
                   this.err = err;
-                  this.util.dismissLoader();
+                  await this.util.dismissLoader();
                 }
               );
           }
         },
-        (err) => {
+        async(err) => {
           this.err = err;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     } else {
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.getDataWithToken("groceryShop").subscribe(
         (res: any) => {
           if (res.success) {
-            // this.util.dismissLoader();
+            // await this.util.dismissLoader();
             this.Store = res.data.shop;
             this.api
               .getDataWithToken(
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                (res: any) => {
+                async(res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    this.util.dismissLoader();
+                    await this.util.dismissLoader();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -91,22 +95,21 @@ export class StorePage implements OnInit {
                     });
                   }
                 },
-                (err) => {
+                async(err) => {
                   this.err = err;
-                  this.util.dismissLoader();
+                  await this.util.dismissLoader();
                 }
               );
           }
         },
-        (err) => {
+        async(err) => {
           this.err = err;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     }
   }
 
-  ngOnInit() { }
   storeDetail(id) {
     this.gpi.storeID = id;
     this.nav.navigateForward("store-detail");

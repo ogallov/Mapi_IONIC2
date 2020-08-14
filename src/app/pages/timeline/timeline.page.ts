@@ -1,6 +1,6 @@
 import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
-import { Component, ViewChild, ElementRef } from "@angular/core";
+import { Component, ViewChild, ElementRef, OnInit } from "@angular/core";
 import {
   ModalController,
   NavController,
@@ -15,7 +15,7 @@ declare var google;
   templateUrl: "./timeline.page.html",
   styleUrls: ["./timeline.page.scss"],
 })
-export class TimelinePage {
+export class TimelinePage implements OnInit {
   @ViewChild("slides", { static: true }) slides;
   @ViewChild("map", { static: true }) mapElement: ElementRef;
   dirService = new google.maps.DirectionsService();
@@ -216,6 +216,7 @@ export class TimelinePage {
   isvisible = false;
   userAddress: any;
   iconUrl = "./assets/image/bike.png";
+
   constructor(
     private translate: TranslateService,
     private ntrl: NavController,
@@ -225,17 +226,23 @@ export class TimelinePage {
   ) {
     this.currency = this.api.currency;
     this.data.driver = {};
-    this.util.startLoad();
+
+  }
+
+  async ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+    await this.util.startLoad();
     this.api
       .getDataWithToken("trackOrder/" + this.api.checkOrderStatus)
-      .subscribe((res: any) => {
+      .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
 
           this.getUserAddress();
           this.getShopAddress();
 
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
 
           if (this.data.deliveryBoy_id != null) {
             this.isvisible = true;
@@ -312,23 +319,23 @@ export class TimelinePage {
             text: val.yes,
             role: "yes",
             cssClass: "secondary",
-            handler: () => {
-              this.util.startLoad();
+            handler: async () => {
+              await this.util.startLoad();
               this.api
                 .getDataWithToken("cancelOrder/" + this.data.id)
                 .subscribe(
-                  (res: any) => {
+                  async(res: any) => {
                     if (res.success) {
-                      this.util.dismissLoader();
+                      await this.util.dismissLoader();
                       this.util.presentToast(res.msg);
                       this.ntrl.navigateRoot("/order-history");
                     } else {
-                      this.util.dismissLoader();
+                      await this.util.dismissLoader();
                       this.util.presentToast(res.msg);
                     }
                   },
-                  (err) => {
-                    this.util.dismissLoader();
+                  async(err) => {
+                    await this.util.dismissLoader();
                   }
                 );
             },
@@ -337,7 +344,7 @@ export class TimelinePage {
             text: val.no,
             role: "no",
             cssClass: "secondary",
-            handler: () => {},
+            handler: () => { },
           },
         ],
       });
@@ -349,6 +356,7 @@ export class TimelinePage {
   orderHistory() {
     this.ntrl.navigateForward(["order-history"]);
   }
+
   DriverLocation() {
     this.api.getDataWithToken("driverLocation/" + this.data.id).subscribe(
       (res: any) => {
@@ -412,21 +420,21 @@ export class TimelinePage {
     );
   }
 
-  getUserAddress() {
+  async getUserAddress() {
     if (localStorage.getItem("isaddress") != "false") {
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe(
-          (res: any) => {
+          async(res: any) => {
             if (res.success) {
               this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city + " " + res.data.zipcode;
-              
+
               this.geocoder.geocode(
                 { address: this.userAddress },
                 (results, status) => {
                   if (status == google.maps.GeocoderStatus.OK) {
-                    
+
                     this.destination = {
                       lat: results[0].geometry.location.lat(),
                       lng: results[0].geometry.location.lng(),
@@ -434,12 +442,12 @@ export class TimelinePage {
                   }
                 }
               );
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
             }
           },
-          (err) => {
+          async(err) => {
             this.err = err;
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
           }
         );
     }

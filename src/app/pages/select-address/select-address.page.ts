@@ -19,13 +19,17 @@ export class SelectAddressPage implements OnInit {
     private ntrl: NavController,
     private translate: TranslateService
   ) {
-    this.util.startLoad();
-    this.api.getDataWithToken("userAddress").subscribe((res: any) => {
+
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
+    this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
       console.log(res);
-      
+
       if (res.success) {
         this.addressList = res.data;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
         if (localStorage.getItem("isaddress")) {
           this.addressList.forEach(element => {
             if (element.id == localStorage.getItem("isaddress")) {
@@ -37,23 +41,20 @@ export class SelectAddressPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
-
   async addAddress() {
     this.isAddadress = true;
     const modal = await this.modalController.create({
       component: AddAddressPage
     });
-    modal.onDidDismiss().then((data: any) => {
+    modal.onDidDismiss().then(async(data: any) => {
       if (data["data"] != undefined) {
         if (data) {
-          this.util.startLoad();
-          this.api.getDataWithToken("userAddress").subscribe((res: any) => {
+          await this.util.startLoad();
+          this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
             console.log(res);
-            
             if (res.success) {
               this.addressList = res.data;
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {
@@ -86,16 +87,16 @@ export class SelectAddressPage implements OnInit {
     return await modal.present();
   }
 
-  deleteAddress(address) {
-    this.util.startLoad();
+  async deleteAddress(address) {
+    await this.util.startLoad();
     this.api
       .getDataWithToken("deleteAddress/" + address.id)
       .subscribe((res: any) => {
         if (res.success) {
-          this.api.getDataWithToken("userAddress").subscribe((res: any) => {
+          this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
             if (res.success) {
               this.addressList = res.data;
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {
@@ -121,7 +122,7 @@ export class SelectAddressPage implements OnInit {
       localStorage.setItem("isaddress", selectedAddress);
       this.ntrl.back();
     } else {
-      this.translate.get('toasts').subscribe(async val => {  
+      this.translate.get('toasts').subscribe(async val => {
         this.util.presentToast(val.select_default_address);
       })
     }

@@ -64,13 +64,14 @@ export class CartPage implements OnInit {
       });
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     if (this.api.promocode.id) {
       this.countDiscount();
     }
 
     if (this.chaneAddress) {
-      this.util.startLoad();
+
+      await this.util.startLoad();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {

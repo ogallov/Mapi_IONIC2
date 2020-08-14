@@ -20,14 +20,18 @@ export class ReviewPage implements OnInit {
     private api: ApiService,
     private util: UtilService
   ) {
+
+  }
+
+  async ngOnInit() {
     this.currency = this.api.currency;
-    this.util.startLoad();
+    await this.util.startLoad();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
-      .subscribe((res: any) => {
+      .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.data.review.forEach(element => {
             element.created_at = moment(element.created_at).fromNow();
           });
@@ -35,7 +39,6 @@ export class ReviewPage implements OnInit {
       });
   }
 
-  ngOnInit() {}
   logScrolling(ev) {
     if (ev.detail.scrollTop >= 200) {
       this.state = 2;
@@ -43,9 +46,11 @@ export class ReviewPage implements OnInit {
       this.state = 1;
     }
   }
+
   back() {
     this.ntrl.back();
   }
+  
   addBookmark() {
     this.bookmarkData.shop_id = this.data.id;
 

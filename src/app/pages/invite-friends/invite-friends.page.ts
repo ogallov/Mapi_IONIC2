@@ -17,16 +17,17 @@ export class InviteFriendsPage implements OnInit {
     private socialSharing: SocialSharing,
     private util: UtilService
   ) {
-    this.util.startLoad();
-    this.api.getDataWithToken("friendsCode").subscribe((res: any) => {
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
+    this.api.getDataWithToken("friendsCode").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     });
   }
-
-  ngOnInit() {}
   back() {
     this.ntrl.back();
   }
@@ -34,8 +35,8 @@ export class InviteFriendsPage implements OnInit {
     this.socialSharing
       .share(
         "please login my referral code " +
-          this.data +
-          " with irest app and get first order free"
+        this.data +
+        " with irest app and get first order free"
       )
       .then((res) => {
         console.log("res: ", res);

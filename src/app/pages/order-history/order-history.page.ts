@@ -21,13 +21,14 @@ export class OrderHistoryPage implements OnInit {
   ) {
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.currency = this.api.currency;
-    this.util.startLoad();
-    this.api.getDataWithToken("userOrder").subscribe((res: any) => {
+
+    await this.util.startLoad();
+    this.api.getDataWithToken("userOrder").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     });
   }
@@ -55,27 +56,27 @@ export class OrderHistoryPage implements OnInit {
             text: val.yes,
             role: "yes",
             cssClass: "secondary",
-            handler: () => {
-              this.util.startLoad();
+            handler: async() => {
+              await this.util.startLoad();
               this.api.getDataWithToken("cancelOrder/" + id).subscribe(
                 (res: any) => {
                   if (res.success) {
                     this.util.presentToast(res.msg);
                     this.api.getDataWithToken("userOrder").subscribe(
-                      (res: any) => {
+                      async(res: any) => {
                         if (res.success) {
                           this.data = res.data;
-                          this.util.dismissLoader();
+                          await this.util.dismissLoader();
                         }
                       },
-                      err => {
-                        this.util.dismissLoader();
+                      async(err) => {
+                        await this.util.dismissLoader();
                       }
                     );
                   }
                 },
-                err => {
-                  this.util.dismissLoader();
+               async(err) => {
+                  await this.util.dismissLoader();
                 }
               );
             }

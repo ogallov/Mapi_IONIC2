@@ -26,15 +26,15 @@ export class ProductDetailPage implements OnInit {
 
   ngOnInit() { }
 
-  ionViewWillEnter() {
-    this.util.startLoad();
+  async ionViewWillEnter() {
+    await this.util.startLoad();
 
     this.cartData = JSON.parse(localStorage.getItem("store-detail"));
 
     this.api.getDataWithToken("groceryItemDetail/" + this.gpi.itemId).subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.data = res.data;
           this.review = res.data.review;
 
@@ -50,8 +50,8 @@ export class ProductDetailPage implements OnInit {
           }
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
       }
     );
   }

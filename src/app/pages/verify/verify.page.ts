@@ -26,30 +26,31 @@ export class VerifyPage implements OnInit {
     this.menu.enable(false);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
+
   back() {
     this.nav.navigateRoot("login");
   }
 
-  getOtp() {
-    this.util.startLoad();
+  async getOtp() {
+    await this.util.startLoad();
     this.api.postData("verifyPhone", this.data).subscribe(
-      (res: any) => {
+      async (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.util.presentToast(res.msg);
           this.api.verifynumber = this.data.phone;
           this.api.verifynuberCode = this.data.code;
           this.nav.navigateRoot("get-otp");
         } else {
           this.err = {};
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.util.presentToast(res.msg);
         }
       },
-      err => {
+      async (err) => {
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
     );
   }

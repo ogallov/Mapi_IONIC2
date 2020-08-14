@@ -91,7 +91,7 @@ export class AddAddressPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  saveAddress() {
+  async saveAddress() {
     
     if (this.isEdit == true) {
       this.addressType.forEach(element => {
@@ -103,17 +103,17 @@ export class AddAddressPage implements OnInit {
       });
       this.addressData.address_id = this.addressData.id;
 
-      this.util.startLoad();
+      await this.util.startLoad();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
       this.api
         .postDataWithToken("editAddress", this.addressData)
         .subscribe(
-          (res: any) => {
+          async(res: any) => {
             console.log(res);
             
             if (res.success) {
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
               this.translate.get('toasts').subscribe(async val => {  
                 this.util.presentToast(val.address_update);
               })
@@ -122,25 +122,27 @@ export class AddAddressPage implements OnInit {
               this.modalController.dismiss(this.ischange);
             }
           },
-          err => {
-            this.util.dismissLoader();
+          async (err) => {
+            await this.util.dismissLoader();
             this.err = err.error.errors;
           }
         );
     } else {
+      
       this.addressType.forEach(element => {
         if (element.checked) {
           this.addressData.address_type = element.name;
         }
       });
-      this.util.startLoad();
+
+      await this.util.startLoad();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
       
       this.api.postDataWithToken("addAddress", this.addressData).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             if (localStorage.getItem("isaddress") == "false") {
               localStorage.setItem("isaddress", res.data.id);
             }
@@ -150,8 +152,8 @@ export class AddAddressPage implements OnInit {
             this.modalController.dismiss(this.ischange);
           }
         },
-        err => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
           this.err = err.error.errors;
         }
       );

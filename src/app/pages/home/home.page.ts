@@ -97,6 +97,7 @@ export class HomePage {
 
   public innerWidth: any = window.innerWidth;
   public banners: any = Array();
+
   constructor(
     private menu: MenuController,
     private modalController: ModalController,
@@ -123,12 +124,12 @@ export class HomePage {
     );
   }
 
-  private initData() {
+  private async initData() {
+
     this.getAdvertisingBanner();
 
-    this.util.startLoad();
+    await this.util.startLoad();
     this.api.getDataWithToken("home").subscribe(
-      
       (res: any) => {
         console.log(res);
         if (res.success) {
@@ -138,8 +139,8 @@ export class HomePage {
           this.getGrocery();
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
         this.err = err;
       }
     );
@@ -153,38 +154,38 @@ export class HomePage {
     });
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
     if (localStorage.getItem("isaddress") != "false") {
 
       if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
-        this.util.startLoad();
+        await this.util.startLoad();
         this.api
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
-            (res: any) => {
+            async(res: any) => {
               console.log(res);
-              
+
               if (res.success) {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
               }
             },
-            (err) => {
+            async(err) => {
               this.err = err;
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
             }
           );
 
       } else {
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
       }
 
 
     } else {
 
-      this.util.startLoad();
+      await this.util.startLoad();
       this.geolocation
         .getCurrentPosition()
         .then((resp) => {
@@ -203,8 +204,8 @@ export class HomePage {
               resp.coords.longitude,
               options
             )
-            .then((result: NativeGeocoderResult[]) => {
-              this.util.dismissLoader();
+            .then(async(result: NativeGeocoderResult[]) => {
+              await this.util.dismissLoader();
               this.userAddress.address_type = "Current Location";
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
@@ -213,8 +214,8 @@ export class HomePage {
             })
             .catch((error: any) => console.log(error));
         })
-        .catch((error) => {
-          this.util.dismissLoader();
+        .catch(async(error) => {
+          await this.util.dismissLoader();
         });
     }
   }
@@ -421,14 +422,15 @@ export class HomePage {
 
   getGrocery() {
     this.api.getDataWithToken("groceryShop").subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
           this.grocery.Store = res.data.shop;
           this.grocery.coupon = res.data.coupon;
+
           this.api.getDataWithToken("groceryCategory").subscribe(
-            (res: any) => {
+            async(res: any) => {
               if (res.success) {
-                this.util.dismissLoader();
+                await this.util.dismissLoader();
                 this.grocery.category = res.data;
 
                 this.grocery.Store.forEach((element) => {
@@ -444,16 +446,16 @@ export class HomePage {
                 });
               }
             },
-            (err) => {
-              this.util.dismissLoader();
+            async(err) => {
+              await this.util.dismissLoader();
               this.err = err;
             }
           );
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
         this.err = err;
       }
     );

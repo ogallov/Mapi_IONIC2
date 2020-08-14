@@ -66,7 +66,7 @@ export class AppComponent {
     private translate: TranslateService
   ) {
     // blocked console.log
-    console.log = function () {};
+    // console.log = function () {};
 
     document.documentElement.dir =
       localStorage.getItem("app_language") == "ar" ? "rtl" : "ltr";

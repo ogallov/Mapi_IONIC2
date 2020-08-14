@@ -28,7 +28,10 @@ export class StoreDetailPage implements OnInit {
 
     this.dataa = JSON.parse(localStorage.getItem("store-detail"));
 
-    this.util.startLoad();
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
     this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
@@ -45,9 +48,9 @@ export class StoreDetailPage implements OnInit {
                     this.api
                       .getDataWithToken("groceryItem/" + this.gpi.storeID)
                       .subscribe(
-                        (res: any) => {
+                        async (res: any) => {
                           if (res.success) {
-                            this.util.dismissLoader();
+                            await this.util.dismissLoader();
                             this.data.product = res.data;
                             this.id = res.data.id;
                             this.data.product.forEach((element) => {
@@ -63,20 +66,20 @@ export class StoreDetailPage implements OnInit {
                             });
                           }
                         },
-                        (err) => {
-                          this.util.dismissLoader();
+                        async(err) => {
+                          await this.util.dismissLoader();
                         }
                       );
                   }
                 },
-                (err) => {
-                  this.util.dismissLoader();
+                async(err) => {
+                  await this.util.dismissLoader();
                 }
               );
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async(err) => {
+          await this.util.dismissLoader();
         }
       );
   }
@@ -95,6 +98,7 @@ export class StoreDetailPage implements OnInit {
     }
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
+
   remove(item) {
     let equalIndex;
 
@@ -119,8 +123,7 @@ export class StoreDetailPage implements OnInit {
     localStorage.setItem("store-detail", JSON.stringify(this.cartData));
   }
 
-  ngOnInit() { }
-  
+
   viewMore() {
     this.nav.navigateForward("product");
   }

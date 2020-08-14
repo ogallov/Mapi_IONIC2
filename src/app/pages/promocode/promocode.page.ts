@@ -19,47 +19,49 @@ export class PromocodePage implements OnInit {
     private util: UtilService,
     private route: ActivatedRoute
   ) {
-    this.route.params.subscribe(params => {
+  }
+
+  ngOnInit() {
+    this.route.params.subscribe(async(params) => {
       this.isfrom = params["id"];
       if (this.isfrom == "menu") {
-        this.util.startLoad();
-        this.api.getDataWithToken("viewCoupon").subscribe((res: any) => {
+        await this.util.startLoad();
+        this.api.getDataWithToken("viewCoupon").subscribe(async(res: any) => {
           if (res.success) {
             this.data = res.data;
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
           }
         });
       } else {
-        this.util.startLoad();
+        await this.util.startLoad();
         this.api
           .getDataWithToken("viewShopCoupon/" + this.isfrom)
-          .subscribe((res: any) => {
+          .subscribe(async(res: any) => {
             if (res.success) {
               this.data = res.data;
-              this.util.dismissLoader();
+              await this.util.dismissLoader();
             }
           });
       }
     });
   }
 
-  ngOnInit() {}
-
   back() {
     this.ntrl.back();
   }
-  applyPromocode(item) {
+
+  async applyPromocode(item) {
     this.promocode.code = item.code;
-    this.util.startLoad();
+    await this.util.startLoad();
     this.api
       .postDataWithToken("chkCoupon", this.promocode)
-      .subscribe((res: any) => {
+      .subscribe(async(res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.api.promocode = item;
           this.ntrl.back();
         } else {
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
           this.util.presentToast(res.msg);
         }
       });

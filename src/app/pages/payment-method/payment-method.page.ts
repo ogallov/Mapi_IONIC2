@@ -43,20 +43,20 @@ export class PaymentMethodPage implements OnInit {
     private translate: TranslateService
   ) {
     this.currencyType = this.api.currencyType;
-    this.util.startLoad();
+    // await this.util.startLoad();
     // this.api.getDataWithToken("keySetting").subscribe((res: any) => {
     //   if (res.success) {
     //     this.razor_key = res.data.razorPublishKey;
     //     this.paypalProductionkey = res.data.paypalProduction;
     //     this.paypalSanboxkey = res.data.paypalSendbox;
-    //     this.util.dismissLoader();
+    //     await this.util.dismissLoader();
     //   }
     // });
   }
 
   ngOnInit() { }
 
-  paymentMethod() {
+  async paymentMethod() {
     this.data.items = [];
     this.data.package_id = [];
     this.data.itemData = [];
@@ -121,21 +121,21 @@ export class PaymentMethodPage implements OnInit {
       this.data.payment_status = 0;
       this.data.payment_type = "LOCAL";
 
-      this.util.startLoad();
+      await this.util.startLoad();
 
       this.api.postDataWithToken("createOrder", this.data).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
         },
         
-        err => {
+        async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     }
@@ -153,6 +153,7 @@ export class PaymentMethodPage implements OnInit {
     });
     return await modal.present();
   }
+
   payWithRazor() {
     var options = {
       description: "Credits towards consultation",
@@ -176,24 +177,24 @@ export class PaymentMethodPage implements OnInit {
       }
     };
 
-    var successCallback = payment_id => {
+    var successCallback = async(payment_id) => {
       this.data.payment_token = payment_id;
 
       this.data.payment_status = 1;
       this.data.payment_type = "RAZOR";
-      this.util.startLoad();
+      await this.util.startLoad();
       this.api.postDataWithToken("createOrder", this.data).subscribe(
-        (res: any) => {
+        async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
         },
-        err => {
+        async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       );
     };
@@ -228,25 +229,25 @@ export class PaymentMethodPage implements OnInit {
                   "sale"
                 );
                 this.payPal.renderSinglePaymentUI(payment).then(
-                  result => {
+                  async(result) => {
                     this.data.payment_token = result.response.id;
                     this.data.payment_status = 1;
                     this.data.payment_type = "PAYPAL";
-                    this.util.startLoad();
+                    await this.util.startLoad();
                     this.api
                       .postDataWithToken("createOrder", this.data)
                       .subscribe(
-                        (res: any) => {
+                        async(res: any) => {
                           if (res.success) {
                             this.api.promocode = {};
-                            this.util.dismissLoader();
+                            await this.util.dismissLoader();
                             this.api.checkOrderStatus = res.data.id;
                             this.presentModal();
                           }
                         },
-                        err => {
+                        async(err) => {
                           this.err = err.error.errors;
-                          this.util.dismissLoader();
+                          await this.util.dismissLoader();
                         }
                       );
                   },

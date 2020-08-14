@@ -11,16 +11,18 @@ import * as moment from "moment";
 export class ItemReviewPage implements OnInit {
   data: any = [];
   constructor(private api: ApiService, private util: UtilService) {
-    this.util.startLoad();
+
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
     this.api
       .getDataWithToken("itemReview/" + this.api.reviewId)
-      .subscribe((res: any) => {
+      .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
-          this.util.dismissLoader();
+          await this.util.dismissLoader();
         }
       });
   }
-
-  ngOnInit() {}
 }

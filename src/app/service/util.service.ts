@@ -43,7 +43,11 @@ export class UtilService {
           if (!this.isLoading) {
             a.dismiss().then(() => { });
           }
+        }, errs => {
+          console.log(errs);
         });
+      }, error => {
+        console.log(error);
       });
   }
 

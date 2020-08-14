@@ -17,35 +17,14 @@ export class GroceryOrderDetailPage implements OnInit {
   itemtotal: any;
   shopReview: any = {};
   status: any;
+
   constructor(
     private util: UtilService,
     private api: ApiService,
     private gpi: GroceryService,
     private modalController: ModalController
   ) {
-    this.currency = this.api.currency;
-    this.util.startLoad();
-    this.api
-      .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
-      .subscribe(
-        (res: any) => {
-          if (res.success) {
-            this.data = res.data;
-            this.itemtotal = 0;
-            this.data.orderItems.forEach((element) => {
-              this.itemtotal = this.itemtotal + element.price;
-              this.util.dismissLoader();
-            });
-            if (this.data.review) {
-              this.shopReview.rate = this.data.review.rate;
-              this.shopReview.message = this.data.review.message;
-            }
-          }
-        },
-        (err) => {
-          this.util.dismissLoader();
-        }
-      );
+    
   }
 
   async pickupFood(id?) {
@@ -62,7 +41,32 @@ export class GroceryOrderDetailPage implements OnInit {
     return await modal.present();
   }
 
-  ngOnInit() {}
+  async ngOnInit() {
+    this.currency = this.api.currency;
+    await this.util.startLoad();
+    this.api
+      .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.data = res.data;
+            this.itemtotal = 0;
+            this.data.orderItems.forEach(async(element) => {
+              this.itemtotal = this.itemtotal + element.price;
+              await this.util.dismissLoader();
+            });
+            if (this.data.review) {
+              this.shopReview.rate = this.data.review.rate;
+              this.shopReview.message = this.data.review.message;
+            }
+          }
+        },
+        async(err) => {
+          await this.util.dismissLoader();
+        }
+      );
+  }
+
   shopReiviewData() {
     this.shopReview.order_id = this.data.id;
     this.shopReview.customer_id = this.data.customer.id;
@@ -81,21 +85,21 @@ export class GroceryOrderDetailPage implements OnInit {
                   this.data = res.data;
                   this.itemtotal = 0;
                   this.status = res.data.order_status;
-                  this.data.orderItems.forEach((element) => {
+                  this.data.orderItems.forEach(async(element) => {
                     this.itemtotal = this.itemtotal + element.price;
 
-                    this.util.dismissLoader();
+                    await this.util.dismissLoader();
                   });
                 }
               },
-              (err) => {
-                this.util.dismissLoader();
+              async(err) => {
+                await this.util.dismissLoader();
               }
             );
         }
       },
-      (err) => {
-        this.util.dismissLoader();
+      async(err) => {
+        await this.util.dismissLoader();
         this.util.presentToast("something went wrong");
       }
     );

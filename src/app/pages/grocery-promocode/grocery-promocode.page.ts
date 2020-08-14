@@ -18,35 +18,38 @@ export class GroceryPromocodePage implements OnInit {
     private gpi: GroceryService,
     private ntrl: NavController
   ) {
-    this.util.startLoad();
+
+  }
+
+  async ngOnInit() {
+    await this.util.startLoad();
     this.api
       .getDataWithToken("viewGroceryShopCoupon/" + this.gpi.storeID)
       .subscribe(
-        (res: any) => {
+        async (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            await this.util.dismissLoader();
             this.data = res.data;
           }
         },
-        (err) => {
-          this.util.dismissLoader();
+        async (err) => {
+          await this.util.dismissLoader();
           this.util.presentToast("somethig went wrong");
         }
       );
   }
 
-  ngOnInit() { }
   applyPromocode(item) {
     let promocode: any = {};
     promocode.code = item.code;
     this.util.startLoad();
-    this.api.postDataWithToken("chkCoupon", promocode).subscribe((res: any) => {
+    this.api.postDataWithToken("chkCoupon", promocode).subscribe(async(res: any) => {
       if (res.success) {
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
         this.gpi.promocode = item;
         this.ntrl.back();
       } else {
-        this.util.dismissLoader();
+        await this.util.dismissLoader();
         this.util.presentToast(res.msg);
       }
     });
