@@ -9,6 +9,7 @@ import {
   PayPalConfiguration
 } from "@ionic-native/paypal/ngx";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 declare var RazorpayCheckout: any;
 @Component({
@@ -40,7 +41,9 @@ export class PaymentMethodPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private payPal: PayPal,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
     this.currencyType = this.api.currencyType;
     // await this.util.startLoad();
@@ -121,13 +124,15 @@ export class PaymentMethodPage implements OnInit {
       this.data.payment_status = 0;
       this.data.payment_type = "LOCAL";
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
 
       this.api.postDataWithToken("createOrder", this.data).subscribe(
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
@@ -135,7 +140,8 @@ export class PaymentMethodPage implements OnInit {
         
         async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     }
@@ -182,19 +188,22 @@ export class PaymentMethodPage implements OnInit {
 
       this.data.payment_status = 1;
       this.data.payment_type = "RAZOR";
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api.postDataWithToken("createOrder", this.data).subscribe(
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
         },
         async(err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     };
@@ -233,21 +242,24 @@ export class PaymentMethodPage implements OnInit {
                     this.data.payment_token = result.response.id;
                     this.data.payment_status = 1;
                     this.data.payment_type = "PAYPAL";
-                    await this.util.startLoad();
+                    // await this.util.startLoad();
+                    //this.spinnerService.show();
                     this.api
                       .postDataWithToken("createOrder", this.data)
                       .subscribe(
                         async(res: any) => {
                           if (res.success) {
                             this.api.promocode = {};
-                            this.util.dismissLoader();
+                            // this.util.dismissLoader();
+                            //this.spinnerService.hide();
                             this.api.checkOrderStatus = res.data.id;
                             this.presentModal();
                           }
                         },
                         async(err) => {
                           this.err = err.error.errors;
-                          this.util.dismissLoader();
+                          // this.util.dismissLoader();
+                          //this.spinnerService.hide();
                         }
                       );
                   },

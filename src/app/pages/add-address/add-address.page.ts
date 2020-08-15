@@ -11,6 +11,7 @@ import {
 import { type } from "os";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var google;
 
 @Component({
@@ -45,7 +46,9 @@ export class AddAddressPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private geolocation: Geolocation,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
 
     this.geolocation.getCurrentPosition().then((res:any) => {
@@ -95,7 +98,7 @@ export class AddAddressPage implements OnInit {
     this.modalController.dismiss();
   }
 
-  async saveAddress() {
+  saveAddress() {
     
     if (this.isEdit == true) {
       this.addressType.forEach(element => {
@@ -108,17 +111,19 @@ export class AddAddressPage implements OnInit {
 
       this.addressData.address_id = this.addressData.id;
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
       this.api
         .postDataWithToken("editAddress", this.addressData)
         .subscribe(
-          async(res: any) => {
+          (res: any) => {
             console.log(res);
             
             if (res.success) {
-              this.util.dismissLoader();
+              //this.spinnerService.hide();
+              // this.util.dismissLoader();
               this.translate.get('toasts').subscribe(async val => {  
                 this.util.presentToast(val.address_update);
               })
@@ -127,8 +132,9 @@ export class AddAddressPage implements OnInit {
               this.modalController.dismiss(this.ischange);
             }
           },
-          async (err) => {
-            this.util.dismissLoader();
+          (err) => {
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.err = err.error.errors;
           }
         );
@@ -141,14 +147,16 @@ export class AddAddressPage implements OnInit {
         }
       });
 
-      await this.util.startLoad();
+      //this.spinnerService.show();
+      // await this.util.startLoad();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
       
       this.api.postDataWithToken("addAddress", this.addressData).subscribe(
-        async(res: any) => {
+        (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            //this.spinnerService.hide();
+            // this.util.dismissLoader();
             if (localStorage.getItem("isaddress") == "false") {
               localStorage.setItem("isaddress", res.data.id);
             }
@@ -158,8 +166,9 @@ export class AddAddressPage implements OnInit {
             this.modalController.dismiss(this.ischange);
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.err = err.error.errors;
         }
       );

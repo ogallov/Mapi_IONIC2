@@ -4,6 +4,7 @@ import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { ActivatedRoute } from "@angular/router";
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var google;
 
 @Component({
@@ -24,35 +25,37 @@ export class CategoryPage implements OnInit {
     private util: UtilService,
     private geolocation: Geolocation,
     private ntrl: NavController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private spinnerService: NgxSpinnerService,
   ) {
-
-  }
-
-  async ngOnInit() {
     this.currency = this.api.currency;
 
-    this.route.params.subscribe(async(params) => {
+    this.route.params.subscribe((params) => {
       this.isfrom = params["id"];
       if (this.isfrom) {
-        await this.util.startLoad();
+        //this.spinnerService.show();
+        // await this.util.startLoad();
         this.api
           .getDataWithToken("categoryShop/" + this.isfrom)
-          .subscribe(async(res: any) => {
+          .subscribe((res: any) => {
             if (res.success) {
-              this.util.dismissLoader();
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
               this.data = res.data;
             }
           });
       } else {
 
-        await this.util.startLoad();
+        
+        // await this.util.startLoad();
         this.api.getDataWithToken("shops").subscribe(
-          async(res: any) => {
+          (res: any) => {
             if (res.success) {
               this.data = res.data;
+
               if (this.api.filterType == "popular") {
-                this.util.dismissLoader();
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
                 this.data.sort((a, b) => {
                   if (a.rate > b.rate) {
                     return -1;
@@ -62,15 +65,19 @@ export class CategoryPage implements OnInit {
                   }
                   return 0;
                 });
+
               } else if (this.api.filterType == "pureveg") {
-                this.util.dismissLoader();
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
                 this.data = this.data.filter(a => {
                   if (a.veg > 0) {
                     return a;
                   }
                 });
+
               } else if (this.api.filterType == "lowcost") {
-                this.util.dismissLoader();
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
                 this.data.sort((a, b) => {
                   if (a.avarage_plate_price < b.avarage_plate_price) {
                     return -1;
@@ -81,7 +88,8 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else {
-                this.util.dismissLoader();
+                //this.spinnerService.hide();
+                // this.util.dismissLoader();
                 if (localStorage.getItem("isaddress") != "false") {
                   this.api
                     .getDataWithToken(
@@ -146,6 +154,11 @@ export class CategoryPage implements OnInit {
       }
     });
   }
+
+  ngOnInit() {
+
+  }
+
   distance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 == lat2 && lon1 == lon2) {
       return 0;

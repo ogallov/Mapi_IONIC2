@@ -2,6 +2,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController } from "@ionic/angular";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-notification",
@@ -13,22 +14,27 @@ export class NotificationPage implements OnInit {
   constructor(
     private ntrl: NavController,
     private api: ApiService,
-    private util: UtilService
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService
   ) {
-
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
-    this.api.getDataWithToken("viewNotification").subscribe(async(res: any) => {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.getDataWithToken("viewNotification").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
       }
-      this.util.dismissLoader();
-    }, async() => {
-      this.util.dismissLoader();
+      // this.util.dismissLoader();
+      //this.spinnerService.hide();
+    },() => {
+      // this.util.dismissLoader();
+      //this.spinnerService.hide();
     });
+
   }
+
+  ngOnInit() {
+  }
+  
   back() {
     this.ntrl.back();
   }

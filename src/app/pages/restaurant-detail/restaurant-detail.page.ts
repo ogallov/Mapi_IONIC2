@@ -9,6 +9,7 @@ import {
 } from "@ionic/angular";
 import { PopoverPage } from "../popover/popover.page";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-restaurant-detail",
@@ -33,17 +34,15 @@ export class RestaurantDetailPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private modalController: ModalController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService
   ) {
-
-  }
-
-  async ngOnInit() {
     this.currency = this.api.currency;
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
-      .subscribe(async(res: any) => {
+      .subscribe((res: any) => {
         if (res.success) {
           this.data = res.data;
           console.log(this.data);
@@ -59,9 +58,14 @@ export class RestaurantDetailPage implements OnInit {
 
           this.tempData = res.data.bestSeller;
           this.api.menu = res.data.menu;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       });
+
+  }
+
+  async ngOnInit() {
   }
 
   ionViewWillEnter() {

@@ -4,6 +4,7 @@ import { UtilService } from "./../../service/util.service";
 import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { OtpmodalpagePage } from "../otpmodalpage/otpmodalpage.page";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-grocery-order-detail",
@@ -22,9 +23,35 @@ export class GroceryOrderDetailPage implements OnInit {
     private util: UtilService,
     private api: ApiService,
     private gpi: GroceryService,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private spinnerService: NgxSpinnerService
   ) {
-    
+    this.currency = this.api.currency;
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api
+      .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            this.data = res.data;
+            this.itemtotal = 0;
+            this.data.orderItems.forEach((element) => {
+              this.itemtotal = this.itemtotal + element.price;
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
+            });
+            if (this.data.review) {
+              this.shopReview.rate = this.data.review.rate;
+              this.shopReview.message = this.data.review.message;
+            }
+          }
+        },
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
+        }
+      );
   }
 
   async pickupFood(id?) {
@@ -41,30 +68,8 @@ export class GroceryOrderDetailPage implements OnInit {
     return await modal.present();
   }
 
-  async ngOnInit() {
-    this.currency = this.api.currency;
-    await this.util.startLoad();
-    this.api
-      .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
-      .subscribe(
-        (res: any) => {
-          if (res.success) {
-            this.data = res.data;
-            this.itemtotal = 0;
-            this.data.orderItems.forEach(async(element) => {
-              this.itemtotal = this.itemtotal + element.price;
-              this.util.dismissLoader();
-            });
-            if (this.data.review) {
-              this.shopReview.rate = this.data.review.rate;
-              this.shopReview.message = this.data.review.message;
-            }
-          }
-        },
-        async(err) => {
-          this.util.dismissLoader();
-        }
-      );
+  ngOnInit() {
+
   }
 
   shopReiviewData() {
@@ -72,7 +77,8 @@ export class GroceryOrderDetailPage implements OnInit {
     this.shopReview.customer_id = this.data.customer.id;
     this.shopReview.shop_id = this.data.shop_id;
 
-    this.util.startLoad();
+    // this.util.startLoad();
+    //this.spinnerService.show();
     this.api.postDataWithToken("addGroceryReview", this.shopReview).subscribe(
       (res: any) => {
         if (res.success) {
@@ -85,21 +91,24 @@ export class GroceryOrderDetailPage implements OnInit {
                   this.data = res.data;
                   this.itemtotal = 0;
                   this.status = res.data.order_status;
-                  this.data.orderItems.forEach(async(element) => {
+                  this.data.orderItems.forEach((element) => {
                     this.itemtotal = this.itemtotal + element.price;
 
-                    this.util.dismissLoader();
+                    // this.util.dismissLoader();
+                    //this.spinnerService.hide();
                   });
                 }
               },
-              async(err) => {
-                this.util.dismissLoader();
+              (err) => {
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
               }
             );
         }
       },
-      async(err) => {
-        this.util.dismissLoader();
+      (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.util.presentToast("something went wrong");
       }
     );

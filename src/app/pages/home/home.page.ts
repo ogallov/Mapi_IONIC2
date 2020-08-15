@@ -11,6 +11,7 @@ import {
 import { ModalController, NavController, MenuController } from "@ionic/angular";
 import { FilterPage } from "../filter/filter.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
@@ -118,7 +119,8 @@ export class HomePage {
     private api: ApiService,
     private util: UtilService,
     private gpi: GroceryService,
-    private geolocation: Geolocation
+    private geolocation: Geolocation,
+    private spinnerService: NgxSpinnerService,
   ) {
     this.menu.enable(true);
 
@@ -136,11 +138,12 @@ export class HomePage {
     );
   }
 
-  private async initData() {
+  private initData() {
 
     this.getAdvertisingBanner();
 
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api.getDataWithToken("home").subscribe(
       (res: any) => {
         console.log(res);
@@ -151,8 +154,9 @@ export class HomePage {
           this.getGrocery();
         }
       },
-      async (err) => {
-        this.util.dismissLoader();
+      (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.err = err;
       }
     );
@@ -168,36 +172,41 @@ export class HomePage {
     });
   }
 
-  async ionViewWillEnter() {
+  ionViewWillEnter() {
 
     if (localStorage.getItem("isaddress") != "false") {
 
       if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
-        await this.util.startLoad();
+        // await this.util.startLoad();
+        //this.spinnerService.show();
         this.api
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
-            async (res: any) => {
+            (res: any) => {
               if (res.success) {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");
-                this.util.dismissLoader();
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
               }
             },
-            async (err) => {
+            (err) => {
               this.err = err;
-              this.util.dismissLoader();
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
             }
           );
 
       } else {
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
 
 
     } else {
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.geolocation
         .getCurrentPosition()
         .then((resp) => {
@@ -216,8 +225,9 @@ export class HomePage {
               resp.coords.longitude,
               options
             )
-            .then(async (result: NativeGeocoderResult[]) => {
-              this.util.dismissLoader();
+            .then((result: NativeGeocoderResult[]) => {
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
               this.userAddress.address_type = "Current Location";
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
@@ -226,8 +236,9 @@ export class HomePage {
             })
             .catch((error: any) => console.log(error));
         })
-        .catch(async (error) => {
-          this.util.dismissLoader();
+        .catch((error) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         });
     }
   }
@@ -434,19 +445,18 @@ export class HomePage {
 
   getGrocery() {
     this.api.getDataWithToken("groceryShop").subscribe(
-      async (res: any) => {
+      (res: any) => {
         if (res.success) {
           this.grocery.Store = res.data.shop;
           this.grocery.coupon = res.data.coupon;
 
           this.api.getDataWithToken("groceryCategory").subscribe(
-            async (res: any) => {
+            (res: any) => {
               console.log(res);
               
               if (res.success) {
-                console.log('<========================== res success grocery Category ===========>');
-                this.util.dismissLoader();
-                console.log('<========================== res success grocery Category ===========>');
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
                 this.grocery.category = res.data;
                 console.log(this.grocery.category);
                 
@@ -463,16 +473,19 @@ export class HomePage {
                 });
               }
             },
-            async (err) => {
-              this.util.dismissLoader();
+            (err) => {
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
               this.err = err;
             }
           );
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       },
-      async (err) => {
-        this.util.dismissLoader();
+       (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.err = err;
       }
     );

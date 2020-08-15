@@ -3,6 +3,7 @@ import { ApiService } from 'src/app/service/api.service';
 import { UtilService } from 'src/app/service/util.service';
 import { ModalController } from '@ionic/angular';
 import { GroceryService } from 'src/app/service/grocery.service';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: 'app-otpmodalpage',
@@ -15,15 +16,12 @@ export class OtpmodalpagePage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private modalController: ModalController,
-    private gpi: GroceryService
+    private gpi: GroceryService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
-
-  }
-  data: any = {};
-  err: any = {};
-
-  async ngOnInit() {
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
       .subscribe(
@@ -32,30 +30,40 @@ export class OtpmodalpagePage implements OnInit {
             this.order_id = res.data.id;
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
   }
+  data: any = {};
+  err: any = {};
 
-  async checkOtp() {
+  ngOnInit() {
+  }
+
+  checkOtp() {
     this.data.order_id = this.order_id;
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api.postDataWithToken("deliveredProduct", this.data).subscribe(
-      async(res: any) => {
+      (res: any) => {
         if (res.success) {
           this.modalController.dismiss("true");
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.err = {};
           this.order_id = res.data.id;
         } else {
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.err = {};
           this.util.presentToast(res.msg);
         }
       },
-      async(err) => {
-        this.util.dismissLoader();
+      (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.err = err.error.errors;
       }
     );

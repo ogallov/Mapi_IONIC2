@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavController, MenuController } from "@ionic/angular";
 import { TranslateService } from "@ngx-translate/core";
 import { async } from '@angular/core/testing';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-login",
@@ -25,7 +26,9 @@ export class LoginPage implements OnInit {
     private ntrl: NavController,
     private api: ApiService,
     private util: UtilService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
     this.menu.enable(false);
     if (localStorage.getItem("remember")) {
@@ -41,12 +44,13 @@ export class LoginPage implements OnInit {
     this.ntrl.navigateForward(["signup"]);
   }
 
-  async gotoSlide() {
+  gotoSlide() {
     this.user.device_token = this.api.deviceToken ? this.api.deviceToken : null;
 
-    await this.util.startLoad();
+    //this.spinnerService.show();
+    // await this.util.startLoad();
     this.api.postData("login", this.user).subscribe(
-      async(res: any) => {
+      (res: any) => {
 
         if (res.success) {
           // for remember me
@@ -83,15 +87,17 @@ export class LoginPage implements OnInit {
           this.api.verifyId = res.data.id;
           this.ntrl.navigateForward("verify");
         }
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       },
 
-      async(err) => {
+      (err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
   }

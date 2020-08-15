@@ -3,6 +3,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController } from "@ionic/angular";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-category-detail",
@@ -41,27 +42,32 @@ export class CategoryDetailPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private gpi: GroceryService,
-    private nav: NavController
+    private nav: NavController,
+    private spinnerService: NgxSpinnerService,
+
   ) {
     this.currency = this.api.currency;
   }
 
-  async ionViewWillEnter() {
+  ionViewWillEnter() {
 
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
 
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
-      async(res: any) => {
-        this.util.dismissLoader();
+      (res: any) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.data = res.data;
         console.log(this.data);
         this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
         this.getdata();
         console.log(this.data);
       },
-      async(err) => {
+      (err) => {
         console.log(err);
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
 

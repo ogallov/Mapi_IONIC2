@@ -3,6 +3,7 @@ import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController, AlertController } from "@ionic/angular";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-order-history",
@@ -17,18 +18,21 @@ export class OrderHistoryPage implements OnInit {
     private api: ApiService,
     private alertController: AlertController,
     private util: UtilService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService
   ) {
   }
 
-  async ionViewWillEnter() {
+  ionViewWillEnter() {
     this.currency = this.api.currency;
 
-    await this.util.startLoad();
-    this.api.getDataWithToken("userOrder").subscribe(async(res: any) => {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.getDataWithToken("userOrder").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     });
   }
@@ -56,27 +60,31 @@ export class OrderHistoryPage implements OnInit {
             text: val.yes,
             role: "yes",
             cssClass: "secondary",
-            handler: async() => {
-              await this.util.startLoad();
+            handler:() => {
+              // await this.util.startLoad();
+              //this.spinnerService.show();
               this.api.getDataWithToken("cancelOrder/" + id).subscribe(
                 (res: any) => {
                   if (res.success) {
                     this.util.presentToast(res.msg);
                     this.api.getDataWithToken("userOrder").subscribe(
-                      async(res: any) => {
+                      (res: any) => {
                         if (res.success) {
                           this.data = res.data;
-                          this.util.dismissLoader();
+                          // this.util.dismissLoader();
+                          //this.spinnerService.hide();
                         }
                       },
-                      async(err) => {
-                        this.util.dismissLoader();
+                      (err) => {
+                        // this.util.dismissLoader();
+                        //this.spinnerService.hide();
                       }
                     );
                   }
                 },
-               async(err) => {
-                  this.util.dismissLoader();
+               (err) => {
+                  // this.util.dismissLoader();
+                  //this.spinnerService.hide();
                 }
               );
             }

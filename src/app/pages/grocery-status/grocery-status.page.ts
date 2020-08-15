@@ -3,6 +3,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { NavController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-grocery-status",
@@ -17,21 +18,19 @@ export class GroceryStatusPage implements OnInit {
     private nav: NavController,
     private api: ApiService,
     private util: UtilService,
-    private gpi: GroceryService
+    private gpi: GroceryService,
+    private spinnerService: NgxSpinnerService
   ) {
-
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
-
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("trackGroceryOrder/" + this.gpi.orderId)
       .subscribe(
-        async (res: any) => {
+        (res: any) => {
           if (res.success) {
             this.data = res.data;
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
 
             if (
               this.data.order_status == "Pending" ||
@@ -56,8 +55,9 @@ export class GroceryStatusPage implements OnInit {
             }
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.util.presentToast("something went wrong");
         }
       );
@@ -69,6 +69,10 @@ export class GroceryStatusPage implements OnInit {
         this.getlocation();
       }
     }, this.api.request_duration);
+  }
+
+  ngOnInit() {
+
   }
 
   orderStatus() {
@@ -105,8 +109,9 @@ export class GroceryStatusPage implements OnInit {
             }
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.util.presentToast("something went wrong");
         }
       );

@@ -24,6 +24,9 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { OtpmodalpagePage } from './pages/otpmodalpage/otpmodalpage.page';
 import { OtpmodalpagePageModule } from './pages/otpmodalpage/otpmodalpage.module';
 
+// ngx spinner
+import { NgxSpinnerModule } from "ngx-spinner";
+
 @NgModule({
   declarations: [AppComponent],
   entryComponents: [],
@@ -46,7 +49,9 @@ import { OtpmodalpagePageModule } from './pages/otpmodalpage/otpmodalpage.module
     CancleOrderPageModule,
     HttpClientModule,
     AddAddressPageModule,
-    OtpmodalpagePageModule
+    OtpmodalpagePageModule,
+    NgxSpinnerModule,
+    
   ],
   providers: [
     SplashScreen,

@@ -3,6 +3,7 @@ import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController, MenuController } from "@ionic/angular";
 import * as moment from "moment";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-review",
@@ -18,25 +19,28 @@ export class ReviewPage implements OnInit {
     private ntrl: NavController,
     private menu: MenuController,
     private api: ApiService,
-    private util: UtilService
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
-
-  }
-
-  async ngOnInit() {
     this.currency = this.api.currency;
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
-      .subscribe(async(res: any) => {
+      .subscribe((res: any) => {
         if (res.success) {
           this.data = res.data;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.data.review.forEach(element => {
             element.created_at = moment(element.created_at).fromNow();
           });
         }
       });
+  }
+
+  ngOnInit() {
   }
 
   logScrolling(ev) {
@@ -50,7 +54,7 @@ export class ReviewPage implements OnInit {
   back() {
     this.ntrl.back();
   }
-  
+
   addBookmark() {
     this.bookmarkData.shop_id = this.data.id;
 

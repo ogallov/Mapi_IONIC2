@@ -2,6 +2,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { MenuController, NavController } from "@ionic/angular";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-get-otp",
@@ -20,12 +21,15 @@ export class GetOtpPage implements OnInit {
     private menu: MenuController,
     private nav: NavController,
     private api: ApiService,
-    private util: UtilService
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService
+
   ) {
     this.menu.enable(false);
   }
 
   ngOnInit() {}
+
   clearData = clear => {
     if (clear == "1") this.opt.a = "";
     else if (clear == "2") this.opt.b = "";
@@ -51,7 +55,7 @@ export class GetOtpPage implements OnInit {
     this.nav.navigateBack("verify");
   }
 
-  async goHome() {
+  goHome() {
     this.data.otp =
       this.opt.a +
       this.opt.b +
@@ -60,13 +64,16 @@ export class GetOtpPage implements OnInit {
       this.opt.e +
       this.opt.f;
 
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api.postData("checkOtp", this.data).subscribe(
-      async(res: any) => {
+      (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          //this.spinnerService.hide();
+          // this.util.dismissLoader();
           localStorage.setItem("token", res.data.token);
           this.api.userToken = res.data.token;
+
           if (res.data.address_id) {
             localStorage.setItem("isaddress", res.data.address_id);
           } else {
@@ -76,28 +83,32 @@ export class GetOtpPage implements OnInit {
           this.nav.navigateRoot("slide");
         }
       },
-      async(err) => {
+      (err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
   }
   resendOtp() {
     this.data.code = this.api.verifynuberCode;
-    this.util.startLoad();
+    // this.util.startLoad();
+    //this.spinnerService.show();
     this.api.postData("resendOTP", this.data).subscribe(
-      async(res: any) => {
+      (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.util.presentToast(res.data);
         }
       },
-      async(err) => {
+      (err) => {
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
   }

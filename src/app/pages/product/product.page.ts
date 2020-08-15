@@ -4,6 +4,7 @@ import { ApiService } from "./../../service/api.service";
 import { ProductFilterPage } from "./../product-filter/product-filter.page";
 import { NavController, PopoverController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-product",
@@ -21,7 +22,8 @@ export class ProductPage implements OnInit {
     private popoverController: PopoverController,
     private api: ApiService,
     private util: UtilService,
-    private gpi: GroceryService
+    private gpi: GroceryService,
+    private spinnerService: NgxSpinnerService
   ) {
     this.currency = this.api.currency;
 
@@ -30,12 +32,14 @@ export class ProductPage implements OnInit {
 
   ngOnInit() { }
   
-  async ionViewWillEnter() {
-    await this.util.startLoad();
+  ionViewWillEnter() {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
-      async(res: any) => {
+      (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.Store = res.data;
           console.log(this.Store);
 
@@ -43,11 +47,13 @@ export class ProductPage implements OnInit {
           this.getdata();
         }
       },
-      async(err) => {
-        this.util.dismissLoader();
+      (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
   }
+
   storeDetail(id) {
     this.gpi.itemId = id;
     this.nav.navigateForward("/product-detail");
@@ -76,6 +82,7 @@ export class ProductPage implements OnInit {
     });
     return await popover.present();
   }
+  
   getdata() {
     if (this.gpi.cartData) {
       if (this.gpi.cartData.length >= 0) {

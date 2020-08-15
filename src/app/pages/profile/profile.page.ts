@@ -6,6 +6,7 @@ import { NavController, ActionSheetController } from "@ionic/angular";
 import * as moment from "moment";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.page.html",
@@ -41,7 +42,9 @@ export class ProfilePage implements OnInit, OnDestroy {
     private camera: Camera,
     private util: UtilService,
     private route: ActivatedRoute,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
 
   }
@@ -66,13 +69,15 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  async ngOnInit() {
+  ngOnInit() {
 
-    await this.util.startLoad();
-    this.api.getDataWithToken("viewReview").subscribe(async (res: any) => {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.getDataWithToken("viewReview").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.data.review.forEach((element) => {
           element.created_at = moment(element.created_at).fromNow();
         });
@@ -153,24 +158,27 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     if (this.segment == 3) {
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
-        async (res: any) => {
+        (res: any) => {
 
           if (res.success) {
             this.err = {};
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
             })
 
             this.util.isUpdateProfile.next(true);
 
-            this.api.getDataWithToken("viewReview").subscribe(async (res: any) => {
+            this.api.getDataWithToken("viewReview").subscribe((res: any) => {
 
               if (res.success) {
                 this.data = res.data;
-                this.util.dismissLoader();
+                // this.util.dismissLoader();
+                //this.spinnerService.hide();
 
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
@@ -209,31 +217,36 @@ export class ProfilePage implements OnInit, OnDestroy {
             });
           }
         },
-        async (err) => {
+        (err) => {
           if (err.error.msg) {
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.util.presentToast(err.error.msg);
           }
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
 
     } else if (this.segment == 5) {
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
-        async (res: any) => {
+        (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.passwordData.password = "";
             this.passwordData.confirmPassword = "";
             this.err = {};
             this.util.presentToast(res.msg);
           }
         },
-        async (err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.err = err.error.errors;
         }
       );
@@ -257,14 +270,16 @@ export class ProfilePage implements OnInit, OnDestroy {
       }
 
       this.userSetting.address_id = localStorage.getItem("isaddress");
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api
         .postDataWithToken("saveSetting", this.userSetting)
-        .subscribe(async (res: any) => {
+        .subscribe((res: any) => {
           if (res.success) {
             this.lastIsAdrress = '';
             localStorage.setItem("isaddressBD", "true");
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
             })

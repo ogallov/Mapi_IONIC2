@@ -10,6 +10,7 @@ import {
   PayPalPayment,
   PayPalConfiguration,
 } from "@ionic-native/paypal/ngx";
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var RazorpayCheckout: any;
 @Component({
   selector: "app-pay-method",
@@ -29,25 +30,28 @@ export class PayMethodPage implements OnInit {
     private util: UtilService,
     private gpi: GroceryService,
     private payPal: PayPal,
-    private modalController: ModalController
+    private modalController: ModalController,
+    private spinnerService: NgxSpinnerService
   ) {
     this.apdata = this.gpi.info;
 
     this.currencyType = this.api.currencyType;
-
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
-    this.api.getDataWithToken("keySetting").subscribe(async(res: any) => {
+    
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.getDataWithToken("keySetting").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     });
   }
 
-  async paymentMethod() {
+  ngOnInit() {
+  }
+
+  paymentMethod() {
     /* 
     return */
     let rdata: any = {};
@@ -95,19 +99,23 @@ export class PayMethodPage implements OnInit {
     } else {
       rdata.payment_status = 0;
       rdata.payment_type = this.payment_type;
-      await this.util.startLoad();
+      // await this.util.startLoad();
+
+      //this.spinnerService.show();
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-        async(res: any) => {
+        (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
           }
         },
-        async(err) => {
+        (err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     }
@@ -132,25 +140,28 @@ export class PayMethodPage implements OnInit {
       },
     };
 
-    var successCallback = async(payment_id) => {
+    var successCallback = (payment_id) => {
       rdata.payment_token = payment_id;
       rdata.payment_status = 1;
       rdata.payment_type = "RAZOR";
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
 
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-        async(res: any) => {
+        (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
           }
         },
-        async(err) => {
+       (err) => {
           this.err = err.error.errors;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     };
@@ -186,26 +197,29 @@ export class PayMethodPage implements OnInit {
                   "sale"
                 );
                 this.payPal.renderSinglePaymentUI(payment).then(
-                  async(result) => {
+                  (result) => {
                     rdata.payment_token = result.response.id;
                     rdata.payment_status = 1;
                     rdata.payment_type = "PAYPAL";
                     
-                    await this.util.startLoad();
+                    // await this.util.startLoad();
+                    //this.spinnerService.show();
                     this.api
                       .postDataWithToken("createGroceryOrder", rdata)
                       .subscribe(
-                        async(res: any) => {
+                        (res: any) => {
                           if (res.success) {
-                            this.util.dismissLoader();
+                            // this.util.dismissLoader();
+                            //this.spinnerService.hide();
                             this.gpi.promocode = {};
                             this.gpi.orderId = res.data.id;
                             this.presentModal();
                           }
                         },
-                        async(err) => {
+                        (err) => {
                           this.err = err.error.errors;
-                          this.util.dismissLoader();
+                          // this.util.dismissLoader();
+                          //this.spinnerService.hide();
                         }
                       );
                   },

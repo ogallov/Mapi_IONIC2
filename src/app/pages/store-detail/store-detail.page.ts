@@ -3,6 +3,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { NavController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-store-detail",
@@ -22,16 +23,15 @@ export class StoreDetailPage implements OnInit {
     private nav: NavController,
     private api: ApiService,
     private util: UtilService,
-    private gpi: GroceryService
+    private gpi: GroceryService,
+    private spinnerService: NgxSpinnerService
   ) {
     this.currency = this.api.currency;
 
     this.dataa = JSON.parse(localStorage.getItem("store-detail"));
 
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
@@ -48,9 +48,10 @@ export class StoreDetailPage implements OnInit {
                     this.api
                       .getDataWithToken("groceryItem/" + this.gpi.storeID)
                       .subscribe(
-                        async (res: any) => {
+                        (res: any) => {
                           if (res.success) {
-                            this.util.dismissLoader();
+                            // this.util.dismissLoader();
+                            //this.spinnerService.hide();
                             this.data.product = res.data;
                             this.id = res.data.id;
                             this.data.product.forEach((element) => {
@@ -66,22 +67,28 @@ export class StoreDetailPage implements OnInit {
                             });
                           }
                         },
-                        async(err) => {
-                          this.util.dismissLoader();
+                        (err) => {
+                          // this.util.dismissLoader();
+                          //this.spinnerService.hide();
                         }
                       );
                   }
                 },
-                async(err) => {
-                  this.util.dismissLoader();
+                (err) => {
+                  // this.util.dismissLoader();
+                  //this.spinnerService.hide();
                 }
               );
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
+  }
+
+  ngOnInit() {
   }
 
   AddCart(item) {

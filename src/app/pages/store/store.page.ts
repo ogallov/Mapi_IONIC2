@@ -3,6 +3,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { NavController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-store",
@@ -18,14 +19,13 @@ export class StorePage implements OnInit {
     private nav: NavController,
     private api: ApiService,
     private util: UtilService,
-    private gpi: GroceryService
+    private gpi: GroceryService,
+    private spinnerService: NgxSpinnerService,
+
   ) {
-
-  }
-
-  async ngOnInit() {
     if (this.gpi.catId) {
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api.getDataWithToken("groceryShop/" + this.gpi.catId).subscribe(
         (res: any) => {
           if (res.success) {
@@ -37,10 +37,11 @@ export class StorePage implements OnInit {
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                async(res: any) => {
+                (res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    this.util.dismissLoader();
+                    // this.util.dismissLoader();
+                    //this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -54,20 +55,23 @@ export class StorePage implements OnInit {
                     });
                   }
                 },
-                async(err) => {
+                (err) => {
                   this.err = err;
-                  this.util.dismissLoader();
+                  // this.util.dismissLoader();
+                  //this.spinnerService.hide();
                 }
               );
           }
         },
-        async(err) => {
+        (err) => {
           this.err = err;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     } else {
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api.getDataWithToken("groceryShop").subscribe(
         (res: any) => {
           if (res.success) {
@@ -78,10 +82,11 @@ export class StorePage implements OnInit {
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                async(res: any) => {
+                (res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    this.util.dismissLoader();
+                    // this.util.dismissLoader();
+                    //this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -95,19 +100,25 @@ export class StorePage implements OnInit {
                     });
                   }
                 },
-                async(err) => {
+                (err) => {
                   this.err = err;
-                  this.util.dismissLoader();
+                  // this.util.dismissLoader();
+                  //this.spinnerService.hide();
                 }
               );
           }
         },
-        async(err) => {
+        (err) => {
           this.err = err;
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
     }
+
+  }
+
+  async ngOnInit() {
   }
 
   storeDetail(id) {

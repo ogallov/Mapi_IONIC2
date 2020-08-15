@@ -5,6 +5,7 @@ import { Component, OnInit } from "@angular/core";
 import { NavController } from "@ionic/angular";
 import { deepStrictEqual } from "assert";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-order-detail",
@@ -23,24 +24,26 @@ export class OrderDetailPage implements OnInit {
   rate = 0;
   err: any = {};
   currency: any;
+
   constructor(
     private ntrl: NavController,
     private api: ApiService,
     private util: UtilService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService
   ) {
-  }
 
-  async ngOnInit() {
     this.currency = this.api.currency;
-    await this.util.startLoad();
-
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+  
     this.api.getDataWithToken("singleOrder/" + this.api.orderID).subscribe(
-      async(res: any) => {
+      (res: any) => {
         if (res.success) {
-          this.util.dismissLoader();
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.data = res.data;
-
+  
           this.itemtotal = 0;
           this.data.orderItems.forEach(element => {
             this.itemtotal = this.itemtotal + element.price;
@@ -59,11 +62,15 @@ export class OrderDetailPage implements OnInit {
           }
         }
       },
-      async(err) => {
-        this.util.dismissLoader();
+      (err) => {
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.err = err;
       }
     );
+  }
+
+  ngOnInit() {
   }
 
   back() {

@@ -4,6 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { ModalController, NavController } from "@ionic/angular";
 import { ApiService } from "./../../service/api.service";
 import { TranslateService } from '@ngx-translate/core';
+import { NgxSpinnerService } from 'ngx-spinner';
 @Component({
   selector: "app-select-address",
   templateUrl: "./select-address.page.html",
@@ -17,19 +18,18 @@ export class SelectAddressPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private ntrl: NavController,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private spinnerService: NgxSpinnerService
   ) {
-
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
-    this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.getDataWithToken("userAddress").subscribe((res: any) => {
       console.log(res);
 
       if (res.success) {
         this.addressList = res.data;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         if (localStorage.getItem("isaddress")) {
           this.addressList.forEach(element => {
             if (element.id == localStorage.getItem("isaddress")) {
@@ -41,20 +41,25 @@ export class SelectAddressPage implements OnInit {
     });
   }
 
+  ngOnInit() {
+  }
+
   async addAddress() {
     this.isAddadress = true;
     const modal = await this.modalController.create({
       component: AddAddressPage
     });
-    modal.onDidDismiss().then(async(data: any) => {
+    modal.onDidDismiss().then(async (data: any) => {
       if (data["data"] != undefined) {
         if (data) {
-          await this.util.startLoad();
-          this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
+          // await this.util.startLoad();
+          //this.spinnerService.show();
+          this.api.getDataWithToken("userAddress").subscribe((res: any) => {
             console.log(res);
             if (res.success) {
               this.addressList = res.data;
-              this.util.dismissLoader();
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {
@@ -87,16 +92,17 @@ export class SelectAddressPage implements OnInit {
     return await modal.present();
   }
 
-  async deleteAddress(address) {
-    await this.util.startLoad();
+  deleteAddress(address) {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("deleteAddress/" + address.id)
       .subscribe((res: any) => {
         if (res.success) {
-          this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
+          this.api.getDataWithToken("userAddress").subscribe( (res: any) => {
             if (res.success) {
               this.addressList = res.data;
-              this.util.dismissLoader();
+              // this.util.dismissLoader();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {

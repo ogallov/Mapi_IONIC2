@@ -6,6 +6,7 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { NativeGeocoder } from "@ionic-native/native-geocoder/ngx";
 import { TranslateService } from "@ngx-translate/core";
 import { SuccessModalPage } from '../success-modal/success-modal.page';
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var google: any;
 @Component({
   selector: "app-cart",
@@ -39,6 +40,8 @@ export class CartPage implements OnInit {
     private util: UtilService,
     private translate: TranslateService,
     private modalController: ModalController,
+    private spinnerService: NgxSpinnerService,
+    
   ) {
     
     this.currency = this.api.currency;
@@ -73,7 +76,7 @@ export class CartPage implements OnInit {
 
     if (this.chaneAddress) {
 
-      await this.util.startLoad();
+      // await this.util.startLoad();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {

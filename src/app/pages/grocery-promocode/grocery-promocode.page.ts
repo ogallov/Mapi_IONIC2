@@ -3,6 +3,7 @@ import { GroceryService } from "./../../service/grocery.service";
 import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-grocery-promocode",
@@ -16,40 +17,47 @@ export class GroceryPromocodePage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private gpi: GroceryService,
-    private ntrl: NavController
+    private ntrl: NavController,
+    private spinnerService: NgxSpinnerService
   ) {
-
-  }
-
-  async ngOnInit() {
-    await this.util.startLoad();
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("viewGroceryShopCoupon/" + this.gpi.storeID)
       .subscribe(
-        async (res: any) => {
+        (res: any) => {
           if (res.success) {
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
             this.data = res.data;
           }
         },
-        async (err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
           this.util.presentToast("somethig went wrong");
         }
       );
   }
 
+  ngOnInit() {
+
+  }
+
   applyPromocode(item) {
     let promocode: any = {};
     promocode.code = item.code;
-    this.util.startLoad();
-    this.api.postDataWithToken("chkCoupon", promocode).subscribe(async(res: any) => {
+    // this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.postDataWithToken("chkCoupon", promocode).subscribe((res: any) => {
       if (res.success) {
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.gpi.promocode = item;
         this.ntrl.back();
       } else {
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
         this.util.presentToast(res.msg);
       }
     });

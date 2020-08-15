@@ -2,6 +2,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController, MenuController } from "@ionic/angular";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-signup",
@@ -17,42 +18,46 @@ export class SignupPage implements OnInit {
     private ntrl: NavController,
     private menu: MenuController,
     private api: ApiService,
-    private util: UtilService
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService
   ) {
     this.menu.enable(false);
   }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   signUp() {
     this.ntrl.navigateRoot(["login"]);
   }
 
-  async gotologin() {
-    await this.util.startLoad();
-    this.api.postData("register", this.data).subscribe(async(res: any) => {
-        if (res.success) { 
-          if (res.data.address_id) {
-            localStorage.setItem("isaddress", res.data.address_id);
-          } else {
-            localStorage.setItem("isaddress", "false");
-          }
-          if (res.data.token) {
-            localStorage.setItem("token", res.data.token);
-            this.api.userToken = res.data.token;
-            this.util.isUpdateProfile.next(true);
-            this.ntrl.navigateRoot("/slide");
-          } else {
-            this.ntrl.navigateForward("verify");
-          }
+  gotologin() {
+    // await this.util.startLoad();
+    //this.spinnerService.show();
+    this.api.postData("register", this.data).subscribe((res: any) => {
+      if (res.success) {
+        if (res.data.address_id) {
+          localStorage.setItem("isaddress", res.data.address_id);
+        } else {
+          localStorage.setItem("isaddress", "false");
         }
-        this.util.dismissLoader();
-        this.err = {};
-        this.util.presentToast(res.msg);
-      },
-      async(err) => {
+        if (res.data.token) {
+          localStorage.setItem("token", res.data.token);
+          this.api.userToken = res.data.token;
+          this.util.isUpdateProfile.next(true);
+          this.ntrl.navigateRoot("/slide");
+        } else {
+          this.ntrl.navigateForward("verify");
+        }
+      }
+      // this.util.dismissLoader();
+      //this.spinnerService.hide();
+      this.err = {};
+      this.util.presentToast(res.msg);
+    },
+      async (err) => {
         this.err = err.error.errors;
-        this.util.dismissLoader();
+        // this.util.dismissLoader();
+        //this.spinnerService.hide();
       }
     );
   }

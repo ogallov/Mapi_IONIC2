@@ -8,6 +8,7 @@ import {
 } from "@ionic/angular";
 import { CancleOrderPage } from "../cancle-order/cancle-order.page";
 import { TranslateService } from "@ngx-translate/core";
+import { NgxSpinnerService } from 'ngx-spinner';
 declare var google;
 
 @Component({
@@ -222,35 +223,33 @@ export class TimelinePage implements OnInit {
     private ntrl: NavController,
     private api: ApiService,
     private util: UtilService,
-    private alertController: AlertController
+    private alertController: AlertController,
+    private spinnerService: NgxSpinnerService
   ) {
     this.currency = this.api.currency;
     this.data.driver = {};
-
-  }
-
-  async ngOnInit() {
-    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
-    //Add 'implements OnInit' to the class.
-    await this.util.startLoad();
+    
+    // await this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("trackOrder/" + this.api.checkOrderStatus)
       .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
-
+  
           this.getUserAddress();
           this.getShopAddress();
-
-          this.util.dismissLoader();
-
+  
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
+  
           if (this.data.deliveryBoy_id != null) {
             this.isvisible = true;
             this.driver = {
               lat: parseFloat(res.data.driver.lat),
               lng: parseFloat(res.data.driver.lang),
             };
-
+  
             this.driver.name = res.data.driver.name;
             this.driver.imagePath = res.data.driver.imagePath;
             this.driver.image = res.data.driver.image;
@@ -258,7 +257,7 @@ export class TimelinePage implements OnInit {
             this.isvisible = true;
             this.Centerlat = parseFloat(this.driver.lat);
             this.Centerlng = parseFloat(this.driver.lang);
-
+  
             if (
               this.data.order_status == "PickUpFood" ||
               this.data.order_status == "OnTheWay" ||
@@ -272,7 +271,7 @@ export class TimelinePage implements OnInit {
             this.Centerlat = parseFloat(this.origin.lat);
             this.Centerlng = parseFloat(this.origin.lng);
           }
-
+  
           if (
             this.data.order_status == "Pending" ||
             this.data.order_status == "Approved" ||
@@ -308,6 +307,10 @@ export class TimelinePage implements OnInit {
     }, this.api.request_duration);
   }
 
+  ngOnInit() {
+
+  }
+
   async cancleOrder() {
     this.translate.get("cancel_order_alert").subscribe(async (val) => {
       console.log("val: ", val);
@@ -319,23 +322,27 @@ export class TimelinePage implements OnInit {
             text: val.yes,
             role: "yes",
             cssClass: "secondary",
-            handler: async () => {
-              await this.util.startLoad();
+            handler: () => {
+              // await this.util.startLoad();
+              //this.spinnerService.show();
               this.api
                 .getDataWithToken("cancelOrder/" + this.data.id)
                 .subscribe(
-                  async(res: any) => {
+                  (res: any) => {
                     if (res.success) {
-                      this.util.dismissLoader();
+                      // this.util.dismissLoader();
+                      //this.spinnerService.hide();
                       this.util.presentToast(res.msg);
                       this.ntrl.navigateRoot("/order-history");
                     } else {
-                      this.util.dismissLoader();
+                      // this.util.dismissLoader();
+                      //this.spinnerService.hide();
                       this.util.presentToast(res.msg);
                     }
                   },
-                  async(err) => {
-                    this.util.dismissLoader();
+                  (err) => {
+                    // this.util.dismissLoader();
+                    //this.spinnerService.hide();
                   }
                 );
             },
@@ -420,13 +427,14 @@ export class TimelinePage implements OnInit {
     );
   }
 
-  async getUserAddress() {
+  getUserAddress() {
     if (localStorage.getItem("isaddress") != "false") {
-      await this.util.startLoad();
+      // await this.util.startLoad();
+      //this.spinnerService.show();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe(
-          async(res: any) => {
+          (res: any) => {
             if (res.success) {
               this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city + " " + res.data.zipcode;
 
@@ -442,12 +450,14 @@ export class TimelinePage implements OnInit {
                   }
                 }
               );
-              this.util.dismissLoader();
+              // this.util.dismissLoader();
+              //this.spinnerService.hide();
             }
           },
-          async(err) => {
+          (err) => {
             this.err = err;
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
           }
         );
     }

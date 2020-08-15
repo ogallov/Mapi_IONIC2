@@ -11,6 +11,7 @@ import { NavController, ModalController } from "@ionic/angular";
 import { Component, OnInit, ViewChild, ElementRef } from "@angular/core";
 import { mapStyle } from "./../../../environments/environment.prod";
 import { GrocerySuccessPage } from '../grocery-success/grocery-success.page';
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-grocery-cart",
@@ -61,6 +62,7 @@ export class GroceryCartPage implements OnInit {
     private util: UtilService,
     private nativeGeocoder: NativeGeocoder,
     private modalController: ModalController,
+    private spinnerService: NgxSpinnerService
 
   ) {
     this.cuurecy = this.api.currency;
@@ -75,7 +77,8 @@ export class GroceryCartPage implements OnInit {
 
     this.data.toPay = this.toPay;
 
-    this.util.startLoad();
+    // this.util.startLoad();
+    //this.spinnerService.show();
     this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
@@ -101,23 +104,26 @@ export class GroceryCartPage implements OnInit {
                 "getAddress/" + localStorage.getItem("isaddress")
               )
               .subscribe(
-                async(res: any) => {
+                (res: any) => {
                   if (res.success) {
-                    this.util.dismissLoader();
+                    //this.spinnerService.hide();
+                    // this.util.dismissLoader();
                     this.data.Deafult_address = res.data;
                     this.mapData();
                     this.data.userlat = res.data.lat;
                     this.data.userlang = res.data.lang;
                   }
                 },
-                async(err) => {
-                  this.util.dismissLoader();
+                (err) => {
+                  // this.util.dismissLoader();
+                  //this.spinnerService.hide();
                 }
               );
           }
         },
-        async(err) => {
-          this.util.dismissLoader();
+        (err) => {
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
         }
       );
   }
@@ -131,15 +137,17 @@ export class GroceryCartPage implements OnInit {
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe(
-          async(res: any) => {
+          (res: any) => {
             if (res.success) {
               this.data.Deafult_address = res.data;
               this.mapData();
             }
-            this.util.dismissLoader();
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
           },
-          async(err) => {
-            this.util.dismissLoader();
+          (err) => {
+            // this.util.dismissLoader();
+            //this.spinnerService.hide();
           }
         );
     }

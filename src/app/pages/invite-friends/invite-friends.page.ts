@@ -3,6 +3,7 @@ import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController } from "@ionic/angular";
 import { SocialSharing } from "@ionic-native/social-sharing/ngx";
+import { NgxSpinnerService } from 'ngx-spinner';
 
 @Component({
   selector: "app-invite-friends",
@@ -15,19 +16,23 @@ export class InviteFriendsPage implements OnInit {
     private ntrl: NavController,
     private api: ApiService,
     private socialSharing: SocialSharing,
-    private util: UtilService
-  ) {
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService
+    ) {
+      // await this.util.startLoad();
+      //this.spinnerService.show();
+      this.api.getDataWithToken("friendsCode").subscribe((res: any) => {
+        if (res.success) {
+          this.data = res.data;
+          // this.util.dismissLoader();
+          //this.spinnerService.hide();
+        }
+      });
   }
 
-  async ngOnInit() {
-    await this.util.startLoad();
-    this.api.getDataWithToken("friendsCode").subscribe(async(res: any) => {
-      if (res.success) {
-        this.data = res.data;
-        this.util.dismissLoader();
-      }
-    });
+  ngOnInit() {
   }
+
   back() {
     this.ntrl.back();
   }
