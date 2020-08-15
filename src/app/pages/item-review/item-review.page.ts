@@ -21,7 +21,7 @@ export class ItemReviewPage implements OnInit {
       .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       });
   }

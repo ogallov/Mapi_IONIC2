@@ -49,7 +49,7 @@ export class PaymentMethodPage implements OnInit {
     //     this.razor_key = res.data.razorPublishKey;
     //     this.paypalProductionkey = res.data.paypalProduction;
     //     this.paypalSanboxkey = res.data.paypalSendbox;
-    //     await this.util.dismissLoader();
+    //     this.util.dismissLoader();
     //   }
     // });
   }
@@ -127,7 +127,7 @@ export class PaymentMethodPage implements OnInit {
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
@@ -135,7 +135,7 @@ export class PaymentMethodPage implements OnInit {
         
         async(err) => {
           this.err = err.error.errors;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     }
@@ -187,14 +187,14 @@ export class PaymentMethodPage implements OnInit {
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
         },
         async(err) => {
           this.err = err.error.errors;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     };
@@ -240,14 +240,14 @@ export class PaymentMethodPage implements OnInit {
                         async(res: any) => {
                           if (res.success) {
                             this.api.promocode = {};
-                            await this.util.dismissLoader();
+                            this.util.dismissLoader();
                             this.api.checkOrderStatus = res.data.id;
                             this.presentModal();
                           }
                         },
                         async(err) => {
                           this.err = err.error.errors;
-                          await this.util.dismissLoader();
+                          this.util.dismissLoader();
                         }
                       );
                   },

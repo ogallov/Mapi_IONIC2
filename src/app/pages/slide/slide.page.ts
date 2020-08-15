@@ -14,6 +14,7 @@ export class SlidePage implements OnInit {
 
   ngOnInit() {
   }
+  
   home(){
     this.ntrl.navigateRoot('home');
   }

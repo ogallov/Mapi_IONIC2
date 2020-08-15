@@ -1,11 +1,16 @@
 ion-header {
+  background: #000;
+
   ion-toolbar {
+    --background: transparent;
+
     ion-title {
       font-family: "fivo-regular";
       text-transform: uppercase;
     }
+
     ion-back-button {
-      color: var(--ion-color-green);
+      color: var(--ion-color-light);
     }
   }
   .search_div {
@@ -13,12 +18,15 @@ ion-header {
   }
 }
 ion-content {
+  --background: #000;
+
   .store_div {
     display: flex;
     flex-wrap: wrap;
     padding: 10px 16px 10px 16px;
     flex: 1 1;
     justify-content: space-between;
+
     .product_div {
       width: 48%;
       border-radius: 5px;
@@ -26,13 +34,16 @@ ion-content {
       padding: 10px 7px;
       margin-bottom: 20px;
       text-align: center;
+
       .name {
         margin-top: 5px;
         font-size: 18px;
-        color: var(--light-black-color);
+        // color: var(--light-black-color);
+        color: var(--ion-color-light);
         font-family: "fivo-regular";
         margin-bottom: 2px;
       }
+      
       img {
         height: 123px;
         width: 100%;

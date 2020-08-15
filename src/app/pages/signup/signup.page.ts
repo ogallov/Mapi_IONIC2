@@ -46,13 +46,13 @@ export class SignupPage implements OnInit {
             this.ntrl.navigateForward("verify");
           }
         }
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.err = {};
         this.util.presentToast(res.msg);
       },
       async(err) => {
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

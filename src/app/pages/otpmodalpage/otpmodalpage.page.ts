@@ -33,7 +33,7 @@ export class OtpmodalpagePage implements OnInit {
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
   }
@@ -45,17 +45,17 @@ export class OtpmodalpagePage implements OnInit {
       async(res: any) => {
         if (res.success) {
           this.modalController.dismiss("true");
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.err = {};
           this.order_id = res.data.id;
         } else {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.err = {};
           this.util.presentToast(res.msg);
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.err = err.error.errors;
       }
     );

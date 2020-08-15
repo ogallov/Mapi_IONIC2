@@ -37,20 +37,20 @@ export class VerifyPage implements OnInit {
     this.api.postData("verifyPhone", this.data).subscribe(
       async (res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast(res.msg);
           this.api.verifynumber = this.data.phone;
           this.api.verifynuberCode = this.data.code;
           this.nav.navigateRoot("get-otp");
         } else {
           this.err = {};
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast(res.msg);
         }
       },
       async (err) => {
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

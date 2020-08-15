@@ -12,11 +12,13 @@ import { type } from "os";
 import { Geolocation } from '@ionic-native/geolocation/ngx';
 import { TranslateService } from '@ngx-translate/core';
 declare var google;
+
 @Component({
   selector: "app-add-address",
   templateUrl: "./add-address.page.html",
   styleUrls: ["./add-address.page.scss"]
 })
+
 export class AddAddressPage implements OnInit {
   addressData: any = {};
   isEdit: boolean = false;
@@ -30,13 +32,14 @@ export class AddAddressPage implements OnInit {
   geocoder = new google.maps.Geocoder();
   Centerlat = 22.308155;
   Centerlng = 70.800705;
-  public agmMap:any = {
+  agmMap:any = {
     lat: '',
     lng: ''
   }
   map: any;
   TCenterlat: any;
   TCenterlng: any;
+
   constructor(
     private modalController: ModalController,
     private api: ApiService,
@@ -67,6 +70,7 @@ export class AddAddressPage implements OnInit {
           element.checked = false;
         }
       });
+
     }  else {
       this.geolocation.getCurrentPosition().then((res:any) => {
        
@@ -101,6 +105,7 @@ export class AddAddressPage implements OnInit {
           this.addressData.address_type = element.name;
         }
       });
+
       this.addressData.address_id = this.addressData.id;
 
       await this.util.startLoad();
@@ -113,7 +118,7 @@ export class AddAddressPage implements OnInit {
             console.log(res);
             
             if (res.success) {
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
               this.translate.get('toasts').subscribe(async val => {  
                 this.util.presentToast(val.address_update);
               })
@@ -123,10 +128,11 @@ export class AddAddressPage implements OnInit {
             }
           },
           async (err) => {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.err = err.error.errors;
           }
         );
+
     } else {
       
       this.addressType.forEach(element => {
@@ -142,7 +148,7 @@ export class AddAddressPage implements OnInit {
       this.api.postDataWithToken("addAddress", this.addressData).subscribe(
         async(res: any) => {
           if (res.success) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             if (localStorage.getItem("isaddress") == "false") {
               localStorage.setItem("isaddress", res.data.id);
             }
@@ -153,12 +159,13 @@ export class AddAddressPage implements OnInit {
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.err = err.error.errors;
         }
       );
     }
   }
+  
   centerChange($event) {
     this.TCenterlat = $event.coords.lat;
     this.TCenterlng = $event.coords.lng;

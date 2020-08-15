@@ -9,10 +9,13 @@ import { SuccessModalPage } from '../success-modal/success-modal.page';
 })
 export class PaymentPage implements OnInit {
 
-  constructor(private modalController:ModalController, private ntrl:NavController) { }
+  constructor(private modalController: ModalController,
+    private ntrl: NavController
+    ) { }
 
   ngOnInit() {
   }
+
   async presentModal() {
     const modal = await this.modalController.create({
       component: SuccessModalPage,

@@ -52,7 +52,7 @@ export class CategoryDetailPage implements OnInit {
 
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
       async(res: any) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.data = res.data;
         console.log(this.data);
         this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
@@ -61,7 +61,7 @@ export class CategoryDetailPage implements OnInit {
       },
       async(err) => {
         console.log(err);
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
 

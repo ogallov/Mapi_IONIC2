@@ -28,12 +28,12 @@ export class GroceryHistoryPage implements OnInit {
     this.api.getDataWithToken("groceryOrder").subscribe(
       async (res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.data = res.data;
         }
       },
       async (err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

@@ -35,7 +35,7 @@ export class ProductPage implements OnInit {
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.Store = res.data;
           console.log(this.Store);
 
@@ -44,7 +44,7 @@ export class ProductPage implements OnInit {
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

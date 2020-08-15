@@ -28,7 +28,7 @@ export class OrderHistoryPage implements OnInit {
     this.api.getDataWithToken("userOrder").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     });
   }
@@ -66,17 +66,17 @@ export class OrderHistoryPage implements OnInit {
                       async(res: any) => {
                         if (res.success) {
                           this.data = res.data;
-                          await this.util.dismissLoader();
+                          this.util.dismissLoader();
                         }
                       },
                       async(err) => {
-                        await this.util.dismissLoader();
+                        this.util.dismissLoader();
                       }
                     );
                   }
                 },
                async(err) => {
-                  await this.util.dismissLoader();
+                  this.util.dismissLoader();
                 }
               );
             }

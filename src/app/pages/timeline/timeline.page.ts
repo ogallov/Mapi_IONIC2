@@ -242,7 +242,7 @@ export class TimelinePage implements OnInit {
           this.getUserAddress();
           this.getShopAddress();
 
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
 
           if (this.data.deliveryBoy_id != null) {
             this.isvisible = true;
@@ -326,16 +326,16 @@ export class TimelinePage implements OnInit {
                 .subscribe(
                   async(res: any) => {
                     if (res.success) {
-                      await this.util.dismissLoader();
+                      this.util.dismissLoader();
                       this.util.presentToast(res.msg);
                       this.ntrl.navigateRoot("/order-history");
                     } else {
-                      await this.util.dismissLoader();
+                      this.util.dismissLoader();
                       this.util.presentToast(res.msg);
                     }
                   },
                   async(err) => {
-                    await this.util.dismissLoader();
+                    this.util.dismissLoader();
                   }
                 );
             },
@@ -442,12 +442,12 @@ export class TimelinePage implements OnInit {
                   }
                 }
               );
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
             }
           },
           async(err) => {
             this.err = err;
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
           }
         );
     }

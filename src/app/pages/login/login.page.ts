@@ -83,7 +83,7 @@ export class LoginPage implements OnInit {
           this.api.verifyId = res.data.id;
           this.ntrl.navigateForward("verify");
         }
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       },
 
       async(err) => {
@@ -91,7 +91,7 @@ export class LoginPage implements OnInit {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

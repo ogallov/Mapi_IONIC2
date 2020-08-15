@@ -31,7 +31,7 @@ export class GroceryStatusPage implements OnInit {
         async (res: any) => {
           if (res.success) {
             this.data = res.data;
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
 
             if (
               this.data.order_status == "Pending" ||
@@ -57,7 +57,7 @@ export class GroceryStatusPage implements OnInit {
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast("something went wrong");
         }
       );
@@ -106,7 +106,7 @@ export class GroceryStatusPage implements OnInit {
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast("something went wrong");
         }
       );

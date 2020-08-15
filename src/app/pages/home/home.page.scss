@@ -9,9 +9,11 @@ ion-header {
     .locationContent {
       display: flex;
       align-items: center;
+
       img {
         margin-right: 8px;
       }
+
       .textContent {
         .location {
           font-family: Poppins-Medium;
@@ -27,6 +29,7 @@ ion-header {
             margin-left: 6px;
           }
         }
+
         .address {
           margin: 0;
           // color: var(--ion-color-darkBlue);
@@ -40,6 +43,7 @@ ion-header {
       }
     }
   }
+
   .mode_btn {
     // color: var(--ion-color-darkBlue);
     color: var(--ion-color-light);
@@ -49,6 +53,7 @@ ion-header {
     height: 18px;
     text-transform: capitalize;
   }
+
   .active {
     color: var(--green-color);
   }
@@ -61,30 +66,36 @@ ion-header {
     ion-searchbar {
       margin-top: 20px;
     }
+
     .filter_p {
       font-size: 12px;
       font-family: "Poppins-Medium";
       color: var(--ion-color-light);
       // color: var(--ion-color-darkBlue);
+
       span {
         img {
           margin-right: 3px;
         }
       }
     }
+
     .offer_div {
       margin-top: 10px;
       margin-left: 16px;
       overflow-y: auto;
       display: -webkit-box;
+      
       .img_div {
         margin-right: 10px;
         position: relative;
+
         img {
           border-radius: 5px;
           width: 135px;
           height: 150px;
         }
+
         .offer {
           background-color: rgba(255, 255, 255, 0.7);
           position: absolute;
@@ -100,6 +111,7 @@ ion-header {
           justify-content: center;
           align-items: center;
         }
+
         .discount_p {
           font-size: 10px;
           font-family: "Poppins-Medium";
@@ -115,24 +127,30 @@ ion-header {
         }
       }
     }
+
     .offer_div::-webkit-scrollbar {
       display: none;
     }
+
     .feature_row {
       display: -webkit-box;
       margin-top: 15px;
       overflow-y: auto;
       margin-left: 10px;
       margin-bottom: 20px;
+
       .first_div {
         display: grid;
         margin-right: 5px;
+
         .img_row {
           display: flex;
           justify-content: center;
         }
+
         .detail_div {
           display: flex;
+
           .tittle {
             font-size: 9.5px;
             font-family: "Poppins-SemiBold";
@@ -145,22 +163,28 @@ ion-header {
         }
       }
     }
+
     .feature_row::-webkit-scrollbar {
       display: none;
     }
+
     .card_div {
       display: flex;
       margin: 13px 16px;
+
       .div_image {
         padding-right: 10px;
+
         img {
           border-radius: 5px;
           width: 87px;
           height: 78px;
         }
       }
+
       .data_div {
         width: 70%;
+
         .btn_div {
           font-size: 8.5px;
           font-family: "Poppins-Medium";
@@ -171,14 +195,17 @@ ion-header {
           margin-right: 0px;
           --border-radius: 2px;
           --box-shadow: none;
+
           &.trending {
             --background: var(--ion-color-google-btn);
             --background-activated: var(--ion-color-google-btn);
           }
         }
+
         .btn_color {
           --background: var(--ion-color-btn-color);
         }
+
         .item {
           font-size: 14px;
           color: var(--ion-color-light);
@@ -187,6 +214,7 @@ ion-header {
           margin-top: 4px;
           margin-bottom: 5px;
         }
+
         .type {
           font-size: 10.5px;
           font-family: "Poppins-Regular";
@@ -195,28 +223,34 @@ ion-header {
           margin-top: 0px;
           margin-bottom: 3px;
         }
+
         .percent {
           font-size: 10.5px;
           font-family: "Poppins-Medium";
           color: var(--ion-color-green);
           margin-top: 0px;
           margin-bottom: 3px;
+
           ion-icon {
             margin-right: 5px;
           }
         }
+
         .rate {
           font-size: 10.5px;
           display: flex;
           font-family: "Poppins-Regular";
           // color: var(--ion-color-darkgray);
           color: var(--ion-color-light);
+
           ion-icon {
             color: var(--ion-color-yellow);
             margin-right: 5px;
           }
+
           span {
             margin-right: 8px;
+
             .point {
               height: 6px;
               width: 6px;
@@ -226,24 +260,29 @@ ion-header {
               align-self: center;
             }
           }
+
           .point_span {
             display: flex;
           }
         }
       }
     }
+
     .slider_div {
       display: -webkit-box;
       overflow-y: auto;
       margin-left: 16px;
+
       .menu_div {
         margin-right: 10px;
         position: relative;
+
         img {
           border-radius: 5px;
           width: 100px;
           height: 78px;
         }
+
         .img_type {
           font-size: 10px;
           font-family: "Poppins-Medium";
@@ -258,6 +297,7 @@ ion-header {
           padding: 5px 7px;
         }
       }
+
       .pocket_div_img {
         img {
           width: 135px;
@@ -265,9 +305,11 @@ ion-header {
         }
       }
     }
+
     .slider_div::-webkit-scrollbar {
       display: none;
     }
+
     .heading {
       font-size: 14px;
       font-family: "Poppins-Medium";
@@ -282,6 +324,7 @@ ion-header {
 .swiper-slide-next {
   height: 150px !important;
   opacity: 0.3;
+
   img {
     width: 100% !important;
     max-width: 100% !important;
@@ -293,6 +336,7 @@ ion-header {
 
 .swiper-slide-active {
   height: 170px;
+
   img {
     width: 100% !important;
     max-width: 100% !important;
@@ -306,10 +350,12 @@ ion-slides {
   height: 170px;
   margin-top: 19px;
   margin-bottom: 26px;
+
   ion-slide {
     border-radius: 5px;
     justify-content: space-around;
     text-align: inherit;
+
     .swiper-slide img {
       width: 100% !important;
       max-width: 100% !important;
@@ -318,6 +364,7 @@ ion-slides {
       object-fit: fill !important;
       border-radius: 3px;
     }
+
     h2 {
       position: absolute;
       bottom: 0;
@@ -345,6 +392,7 @@ $colors: (
   #e3bd36,
   #5191fa
 );
+
 @for $i from 1 through length($colors) {
   .swiper-slide:nth-child(#{length($colors)}n + #{$i}) {
     background: nth($colors, $i);
@@ -364,6 +412,7 @@ $colors: (
     display: flex;
     justify-content: space-between;
     align-items: center;
+
     .more_btn {
       font-size: 14px;
       text-transform: capitalize;
@@ -371,25 +420,30 @@ $colors: (
       height: 20px;
     }
   }
+
   .trending_div {
     display: -webkit-box;
     overflow-x: auto;
     padding: 10px 0px 10px 16px;
+
     .product_div {
       width: 145px;
       border-radius: 5px;
       box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
       padding: 10px 7px;
       margin-right: 16px;
+
       .img_div {
         display: flex;
         justify-content: center;
         padding: 10px 0px 20px 0px;
+
         img {
           height: 100px;
           width: 80px;
         }
       }
+
       .name {
         font-size: 15px;
         font-family: "fivo-regular";
@@ -397,6 +451,7 @@ $colors: (
         color: var(--ion-color-light);
         margin: 0;
       }
+
       .qunty {
         font-size: 12px;
         // color: var(--border-color);
@@ -404,6 +459,7 @@ $colors: (
         font-family: "fivo-regular";
         margin: 4px 0px;
       }
+
       .price {
         font-size: 14px;
         // color: var(--green-color);
@@ -412,21 +468,25 @@ $colors: (
         margin: 0;
       }
     }
+
     .btn_div {
       display: flex;
       align-items: center;
       justify-content: space-between;
+
       .add_btn {
         height: 15px;
         width: 15px;
         --background: var(--ion-color-darkBlue);
         --background-activated: var(--ion-color-darkBlue);
         // --border-radius: 2px;
+
         ion-icon {
           height: 9px;
           width: 9px;
         }
       }
+
       .qty_p {
         font-size: 14px;
         // color: var(--border-color);
@@ -435,15 +495,18 @@ $colors: (
         margin: 0 5px;
         padding-top: 2px;
       }
+
       .qty_div {
         display: flex;
         align-items: center;
       }
     }
   }
+
   .trending_div::-webkit-scrollbar {
     display: none;
   }
+
   .offer_div {
     background: transparent;
     --background: transparent;
@@ -470,6 +533,7 @@ $colors: (
         font-family: "fivo-medium";
         margin: 0;
       }
+
       .text_lbl {
         font-size: 17px;
         // color: var(--light-black-color);
@@ -479,10 +543,12 @@ $colors: (
       }
     }
   }
+
   .store_div {
     display: -webkit-box;
     overflow-x: auto;
     padding: 10px 0px 10px 16px;
+
     .product_div {
       width: 145px;
       border-radius: 5px;
@@ -490,6 +556,7 @@ $colors: (
       padding: 10px 7px;
       margin-right: 16px;
       position: relative;
+
       .new_div {
         width: 51px;
         height: 17px;
@@ -510,9 +577,12 @@ $colors: (
           margin: 0;
         }
       }
+
       .simg_div {
         text-align: center;
-        padding: 45px 0px 20px 0px;
+        // padding: 45px 0px 20px 0px;
+        padding: 10px 0px 20px 0px;
+
         img {
           max-width: 115px;
           height: 60px;
@@ -530,10 +600,12 @@ $colors: (
         margin-bottom: 5px;
         text-align: center;
       }
+
       .organic_div {
         padding: 5px 0px;
         display: flex;
         align-items: center;
+
         .dot_div {
           height: 5px;
           width: 5px;
@@ -541,6 +613,7 @@ $colors: (
           background-color: var(--green-color);
           margin: 0px 5px;
         }
+
         .or_lbl {
           font-size: 14px;
           // color: var(--border-color);
@@ -549,6 +622,7 @@ $colors: (
           margin: 0;
         }
       }
+
       .away_lbl {
         font-size: 12px;
         font-family: "fivo-regular";
@@ -559,10 +633,12 @@ $colors: (
       }
     }
   }
+
   .store_div::-webkit-scrollbar,
   .categories_div::-webkit-scrollbar {
     display: none;
   }
+
   .money_offer {
     height: 107px;
     margin: 15px 0px;
@@ -571,6 +647,7 @@ $colors: (
     display: flex;
     align-items: center;
     justify-content: center;
+
     .detail_div {
       width: 64%;
       padding-left: 15px;
@@ -583,6 +660,7 @@ $colors: (
       margin-top: 0;
       margin-bottom: 5px;
     }
+
     .text_lbl {
       font-size: 14px;
       color: var(--coupon_green);
@@ -591,6 +669,7 @@ $colors: (
       margin: 0;
     }
   }
+
   .categories_div {
     display: -webkit-box;
     overflow-x: auto;
@@ -603,11 +682,13 @@ $colors: (
       padding: 25px 0px 10px 0px;
       text-align: center;
       margin-right: 16px;
+
       img {
         height: 123px;
         width: 100%;
         object-fit: scale-down;
       }
+      
       .name {
         margin-top: 5px;
         font-size: 18px;

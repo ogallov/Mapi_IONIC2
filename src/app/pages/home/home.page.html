@@ -26,9 +26,9 @@
 <ion-content *ngIf="isfood" class="food_content">
 
     <ion-slides class="margin-top-18" pager="false" [options]="slideOpts">
-        <ion-slide *ngFor="let i of banners" [ngStyle]="{'maxWidth': innerWidth - 80+'px'}">
-            <img [src]="i?.imagePath+i?.image">
-            <h2 *ngIf="i?.title?.length != 0">{{i?.title}}</h2>
+        <ion-slide *ngFor="let banner of banners" [ngStyle]="{'maxWidth': innerWidth - 80 + 'px'}">
+            <img [src]="banner?.imagePath && banner?.image">
+            <h2 *ngIf="banner?.title?.length != 0">{{banner?.title}}</h2>
         </ion-slide>
     </ion-slides>
 
@@ -74,7 +74,8 @@
                         {{btnType}}
                     </ion-button>
                     <h3 class="item">{{item?.name}}</h3>
-                    <p class="type">{{item?.itemNames}}</p>
+                    <p class="type">{{item?.description}}</p>
+                    <!-- <p class="type">{{item?.itemNames}}</p> -->
 
                     <div class="rate">
                         <span>
@@ -84,10 +85,10 @@
                             <div class="point"></div>
                             {{item?.min}} {{"home_page.min" | translate}}
                         </span>
-                        <span class="point_span">
+                        <!-- <span class="point_span">
                             <div class="point"></div>
                             {{currency}}{{item?.avarage_plate_price}} {{"home_page.for_two" | translate}}
-                        </span>
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -111,7 +112,8 @@
                         {{btnType}}
                     </ion-button>
                     <h3 class="item">{{item?.name}}</h3>
-                    <p class="type">{{item?.itemNames}}</p>
+                    <!-- <p class="type">{{item?.itemNames}}</p> -->
+                    <p class="type">{{item?.description}}</p>
                     <div class="rate">
                         <span>
                             <ion-icon name="star"></ion-icon>{{item?.rate}}
@@ -120,10 +122,10 @@
                             <div class="point"></div>
                             {{item?.delivery_time}} {{"home_page.min" | translate}}
                         </span>
-                        <span class="point_span">
+                        <!-- <span class="point_span">
                             <div class="point"></div>
                             {{currency}}{{item?.avarage_plate_price}} {{"home_page.for_two" | translate}}
-                        </span>
+                        </span> -->
                     </div>
                 </div>
             </div>
@@ -159,10 +161,10 @@
             </div>
             <h3 class="name">{{item?.name}}</h3>
 
-            <p class="away_lbl">
+            <!-- <p class="away_lbl">
                 <ion-icon src="./assets/icon-image/gro_pin.svg"></ion-icon>
                 {{item?.away}} km
-            </p>
+            </p> -->
         </div>
     </div>
 

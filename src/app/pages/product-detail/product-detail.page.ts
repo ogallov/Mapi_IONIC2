@@ -34,7 +34,7 @@ export class ProductDetailPage implements OnInit {
     this.api.getDataWithToken("groceryItemDetail/" + this.gpi.itemId).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.data = res.data;
           this.review = res.data.review;
 
@@ -51,7 +51,7 @@ export class ProductDetailPage implements OnInit {
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

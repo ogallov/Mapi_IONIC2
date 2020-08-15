@@ -53,7 +53,7 @@ export class GroceryOrderDetailPage implements OnInit {
             this.itemtotal = 0;
             this.data.orderItems.forEach(async(element) => {
               this.itemtotal = this.itemtotal + element.price;
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
             });
             if (this.data.review) {
               this.shopReview.rate = this.data.review.rate;
@@ -62,7 +62,7 @@ export class GroceryOrderDetailPage implements OnInit {
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
   }
@@ -88,18 +88,18 @@ export class GroceryOrderDetailPage implements OnInit {
                   this.data.orderItems.forEach(async(element) => {
                     this.itemtotal = this.itemtotal + element.price;
 
-                    await this.util.dismissLoader();
+                    this.util.dismissLoader();
                   });
                 }
               },
               async(err) => {
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
               }
             );
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.util.presentToast("something went wrong");
       }
     );

@@ -38,7 +38,7 @@ export class OrderDetailPage implements OnInit {
     this.api.getDataWithToken("singleOrder/" + this.api.orderID).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.data = res.data;
 
           this.itemtotal = 0;
@@ -60,7 +60,7 @@ export class OrderDetailPage implements OnInit {
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.err = err;
       }
     );

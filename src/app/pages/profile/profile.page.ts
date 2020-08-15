@@ -13,8 +13,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 
 export class ProfilePage implements OnInit, OnDestroy {
-  public segment: number = 1;
-  public subsegment: number = 1;
+  segment: number = 4;
+  subsegment: number = 1;
   userDetail: any = {};
   err: any = {};
   data: any = {};
@@ -32,7 +32,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   lastIsAdrress: string = localStorage.getItem("isaddress");
   flagControlBtnOpen: boolean = false;
 
-  public language: string = localStorage.getItem('app_language') ? localStorage.getItem('app_language') : 'en';
+  language: string = localStorage.getItem('app_language') ? localStorage.getItem('app_language') : 'es';
 
   constructor(
     private ntrl: NavController,
@@ -46,14 +46,33 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   }
 
-  async ngOnDestroy() {
-    //Called once, before the instance is destroyed.
-    //Add 'implements OnDestroy' to the class.
+  ionViewWillEnter() {
+
+    if (this.changeAddressBtn) {
+      console.log(localStorage.getItem("isaddress"));
+      
+      this.api.getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+        .subscribe((res: any) => {
+          console.log(res);
+
+          if (res.success) {
+            console.log(res.data);
+            this.data.userAddress.soc_name = res.data.soc_name;
+            this.data.userAddress.street = res.data.street;
+            this.data.userAddress.city = res.data.city;
+            this.data.userAddress.zipcode = res.data.zipcode;
+          }
+        });
+    }
+  }
+
+  async ngOnInit() {
+
     await this.util.startLoad();
-    this.api.getDataWithToken("viewReview").subscribe(async(res: any) => {
+    this.api.getDataWithToken("viewReview").subscribe(async (res: any) => {
       if (res.success) {
         this.data = res.data;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.data.review.forEach((element) => {
           element.created_at = moment(element.created_at).fromNow();
         });
@@ -68,8 +87,8 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
 
         this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
-        // this.data.address = localStorage.getItem("address");
-        this.data.address = localStorage.getItem("isaddress");
+        this.data.address = localStorage.getItem("address");
+        // this.data.address = localStorage.getItem("isaddress");
 
         if (this.userDetail.enable_notification == 1) {
           this.userSetting.enable_notification = true;
@@ -110,25 +129,20 @@ export class ProfilePage implements OnInit, OnDestroy {
     }
   }
 
-  ionViewWillEnter() {
+  ngOnDestroy(): void {
+    //Called once, before the instance is destroyed.
+    //Add 'implements OnDestroy' to the class.
 
-    if (this.changeAddressBtn) {
-      this.api.getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-        .subscribe((res: any) => {
-          console.log(res.data);
-
-          if (res.success) {
-            console.log(res.data);
-            this.data.userAddress.soc_name = res.data.soc_name;
-            this.data.userAddress.street = res.data.street;
-            this.data.userAddress.city = res.data.city;
-            this.data.userAddress.zipcode = res.data.zipcode;
-          }
-        });
+    if (this.lastIsAdrress !== '') {
+      // message
+      if (this.flagControlBtnOpen) {
+        this.translate.get('toasts').subscribe(async val => {
+          this.util.presentToast(val.The_selected_address_has_not_been_saved);
+        })
+      }
+      // set address last
+      localStorage.setItem('isaddress', this.lastIsAdrress);
     }
-  }
-
-  ngOnInit() {
   }
 
   back() {
@@ -141,22 +155,22 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       await this.util.startLoad();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
-        async(res: any) => {
+        async (res: any) => {
 
           if (res.success) {
             this.err = {};
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
             })
 
             this.util.isUpdateProfile.next(true);
 
-            this.api.getDataWithToken("viewReview").subscribe(async(res: any) => {
+            this.api.getDataWithToken("viewReview").subscribe(async (res: any) => {
 
               if (res.success) {
                 this.data = res.data;
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
 
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
@@ -195,13 +209,13 @@ export class ProfilePage implements OnInit, OnDestroy {
             });
           }
         },
-        async(err) => {
+        async (err) => {
           if (err.error.msg) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.util.presentToast(err.error.msg);
           }
           this.err = err.error.errors;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
 
@@ -209,17 +223,17 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       await this.util.startLoad();
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
-        async(res: any) => {
+        async (res: any) => {
           if (res.success) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.passwordData.password = "";
             this.passwordData.confirmPassword = "";
             this.err = {};
             this.util.presentToast(res.msg);
           }
         },
-        async(err) => {
-          await this.util.dismissLoader();
+        async (err) => {
+          this.util.dismissLoader();
           this.err = err.error.errors;
         }
       );
@@ -246,11 +260,11 @@ export class ProfilePage implements OnInit, OnDestroy {
       await this.util.startLoad();
       this.api
         .postDataWithToken("saveSetting", this.userSetting)
-        .subscribe(async(res: any) => {
+        .subscribe(async (res: any) => {
           if (res.success) {
             this.lastIsAdrress = '';
             localStorage.setItem("isaddressBD", "true");
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
             })
@@ -395,8 +409,8 @@ export class ProfilePage implements OnInit, OnDestroy {
                   this.userDetail = this.data.userDetail;
                   this.coverImage = this.userDetail.imagePath + this.data.userDetail.cover_image;
                   this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
-                  // this.data.address = localStorage.getItem("address");
-                  this.data.address = localStorage.getItem("isaddress");
+                  this.data.address = localStorage.getItem("address");
+                  // this.data.address = localStorage.getItem("isaddress");
 
                   if (this.userDetail.enable_notification == 1) {
                     this.userSetting.enable_notification = true;

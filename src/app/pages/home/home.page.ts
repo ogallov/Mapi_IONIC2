@@ -17,13 +17,22 @@ import { Geolocation } from "@ionic-native/geolocation/ngx";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage {
+
+  // string
   term: string;
+
+  // number
+  sellProduct = 0;
+
+  // boolean
+  isfood = true;
+
+  // any
   userAddress: any = {};
   err: any = {};
   currentTime: any;
-  isfood = true;
-  sellProduct = 0;
-  public staticData: any = {
+
+  staticData: any = {
     feature: [
       {
         image: "assets/image/diamond.svg",
@@ -51,7 +60,8 @@ export class HomePage {
       },
     ],
   };
-  public slideOpts: any = {
+
+  slideOpts: any = {
     slidesPerView: "auto",
     centeredSlides: true,
     centeredSlidesBounds: true,
@@ -60,6 +70,7 @@ export class HomePage {
     autoplay: {
       delay: 3000,
     },
+
     slideNextClass: "swiper-slide-next",
     slidePrevClass: "swiper-slide-next",
     slideActiveClass: "swiper-slide-active",
@@ -68,6 +79,7 @@ export class HomePage {
       clickable: true,
     },
   };
+
   data: any = {};
   grocery: any = {};
   btnType = "Exclusive";
@@ -95,8 +107,8 @@ export class HomePage {
     },
   ];
 
-  public innerWidth: any = window.innerWidth;
-  public banners: any = Array();
+  innerWidth: any = window.innerWidth;
+  banners: any = Array();
 
   constructor(
     private menu: MenuController,
@@ -139,8 +151,8 @@ export class HomePage {
           this.getGrocery();
         }
       },
-      async(err) => {
-        await this.util.dismissLoader();
+      async (err) => {
+        this.util.dismissLoader();
         this.err = err;
       }
     );
@@ -148,6 +160,8 @@ export class HomePage {
 
   getAdvertisingBanner(): void {
     this.api.getData("banner").subscribe((res: any) => {
+      console.log(res);
+      
       if (res.success) {
         this.banners = res.data;
       }
@@ -163,23 +177,21 @@ export class HomePage {
         this.api
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
-            async(res: any) => {
-              console.log(res);
-
+            async (res: any) => {
               if (res.success) {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
               }
             },
-            async(err) => {
+            async (err) => {
               this.err = err;
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
             }
           );
 
       } else {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
 
 
@@ -204,8 +216,8 @@ export class HomePage {
               resp.coords.longitude,
               options
             )
-            .then(async(result: NativeGeocoderResult[]) => {
-              await this.util.dismissLoader();
+            .then(async (result: NativeGeocoderResult[]) => {
+              this.util.dismissLoader();
               this.userAddress.address_type = "Current Location";
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
@@ -214,8 +226,8 @@ export class HomePage {
             })
             .catch((error: any) => console.log(error));
         })
-        .catch(async(error) => {
-          await this.util.dismissLoader();
+        .catch(async (error) => {
+          this.util.dismissLoader();
         });
     }
   }
@@ -422,17 +434,22 @@ export class HomePage {
 
   getGrocery() {
     this.api.getDataWithToken("groceryShop").subscribe(
-      async(res: any) => {
+      async (res: any) => {
         if (res.success) {
           this.grocery.Store = res.data.shop;
           this.grocery.coupon = res.data.coupon;
 
           this.api.getDataWithToken("groceryCategory").subscribe(
-            async(res: any) => {
+            async (res: any) => {
+              console.log(res);
+              
               if (res.success) {
-                await this.util.dismissLoader();
+                console.log('<========================== res success grocery Category ===========>');
+                this.util.dismissLoader();
+                console.log('<========================== res success grocery Category ===========>');
                 this.grocery.category = res.data;
-
+                console.log(this.grocery.category);
+                
                 this.grocery.Store.forEach((element) => {
                   element.away = Number(
                     this.distance(
@@ -446,16 +463,16 @@ export class HomePage {
                 });
               }
             },
-            async(err) => {
-              await this.util.dismissLoader();
+            async (err) => {
+              this.util.dismissLoader();
               this.err = err;
             }
           );
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       },
-      async(err) => {
-        await this.util.dismissLoader();
+      async (err) => {
+        this.util.dismissLoader();
         this.err = err;
       }
     );

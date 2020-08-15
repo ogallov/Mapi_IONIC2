@@ -24,7 +24,7 @@ export class InviteFriendsPage implements OnInit {
     this.api.getDataWithToken("friendsCode").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     });
   }

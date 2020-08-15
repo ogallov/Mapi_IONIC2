@@ -29,7 +29,7 @@ export class PromocodePage implements OnInit {
         this.api.getDataWithToken("viewCoupon").subscribe(async(res: any) => {
           if (res.success) {
             this.data = res.data;
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
           }
         });
       } else {
@@ -39,7 +39,7 @@ export class PromocodePage implements OnInit {
           .subscribe(async(res: any) => {
             if (res.success) {
               this.data = res.data;
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
             }
           });
       }
@@ -57,11 +57,11 @@ export class PromocodePage implements OnInit {
       .postDataWithToken("chkCoupon", this.promocode)
       .subscribe(async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.api.promocode = item;
           this.ntrl.back();
         } else {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast(res.msg);
         }
       });

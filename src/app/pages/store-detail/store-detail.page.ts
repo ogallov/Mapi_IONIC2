@@ -50,7 +50,7 @@ export class StoreDetailPage implements OnInit {
                       .subscribe(
                         async (res: any) => {
                           if (res.success) {
-                            await this.util.dismissLoader();
+                            this.util.dismissLoader();
                             this.data.product = res.data;
                             this.id = res.data.id;
                             this.data.product.forEach((element) => {
@@ -67,19 +67,19 @@ export class StoreDetailPage implements OnInit {
                           }
                         },
                         async(err) => {
-                          await this.util.dismissLoader();
+                          this.util.dismissLoader();
                         }
                       );
                   }
                 },
                 async(err) => {
-                  await this.util.dismissLoader();
+                  this.util.dismissLoader();
                 }
               );
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
   }

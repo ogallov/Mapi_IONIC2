@@ -28,12 +28,12 @@ export class GroceryPromocodePage implements OnInit {
       .subscribe(
         async (res: any) => {
           if (res.success) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.data = res.data;
           }
         },
         async (err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast("somethig went wrong");
         }
       );
@@ -45,11 +45,11 @@ export class GroceryPromocodePage implements OnInit {
     this.util.startLoad();
     this.api.postDataWithToken("chkCoupon", promocode).subscribe(async(res: any) => {
       if (res.success) {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.gpi.promocode = item;
         this.ntrl.back();
       } else {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         this.util.presentToast(res.msg);
       }
     });

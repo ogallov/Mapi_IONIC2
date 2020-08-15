@@ -6,8 +6,10 @@
             </ion-buttons>
             <ion-buttons slot="end">
                 <ion-button fill="clear" mode="md" (click)="addBookmark()">
-                    <ion-icon class="bookmark-icon" *ngIf="!data?.favourite" src="./assets/icon-image/detail-icon.svg"></ion-icon>
-                    <ion-icon class="bookmark-icon" *ngIf="data?.favourite" src="./assets/icon-image/bookmark-icon.svg"></ion-icon>
+                    <ion-icon class="bookmark-icon" *ngIf="!data?.favourite" src="./assets/icon-image/detail-icon.svg">
+                    </ion-icon>
+                    <ion-icon class="bookmark-icon" *ngIf="data?.favourite" src="./assets/icon-image/bookmark-icon.svg">
+                    </ion-icon>
                 </ion-button>
             </ion-buttons>
         </ion-toolbar>
@@ -32,7 +34,8 @@
                 <h3 class="review">{{'review_page.review' | translate}}</h3>
             </div>
         </div>
-        <h3 class="tittle">{{data?.itemNames}}</h3>
+        <!-- <h3 class="tittle">{{data?.itemNames}}</h3> -->
+        <h3 class="tittle">{{data?.description}}</h3>
         <p class="address">{{data?.address}}</p>
         <p class="open">
             {{'review_page.open_now' | translate}}
@@ -55,13 +58,13 @@
             <h3 class="rate">{{data?.delivery_time}} {{'review_page.mins' | translate}}</h3>
             <h3 class="rating">{{'review_page.delivery_time' | translate}}</h3>
         </div>
-        <div class="first_col ion-text-center dot_div">
+        <!-- <div class="first_col ion-text-center dot_div">
             <div class="dot"></div>
         </div>
         <div class="first_col">
             <h3 class="rate">{{currency}}{{data?.avarage_plate_price}}</h3>
             <h3 class="rating">{{'review_page.for_two' | translate}}</h3>
-        </div>
+        </div> -->
     </div>
     <div class="coopan_div">
         <div class="container" *ngFor="let item of data?.coupon">
@@ -93,7 +96,8 @@
         <p class="p_text ion-padding-start">
             {{'review_page.review' | translate}}
         </p>
-        <p *ngIf="data?.review?.length==0" class="ion-padding-start no_data_p"> {{'review_page.no_data' | translate}}</p>
+        <p *ngIf="data?.review?.length==0" class="ion-padding-start no_data_p"> {{'review_page.no_data' | translate}}
+        </p>
         <ion-item class="review_item" *ngFor="let item of data?.review" lines="none">
             <ion-avatar slot="start">
                 <img [src]="item.customer.imagePath + item.customer.image" />
@@ -116,8 +120,10 @@
                 <div class="yes_div" *ngIf="item?.status">
                     <p class="yes_p">
                         {{'review_page.was_helpful' | translate}}
-                        <ion-button class="no_btn ion-float-right ion-text-capitalize">{{'review_page.no' | translate}}</ion-button>
-                        <ion-button class="yes_btn ion-float-right ion-text-capitalize">{{'review_page.yes' | translate}}</ion-button>
+                        <ion-button class="no_btn ion-float-right ion-text-capitalize">{{'review_page.no' | translate}}
+                        </ion-button>
+                        <ion-button class="yes_btn ion-float-right ion-text-capitalize">
+                            {{'review_page.yes' | translate}}</ion-button>
                     </p>
                 </div>
             </ion-label>

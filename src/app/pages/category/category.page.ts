@@ -40,7 +40,7 @@ export class CategoryPage implements OnInit {
           .getDataWithToken("categoryShop/" + this.isfrom)
           .subscribe(async(res: any) => {
             if (res.success) {
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
               this.data = res.data;
             }
           });
@@ -52,7 +52,7 @@ export class CategoryPage implements OnInit {
             if (res.success) {
               this.data = res.data;
               if (this.api.filterType == "popular") {
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
                 this.data.sort((a, b) => {
                   if (a.rate > b.rate) {
                     return -1;
@@ -63,14 +63,14 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else if (this.api.filterType == "pureveg") {
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
                 this.data = this.data.filter(a => {
                   if (a.veg > 0) {
                     return a;
                   }
                 });
               } else if (this.api.filterType == "lowcost") {
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
                 this.data.sort((a, b) => {
                   if (a.avarage_plate_price < b.avarage_plate_price) {
                     return -1;
@@ -81,7 +81,7 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else {
-                await this.util.dismissLoader();
+                this.util.dismissLoader();
                 if (localStorage.getItem("isaddress") != "false") {
                   this.api
                     .getDataWithToken(

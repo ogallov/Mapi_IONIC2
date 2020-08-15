@@ -21,20 +21,21 @@
                     {{btnType}}
                 </ion-button>
                 <h3 class="item">{{item?.name}}</h3>
-                <p class="type">{{item?.itemNames}}</p>
+                <p class="type">{{item?.description}}</p>
+                <!-- <p class="type">{{item?.itemNames}}</p> -->
 
                 <div class="rate">
                     <span>
-            <ion-icon name="star"></ion-icon>{{item?.rate}}
-          </span>
+                        <ion-icon name="star"></ion-icon>{{item?.rate}}
+                    </span>
                     <span class="point_span">
-            <div class="point"></div>
-            {{item?.min}} {{"category_page.min" | translate}}
-          </span>
-                    <span class="point_span">
-            <div class="point"></div>
-            {{currency}}{{item?.avarage_plate_price}} {{"category_page.for_two" | translate}}
-          </span>
+                        <div class="point"></div>
+                        {{item?.min}} {{"category_page.min" | translate}}
+                    </span>
+                    <!-- <span class="point_span">
+                        <div class="point"></div>
+                        {{currency}}{{item?.avarage_plate_price}} {{"category_page.for_two" | translate}}
+                    </span> -->
                 </div>
             </div>
         </div>

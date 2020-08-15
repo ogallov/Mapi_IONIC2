@@ -24,9 +24,9 @@ export class NotificationPage implements OnInit {
       if (res.success) {
         this.data = res.data;
       }
-      await this.util.dismissLoader();
+      this.util.dismissLoader();
     }, async() => {
-      await this.util.dismissLoader();
+      this.util.dismissLoader();
     });
   }
   back() {

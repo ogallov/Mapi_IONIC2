@@ -24,7 +24,7 @@ export class ForgotPage implements OnInit {
     this.api.postData("forgetPassword", this.data).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast(res.msg);
           this.ntrl.navigateForward(["login"]);
         }
@@ -34,7 +34,7 @@ export class ForgotPage implements OnInit {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

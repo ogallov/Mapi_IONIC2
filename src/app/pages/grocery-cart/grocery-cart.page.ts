@@ -103,7 +103,7 @@ export class GroceryCartPage implements OnInit {
               .subscribe(
                 async(res: any) => {
                   if (res.success) {
-                    await this.util.dismissLoader();
+                    this.util.dismissLoader();
                     this.data.Deafult_address = res.data;
                     this.mapData();
                     this.data.userlat = res.data.lat;
@@ -111,13 +111,13 @@ export class GroceryCartPage implements OnInit {
                   }
                 },
                 async(err) => {
-                  await this.util.dismissLoader();
+                  this.util.dismissLoader();
                 }
               );
           }
         },
         async(err) => {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
   }
@@ -136,10 +136,10 @@ export class GroceryCartPage implements OnInit {
               this.data.Deafult_address = res.data;
               this.mapData();
             }
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
           },
           async(err) => {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
           }
         );
     }

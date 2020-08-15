@@ -29,7 +29,7 @@ export class StorePage implements OnInit {
       this.api.getDataWithToken("groceryShop/" + this.gpi.catId).subscribe(
         (res: any) => {
           if (res.success) {
-            // await this.util.dismissLoader();
+            // this.util.dismissLoader();
             this.Store = res.data;
             this.gpi.catId = undefined;
             this.api
@@ -40,7 +40,7 @@ export class StorePage implements OnInit {
                 async(res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    await this.util.dismissLoader();
+                    this.util.dismissLoader();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -56,14 +56,14 @@ export class StorePage implements OnInit {
                 },
                 async(err) => {
                   this.err = err;
-                  await this.util.dismissLoader();
+                  this.util.dismissLoader();
                 }
               );
           }
         },
         async(err) => {
           this.err = err;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     } else {
@@ -71,7 +71,7 @@ export class StorePage implements OnInit {
       this.api.getDataWithToken("groceryShop").subscribe(
         (res: any) => {
           if (res.success) {
-            // await this.util.dismissLoader();
+            // this.util.dismissLoader();
             this.Store = res.data.shop;
             this.api
               .getDataWithToken(
@@ -81,7 +81,7 @@ export class StorePage implements OnInit {
                 async(res: any) => {
                   if (res.success) {
                     this.userAddress = res.data;
-                    await this.util.dismissLoader();
+                    this.util.dismissLoader();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -97,14 +97,14 @@ export class StorePage implements OnInit {
                 },
                 async(err) => {
                   this.err = err;
-                  await this.util.dismissLoader();
+                  this.util.dismissLoader();
                 }
               );
           }
         },
         async(err) => {
           this.err = err;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     }

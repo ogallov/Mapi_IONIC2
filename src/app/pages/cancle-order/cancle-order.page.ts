@@ -7,6 +7,7 @@ import { NavController, ModalController, NavParams } from "@ionic/angular";
   styleUrls: ["./cancle-order.page.scss"]
 })
 export class CancleOrderPage implements OnInit {
+
   cancleDate: any = [
     "I want to change detail of this order.",
     "The Rider is too long to be appointed.",
@@ -16,7 +17,9 @@ export class CancleOrderPage implements OnInit {
     "Other"
   ];
 
-  constructor(private nav: NavController, private modal: ModalController) {}
+  constructor(private nav: NavController,
+    private modal: ModalController
+    ) {}
 
   ngOnInit() {}
 

@@ -6,6 +6,7 @@ import { Component, OnInit } from "@angular/core";
   templateUrl: "./popover.page.html",
   styleUrls: ["./popover.page.scss"]
 })
+
 export class PopoverPage implements OnInit {
   data: any[];
   constructor(private api: ApiService) {

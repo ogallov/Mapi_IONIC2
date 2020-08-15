@@ -31,7 +31,7 @@ export class ReviewPage implements OnInit {
       .subscribe(async(res: any) => {
         if (res.success) {
           this.data = res.data;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.data.review.forEach(element => {
             element.created_at = moment(element.created_at).fromNow();
           });

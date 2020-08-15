@@ -27,12 +27,12 @@ export class GroceryCategoryPage implements OnInit {
     this.api.getDataWithToken("groceryCategory").subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.category = res.data;
         }
       },
       async(err) => {
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
    }

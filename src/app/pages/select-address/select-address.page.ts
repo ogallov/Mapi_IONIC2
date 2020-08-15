@@ -29,7 +29,7 @@ export class SelectAddressPage implements OnInit {
 
       if (res.success) {
         this.addressList = res.data;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
         if (localStorage.getItem("isaddress")) {
           this.addressList.forEach(element => {
             if (element.id == localStorage.getItem("isaddress")) {
@@ -54,7 +54,7 @@ export class SelectAddressPage implements OnInit {
             console.log(res);
             if (res.success) {
               this.addressList = res.data;
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {
@@ -96,7 +96,7 @@ export class SelectAddressPage implements OnInit {
           this.api.getDataWithToken("userAddress").subscribe(async(res: any) => {
             if (res.success) {
               this.addressList = res.data;
-              await this.util.dismissLoader();
+              this.util.dismissLoader();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {

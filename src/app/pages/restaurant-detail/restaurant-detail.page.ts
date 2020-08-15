@@ -59,7 +59,7 @@ export class RestaurantDetailPage implements OnInit {
 
           this.tempData = res.data.bestSeller;
           this.api.menu = res.data.menu;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       });
   }

@@ -13,6 +13,7 @@ declare var google: any;
   styleUrls: ["./cart.page.scss"],
 })
 export class CartPage implements OnInit {
+
   @ViewChild("map", { static: true }) mapElement: ElementRef;
   map: any;
   avtiveSegment: any = "About";
@@ -39,6 +40,7 @@ export class CartPage implements OnInit {
     private translate: TranslateService,
     private modalController: ModalController,
   ) {
+    
     this.currency = this.api.currency;
     this.data = this.api.cartData;
     this.data.cartData = this.api.cartData.cartDetail;

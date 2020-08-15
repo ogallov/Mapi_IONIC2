@@ -64,7 +64,7 @@ export class GetOtpPage implements OnInit {
     this.api.postData("checkOtp", this.data).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           localStorage.setItem("token", res.data.token);
           this.api.userToken = res.data.token;
           if (res.data.address_id) {
@@ -81,7 +81,7 @@ export class GetOtpPage implements OnInit {
           this.util.presentToast(err.error.msg);
         }
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }
@@ -91,13 +91,13 @@ export class GetOtpPage implements OnInit {
     this.api.postData("resendOTP", this.data).subscribe(
       async(res: any) => {
         if (res.success) {
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
           this.util.presentToast(res.data);
         }
       },
       async(err) => {
         this.err = err.error.errors;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     );
   }

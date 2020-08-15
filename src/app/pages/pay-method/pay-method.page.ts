@@ -42,7 +42,7 @@ export class PayMethodPage implements OnInit {
     this.api.getDataWithToken("keySetting").subscribe(async(res: any) => {
       if (res.success) {
         this.data = res.data;
-        await this.util.dismissLoader();
+        this.util.dismissLoader();
       }
     });
   }
@@ -99,7 +99,7 @@ export class PayMethodPage implements OnInit {
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         async(res: any) => {
           if (res.success) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
@@ -107,7 +107,7 @@ export class PayMethodPage implements OnInit {
         },
         async(err) => {
           this.err = err.error.errors;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     }
@@ -142,7 +142,7 @@ export class PayMethodPage implements OnInit {
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         async(res: any) => {
           if (res.success) {
-            await this.util.dismissLoader();
+            this.util.dismissLoader();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
@@ -150,7 +150,7 @@ export class PayMethodPage implements OnInit {
         },
         async(err) => {
           this.err = err.error.errors;
-          await this.util.dismissLoader();
+          this.util.dismissLoader();
         }
       );
     };
@@ -197,7 +197,7 @@ export class PayMethodPage implements OnInit {
                       .subscribe(
                         async(res: any) => {
                           if (res.success) {
-                            await this.util.dismissLoader();
+                            this.util.dismissLoader();
                             this.gpi.promocode = {};
                             this.gpi.orderId = res.data.id;
                             this.presentModal();
@@ -205,7 +205,7 @@ export class PayMethodPage implements OnInit {
                         },
                         async(err) => {
                           this.err = err.error.errors;
-                          await this.util.dismissLoader();
+                          this.util.dismissLoader();
                         }
                       );
                   },

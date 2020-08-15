@@ -7,6 +7,7 @@ import { modalController } from "@ionic/core";
   templateUrl: "./success-modal.page.html",
   styleUrls: ["./success-modal.page.scss"]
 })
+
 export class SuccessModalPage implements OnInit {
   constructor(private ntrl: NavController) {}
 

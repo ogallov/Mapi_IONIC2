@@ -54,6 +54,7 @@ export class AppComponent {
     },
   ];
   userData: any;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -68,18 +69,15 @@ export class AppComponent {
     // blocked console.log
     // console.log = function () {};
 
-    document.documentElement.dir =
-      localStorage.getItem("app_language") == "ar" ? "rtl" : "ltr";
+    document.documentElement.dir = localStorage.getItem("app_language") == "ar" ? "rtl" : "ltr";
+    
     this.translate.setDefaultLang(
-      localStorage.getItem("app_language")
-        ? localStorage.getItem("app_language")
-        : "es"
+      localStorage.getItem("app_language") ? localStorage.getItem("app_language") : "es"
     );
 
     this.api.getData("keySetting").subscribe((res: any) => {
       const script = document.createElement("script");
-      script.src =
-        "https://maps.googleapis.com/maps/api/js?key=" + res.data.map_key;
+      script.src = "https://maps.googleapis.com/maps/api/js?key=" + res.data.map_key;
       document.head.appendChild(script);
     });
 
@@ -103,7 +101,7 @@ export class AppComponent {
   }
 
   initializeApp() {
-    
+
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();
@@ -115,23 +113,23 @@ export class AppComponent {
               this.api.request_duration = res.data.request_duration;
 
               if (this.platform.is("cordova")) {
-                
+
                 this.oneSignal.startInit(
                   res.data.onesignal_app_id,
                   res.data.onesignal_project_number
                 );
-                
+
                 this.oneSignal
                   .getIds()
                   .then((ids) => (this.api.deviceToken = ids.userId));
                 this.oneSignal.endInit();
-                
+
               } else {
                 this.api.deviceToken = null;
               }
             }
           },
-          (err) => {}
+          (err) => { }
         );
       }, 2000);
     });
@@ -193,7 +191,7 @@ export class AppComponent {
   async showToast() {
     const toast = await this.toastController.create({
       message: "press back again to exit App.",
-      duration: 2000,
+      duration: 1500,
     });
     toast.present();
   }
