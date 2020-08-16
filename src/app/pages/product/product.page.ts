@@ -34,12 +34,12 @@ export class ProductPage implements OnInit {
   
   ionViewWillEnter() {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.Store = res.data;
           console.log(this.Store);
 
@@ -49,7 +49,7 @@ export class ProductPage implements OnInit {
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

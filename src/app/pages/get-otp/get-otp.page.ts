@@ -65,11 +65,11 @@ export class GetOtpPage implements OnInit {
       this.opt.f;
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postData("checkOtp", this.data).subscribe(
       (res: any) => {
         if (res.success) {
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           // this.util.dismissLoader();
           localStorage.setItem("token", res.data.token);
           this.api.userToken = res.data.token;
@@ -89,26 +89,26 @@ export class GetOtpPage implements OnInit {
         }
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }
   resendOtp() {
     this.data.code = this.api.verifynuberCode;
     // this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postData("resendOTP", this.data).subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast(res.data);
         }
       },
       (err) => {
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

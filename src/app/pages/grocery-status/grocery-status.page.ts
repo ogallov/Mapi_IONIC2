@@ -22,7 +22,7 @@ export class GroceryStatusPage implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("trackGroceryOrder/" + this.gpi.orderId)
       .subscribe(
@@ -30,7 +30,7 @@ export class GroceryStatusPage implements OnInit {
           if (res.success) {
             this.data = res.data;
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
 
             if (
               this.data.order_status == "Pending" ||
@@ -57,7 +57,7 @@ export class GroceryStatusPage implements OnInit {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast("something went wrong");
         }
       );
@@ -111,7 +111,7 @@ export class GroceryStatusPage implements OnInit {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast("something went wrong");
         }
       );

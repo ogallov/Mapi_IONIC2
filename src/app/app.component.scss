@@ -2,7 +2,8 @@ ion-content {
   --background: #000;
 
   .back-btn {
-    --color: var(--ion-color-darkBlue);
+    // --color: var(--ion-color-darkBlue);
+    --color: var(--ion-color-light)
     height: 19px;
     margin: 0;
   }
@@ -35,6 +36,7 @@ ion-content {
       margin-left: 10px;
     }
   }
+  
   .lbl_tittle {
     font-size: 16px;
     font-family: "Poppins-Medium";

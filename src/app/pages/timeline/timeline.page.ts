@@ -230,7 +230,7 @@ export class TimelinePage implements OnInit {
     this.data.driver = {};
     
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("trackOrder/" + this.api.checkOrderStatus)
       .subscribe(async(res: any) => {
@@ -241,7 +241,7 @@ export class TimelinePage implements OnInit {
           this.getShopAddress();
   
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
   
           if (this.data.deliveryBoy_id != null) {
             this.isvisible = true;
@@ -324,25 +324,25 @@ export class TimelinePage implements OnInit {
             cssClass: "secondary",
             handler: () => {
               // await this.util.startLoad();
-              //this.spinnerService.show();
+              this.spinnerService.show();
               this.api
                 .getDataWithToken("cancelOrder/" + this.data.id)
                 .subscribe(
                   (res: any) => {
                     if (res.success) {
                       // this.util.dismissLoader();
-                      //this.spinnerService.hide();
+                      this.spinnerService.hide();
                       this.util.presentToast(res.msg);
                       this.ntrl.navigateRoot("/order-history");
                     } else {
                       // this.util.dismissLoader();
-                      //this.spinnerService.hide();
+                      this.spinnerService.hide();
                       this.util.presentToast(res.msg);
                     }
                   },
                   (err) => {
                     // this.util.dismissLoader();
-                    //this.spinnerService.hide();
+                    this.spinnerService.hide();
                   }
                 );
             },
@@ -430,7 +430,7 @@ export class TimelinePage implements OnInit {
   getUserAddress() {
     if (localStorage.getItem("isaddress") != "false") {
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe(
@@ -451,13 +451,13 @@ export class TimelinePage implements OnInit {
                 }
               );
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
             }
           },
           (err) => {
             this.err = err;
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
           }
         );
     }

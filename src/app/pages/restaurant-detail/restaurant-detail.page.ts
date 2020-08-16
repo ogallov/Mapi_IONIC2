@@ -39,7 +39,7 @@ export class RestaurantDetailPage implements OnInit {
   ) {
     this.currency = this.api.currency;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
       .subscribe((res: any) => {
@@ -59,7 +59,7 @@ export class RestaurantDetailPage implements OnInit {
           this.tempData = res.data.bestSeller;
           this.api.menu = res.data.menu;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       });
 

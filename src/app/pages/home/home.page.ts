@@ -143,7 +143,7 @@ export class HomePage {
     this.getAdvertisingBanner();
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("home").subscribe(
       (res: any) => {
         console.log(res);
@@ -156,7 +156,7 @@ export class HomePage {
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.err = err;
       }
     );
@@ -178,7 +178,7 @@ export class HomePage {
 
       if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
         // await this.util.startLoad();
-        //this.spinnerService.show();
+        this.spinnerService.show();
         this.api
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
@@ -187,26 +187,26 @@ export class HomePage {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
               }
             },
             (err) => {
               this.err = err;
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
             }
           );
 
       } else {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
 
 
     } else {
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.geolocation
         .getCurrentPosition()
         .then((resp) => {
@@ -227,7 +227,7 @@ export class HomePage {
             )
             .then((result: NativeGeocoderResult[]) => {
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
               this.userAddress.address_type = "Current Location";
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
@@ -238,7 +238,7 @@ export class HomePage {
         })
         .catch((error) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         });
     }
   }
@@ -456,7 +456,7 @@ export class HomePage {
               
               if (res.success) {
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
                 this.grocery.category = res.data;
                 console.log(this.grocery.category);
                 
@@ -475,17 +475,17 @@ export class HomePage {
             },
             (err) => {
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
               this.err = err;
             }
           );
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       },
        (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.err = err;
       }
     );

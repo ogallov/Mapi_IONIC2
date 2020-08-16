@@ -35,13 +35,13 @@ export class OrderDetailPage implements OnInit {
 
     this.currency = this.api.currency;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
   
     this.api.getDataWithToken("singleOrder/" + this.api.orderID).subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.data = res.data;
   
           this.itemtotal = 0;
@@ -64,7 +64,7 @@ export class OrderDetailPage implements OnInit {
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.err = err;
       }
     );

@@ -38,12 +38,12 @@ export class PayMethodPage implements OnInit {
     this.currencyType = this.api.currencyType;
     
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("keySetting").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     });
   }
@@ -101,12 +101,12 @@ export class PayMethodPage implements OnInit {
       rdata.payment_type = this.payment_type;
       // await this.util.startLoad();
 
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         (res: any) => {
           if (res.success) {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
@@ -115,7 +115,7 @@ export class PayMethodPage implements OnInit {
         (err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     }
@@ -146,13 +146,13 @@ export class PayMethodPage implements OnInit {
       rdata.payment_type = "RAZOR";
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
 
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         (res: any) => {
           if (res.success) {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
             this.presentModal();
@@ -161,7 +161,7 @@ export class PayMethodPage implements OnInit {
        (err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     };
@@ -203,14 +203,14 @@ export class PayMethodPage implements OnInit {
                     rdata.payment_type = "PAYPAL";
                     
                     // await this.util.startLoad();
-                    //this.spinnerService.show();
+                    this.spinnerService.show();
                     this.api
                       .postDataWithToken("createGroceryOrder", rdata)
                       .subscribe(
                         (res: any) => {
                           if (res.success) {
                             // this.util.dismissLoader();
-                            //this.spinnerService.hide();
+                            this.spinnerService.hide();
                             this.gpi.promocode = {};
                             this.gpi.orderId = res.data.id;
                             this.presentModal();
@@ -219,7 +219,7 @@ export class PayMethodPage implements OnInit {
                         (err) => {
                           this.err = err.error.errors;
                           // this.util.dismissLoader();
-                          //this.spinnerService.hide();
+                          this.spinnerService.hide();
                         }
                       );
                   },

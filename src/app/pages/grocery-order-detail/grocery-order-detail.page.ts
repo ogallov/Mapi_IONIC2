@@ -28,7 +28,7 @@ export class GroceryOrderDetailPage implements OnInit {
   ) {
     this.currency = this.api.currency;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
       .subscribe(
@@ -39,7 +39,7 @@ export class GroceryOrderDetailPage implements OnInit {
             this.data.orderItems.forEach((element) => {
               this.itemtotal = this.itemtotal + element.price;
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
             });
             if (this.data.review) {
               this.shopReview.rate = this.data.review.rate;
@@ -49,7 +49,7 @@ export class GroceryOrderDetailPage implements OnInit {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
   }
@@ -78,7 +78,7 @@ export class GroceryOrderDetailPage implements OnInit {
     this.shopReview.shop_id = this.data.shop_id;
 
     // this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postDataWithToken("addGroceryReview", this.shopReview).subscribe(
       (res: any) => {
         if (res.success) {
@@ -95,20 +95,20 @@ export class GroceryOrderDetailPage implements OnInit {
                     this.itemtotal = this.itemtotal + element.price;
 
                     // this.util.dismissLoader();
-                    //this.spinnerService.hide();
+                    this.spinnerService.hide();
                   });
                 }
               },
               (err) => {
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
               }
             );
         }
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.util.presentToast("something went wrong");
       }
     );

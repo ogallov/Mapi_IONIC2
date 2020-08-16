@@ -24,13 +24,13 @@ export class ForgotPage implements OnInit {
 
   Sendpassword() {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postData("forgetPassword", this.data).subscribe(
       (res: any) => {
 
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast(res.msg);
           this.ntrl.navigateForward(["login"]);
         }
@@ -41,7 +41,7 @@ export class ForgotPage implements OnInit {
         }
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

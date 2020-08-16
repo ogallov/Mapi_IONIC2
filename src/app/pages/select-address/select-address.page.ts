@@ -22,14 +22,14 @@ export class SelectAddressPage implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("userAddress").subscribe((res: any) => {
       console.log(res);
 
       if (res.success) {
         this.addressList = res.data;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         if (localStorage.getItem("isaddress")) {
           this.addressList.forEach(element => {
             if (element.id == localStorage.getItem("isaddress")) {
@@ -53,13 +53,13 @@ export class SelectAddressPage implements OnInit {
       if (data["data"] != undefined) {
         if (data) {
           // await this.util.startLoad();
-          //this.spinnerService.show();
+          this.spinnerService.show();
           this.api.getDataWithToken("userAddress").subscribe((res: any) => {
             console.log(res);
             if (res.success) {
               this.addressList = res.data;
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
               if (localStorage.getItem("isaddress")) {
                 this.addressList.forEach(element => {
                   if (element.id == localStorage.getItem("isaddress")) {
@@ -94,7 +94,7 @@ export class SelectAddressPage implements OnInit {
 
   deleteAddress(address) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("deleteAddress/" + address.id)
       .subscribe((res: any) => {

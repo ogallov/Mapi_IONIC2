@@ -36,12 +36,12 @@ export class VerifyPage implements OnInit {
 
   getOtp() {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postData("verifyPhone", this.data).subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast(res.msg);
           this.api.verifynumber = this.data.phone;
           this.api.verifynuberCode = this.data.code;
@@ -49,14 +49,14 @@ export class VerifyPage implements OnInit {
         } else {
           this.err = {};
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast(res.msg);
         }
       },
       (err) => {
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

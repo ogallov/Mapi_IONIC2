@@ -31,7 +31,7 @@ export class StoreDetailPage implements OnInit {
     this.dataa = JSON.parse(localStorage.getItem("store-detail"));
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
@@ -51,7 +51,7 @@ export class StoreDetailPage implements OnInit {
                         (res: any) => {
                           if (res.success) {
                             // this.util.dismissLoader();
-                            //this.spinnerService.hide();
+                            this.spinnerService.hide();
                             this.data.product = res.data;
                             this.id = res.data.id;
                             this.data.product.forEach((element) => {
@@ -69,21 +69,21 @@ export class StoreDetailPage implements OnInit {
                         },
                         (err) => {
                           // this.util.dismissLoader();
-                          //this.spinnerService.hide();
+                          this.spinnerService.hide();
                         }
                       );
                   }
                 },
                 (err) => {
                   // this.util.dismissLoader();
-                  //this.spinnerService.hide();
+                  this.spinnerService.hide();
                 }
               );
           }
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
   }

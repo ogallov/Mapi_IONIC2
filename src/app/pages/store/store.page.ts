@@ -25,7 +25,7 @@ export class StorePage implements OnInit {
   ) {
     if (this.gpi.catId) {
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.getDataWithToken("groceryShop/" + this.gpi.catId).subscribe(
         (res: any) => {
           if (res.success) {
@@ -41,7 +41,7 @@ export class StorePage implements OnInit {
                   if (res.success) {
                     this.userAddress = res.data;
                     // this.util.dismissLoader();
-                    //this.spinnerService.hide();
+                    this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -58,7 +58,7 @@ export class StorePage implements OnInit {
                 (err) => {
                   this.err = err;
                   // this.util.dismissLoader();
-                  //this.spinnerService.hide();
+                  this.spinnerService.hide();
                 }
               );
           }
@@ -66,12 +66,12 @@ export class StorePage implements OnInit {
         (err) => {
           this.err = err;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     } else {
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.getDataWithToken("groceryShop").subscribe(
         (res: any) => {
           if (res.success) {
@@ -86,7 +86,7 @@ export class StorePage implements OnInit {
                   if (res.success) {
                     this.userAddress = res.data;
                     // this.util.dismissLoader();
-                    //this.spinnerService.hide();
+                    this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
@@ -103,7 +103,7 @@ export class StorePage implements OnInit {
                 (err) => {
                   this.err = err;
                   // this.util.dismissLoader();
-                  //this.spinnerService.hide();
+                  this.spinnerService.hide();
                 }
               );
           }
@@ -111,7 +111,7 @@ export class StorePage implements OnInit {
         (err) => {
           this.err = err;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     }

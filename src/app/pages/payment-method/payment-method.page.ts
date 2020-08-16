@@ -125,14 +125,14 @@ export class PaymentMethodPage implements OnInit {
       this.data.payment_type = "LOCAL";
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
 
       this.api.postDataWithToken("createOrder", this.data).subscribe(
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
@@ -141,7 +141,7 @@ export class PaymentMethodPage implements OnInit {
         async(err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     }
@@ -189,13 +189,13 @@ export class PaymentMethodPage implements OnInit {
       this.data.payment_status = 1;
       this.data.payment_type = "RAZOR";
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.postDataWithToken("createOrder", this.data).subscribe(
         async(res: any) => {
           if (res.success) {
             this.api.promocode = {};
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.api.checkOrderStatus = res.data.id;
             this.presentModal();
           }
@@ -203,7 +203,7 @@ export class PaymentMethodPage implements OnInit {
         async(err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
     };
@@ -243,7 +243,7 @@ export class PaymentMethodPage implements OnInit {
                     this.data.payment_status = 1;
                     this.data.payment_type = "PAYPAL";
                     // await this.util.startLoad();
-                    //this.spinnerService.show();
+                    this.spinnerService.show();
                     this.api
                       .postDataWithToken("createOrder", this.data)
                       .subscribe(
@@ -251,7 +251,7 @@ export class PaymentMethodPage implements OnInit {
                           if (res.success) {
                             this.api.promocode = {};
                             // this.util.dismissLoader();
-                            //this.spinnerService.hide();
+                            this.spinnerService.hide();
                             this.api.checkOrderStatus = res.data.id;
                             this.presentModal();
                           }
@@ -259,7 +259,7 @@ export class PaymentMethodPage implements OnInit {
                         async(err) => {
                           this.err = err.error.errors;
                           // this.util.dismissLoader();
-                          //this.spinnerService.hide();
+                          this.spinnerService.hide();
                         }
                       );
                   },

@@ -32,7 +32,7 @@ export class SignupPage implements OnInit {
 
   gotologin() {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postData("register", this.data).subscribe((res: any) => {
       if (res.success) {
         if (res.data.address_id) {
@@ -50,14 +50,14 @@ export class SignupPage implements OnInit {
         }
       }
       // this.util.dismissLoader();
-      //this.spinnerService.hide();
+      this.spinnerService.hide();
       this.err = {};
       this.util.presentToast(res.msg);
     },
       async (err) => {
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

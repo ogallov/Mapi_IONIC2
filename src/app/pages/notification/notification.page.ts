@@ -18,16 +18,16 @@ export class NotificationPage implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("viewNotification").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
       }
       // this.util.dismissLoader();
-      //this.spinnerService.hide();
+      this.spinnerService.hide();
     },() => {
       // this.util.dismissLoader();
-      //this.spinnerService.hide();
+      this.spinnerService.hide();
     });
 
   }

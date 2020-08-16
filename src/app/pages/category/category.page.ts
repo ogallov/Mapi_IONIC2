@@ -33,14 +33,14 @@ export class CategoryPage implements OnInit {
     this.route.params.subscribe((params) => {
       this.isfrom = params["id"];
       if (this.isfrom) {
-        //this.spinnerService.show();
+        this.spinnerService.show();
         // await this.util.startLoad();
         this.api
           .getDataWithToken("categoryShop/" + this.isfrom)
           .subscribe((res: any) => {
             if (res.success) {
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
               this.data = res.data;
             }
           });
@@ -55,7 +55,7 @@ export class CategoryPage implements OnInit {
 
               if (this.api.filterType == "popular") {
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
                 this.data.sort((a, b) => {
                   if (a.rate > b.rate) {
                     return -1;
@@ -68,7 +68,7 @@ export class CategoryPage implements OnInit {
 
               } else if (this.api.filterType == "pureveg") {
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
                 this.data = this.data.filter(a => {
                   if (a.veg > 0) {
                     return a;
@@ -77,7 +77,7 @@ export class CategoryPage implements OnInit {
 
               } else if (this.api.filterType == "lowcost") {
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
                 this.data.sort((a, b) => {
                   if (a.avarage_plate_price < b.avarage_plate_price) {
                     return -1;
@@ -88,7 +88,7 @@ export class CategoryPage implements OnInit {
                   return 0;
                 });
               } else {
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
                 // this.util.dismissLoader();
                 if (localStorage.getItem("isaddress") != "false") {
                   this.api

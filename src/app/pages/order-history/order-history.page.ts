@@ -27,12 +27,12 @@ export class OrderHistoryPage implements OnInit {
     this.currency = this.api.currency;
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("userOrder").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     });
   }
@@ -62,7 +62,7 @@ export class OrderHistoryPage implements OnInit {
             cssClass: "secondary",
             handler:() => {
               // await this.util.startLoad();
-              //this.spinnerService.show();
+              this.spinnerService.show();
               this.api.getDataWithToken("cancelOrder/" + id).subscribe(
                 (res: any) => {
                   if (res.success) {
@@ -72,19 +72,19 @@ export class OrderHistoryPage implements OnInit {
                         if (res.success) {
                           this.data = res.data;
                           // this.util.dismissLoader();
-                          //this.spinnerService.hide();
+                          this.spinnerService.hide();
                         }
                       },
                       (err) => {
                         // this.util.dismissLoader();
-                        //this.spinnerService.hide();
+                        this.spinnerService.hide();
                       }
                     );
                   }
                 },
                (err) => {
                   // this.util.dismissLoader();
-                  //this.spinnerService.hide();
+                  this.spinnerService.hide();
                 }
               );
             }

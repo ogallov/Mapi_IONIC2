@@ -21,7 +21,7 @@ export class OtpmodalpagePage implements OnInit {
 
   ) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
       .subscribe(
@@ -32,7 +32,7 @@ export class OtpmodalpagePage implements OnInit {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
   }
@@ -45,25 +45,25 @@ export class OtpmodalpagePage implements OnInit {
   checkOtp() {
     this.data.order_id = this.order_id;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.postDataWithToken("deliveredProduct", this.data).subscribe(
       (res: any) => {
         if (res.success) {
           this.modalController.dismiss("true");
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.err = {};
           this.order_id = res.data.id;
         } else {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.err = {};
           this.util.presentToast(res.msg);
         }
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.err = err.error.errors;
       }
     );

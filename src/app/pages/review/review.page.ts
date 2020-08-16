@@ -25,14 +25,14 @@ export class ReviewPage implements OnInit {
   ) {
     this.currency = this.api.currency;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("shopDetail/" + this.api.detailId)
       .subscribe((res: any) => {
         if (res.success) {
           this.data = res.data;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.data.review.forEach(element => {
             element.created_at = moment(element.created_at).fromNow();
           });

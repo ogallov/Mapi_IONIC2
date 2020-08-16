@@ -72,12 +72,12 @@ export class ProfilePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("viewReview").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.data.review.forEach((element) => {
           element.created_at = moment(element.created_at).fromNow();
         });
@@ -159,14 +159,14 @@ export class ProfilePage implements OnInit, OnDestroy {
     if (this.segment == 3) {
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
         (res: any) => {
 
           if (res.success) {
             this.err = {};
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
             })
@@ -178,7 +178,7 @@ export class ProfilePage implements OnInit, OnDestroy {
               if (res.success) {
                 this.data = res.data;
                 // this.util.dismissLoader();
-                //this.spinnerService.hide();
+                this.spinnerService.hide();
 
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
@@ -220,24 +220,24 @@ export class ProfilePage implements OnInit, OnDestroy {
         (err) => {
           if (err.error.msg) {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.util.presentToast(err.error.msg);
           }
           this.err = err.error.errors;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
 
     } else if (this.segment == 5) {
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
         (res: any) => {
           if (res.success) {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.passwordData.password = "";
             this.passwordData.confirmPassword = "";
             this.err = {};
@@ -246,7 +246,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.err = err.error.errors;
         }
       );
@@ -271,7 +271,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
       this.userSetting.address_id = localStorage.getItem("isaddress");
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.api
         .postDataWithToken("saveSetting", this.userSetting)
         .subscribe((res: any) => {
@@ -279,7 +279,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.lastIsAdrress = '';
             localStorage.setItem("isaddressBD", "true");
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
             })

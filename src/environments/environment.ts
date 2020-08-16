@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  baseUrl: "http://localhost:8001/api/user/",
-  // baseUrl: "http://end.mimapi.club/api/user/"
+  // baseUrl: "http://localhost:8001/api/user/",
+  baseUrl: "http://end.mimapi.club/api/user/"
 };
 
 export const countryCode = [

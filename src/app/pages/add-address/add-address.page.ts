@@ -112,7 +112,7 @@ export class AddAddressPage implements OnInit {
       this.addressData.address_id = this.addressData.id;
 
       // await this.util.startLoad();
-      //this.spinnerService.show();
+      this.spinnerService.show();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
       this.api
@@ -122,7 +122,7 @@ export class AddAddressPage implements OnInit {
             console.log(res);
             
             if (res.success) {
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
               // this.util.dismissLoader();
               this.translate.get('toasts').subscribe(async val => {  
                 this.util.presentToast(val.address_update);
@@ -134,7 +134,7 @@ export class AddAddressPage implements OnInit {
           },
           (err) => {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             this.err = err.error.errors;
           }
         );
@@ -147,7 +147,7 @@ export class AddAddressPage implements OnInit {
         }
       });
 
-      //this.spinnerService.show();
+      this.spinnerService.show();
       // await this.util.startLoad();
       this.addressData.lat = this.TCenterlat;
       this.addressData.lang = this.TCenterlng;
@@ -155,7 +155,7 @@ export class AddAddressPage implements OnInit {
       this.api.postDataWithToken("addAddress", this.addressData).subscribe(
         (res: any) => {
           if (res.success) {
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
             // this.util.dismissLoader();
             if (localStorage.getItem("isaddress") == "false") {
               localStorage.setItem("isaddress", res.data.id);
@@ -168,7 +168,7 @@ export class AddAddressPage implements OnInit {
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.err = err.error.errors;
         }
       );

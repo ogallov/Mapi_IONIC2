@@ -31,7 +31,7 @@ export class ProductDetailPage implements OnInit {
 
   async ionViewWillEnter() {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
 
     this.cartData = JSON.parse(localStorage.getItem("store-detail"));
 
@@ -39,7 +39,7 @@ export class ProductDetailPage implements OnInit {
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.data = res.data;
           this.review = res.data.review;
 
@@ -57,7 +57,7 @@ export class ProductDetailPage implements OnInit {
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

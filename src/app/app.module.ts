@@ -26,6 +26,7 @@ import { OtpmodalpagePageModule } from './pages/otpmodalpage/otpmodalpage.module
 
 // ngx spinner
 import { NgxSpinnerModule } from "ngx-spinner";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [AppComponent],
@@ -51,6 +52,7 @@ import { NgxSpinnerModule } from "ngx-spinner";
     AddAddressPageModule,
     OtpmodalpagePageModule,
     NgxSpinnerModule,
+    BrowserAnimationsModule,
     
   ],
   providers: [

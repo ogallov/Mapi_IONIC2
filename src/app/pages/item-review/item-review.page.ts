@@ -12,17 +12,18 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class ItemReviewPage implements OnInit {
   data: any = [];
   constructor(private api: ApiService,
-    private util: UtilService, 
-    private spinnerService: NgxSpinnerService) {
+    private util: UtilService,
+    private spinnerService: NgxSpinnerService,
+  ) {
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("itemReview/" + this.api.reviewId)
       .subscribe((res: any) => {
         if (res.success) {
           this.data = res.data;
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       });
   }

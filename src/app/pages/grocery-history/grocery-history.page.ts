@@ -24,18 +24,18 @@ export class GroceryHistoryPage implements OnInit {
   ) {
     this.currency = this.api.currency;
     // this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("groceryOrder").subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.data = res.data;
         }
       },
       (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

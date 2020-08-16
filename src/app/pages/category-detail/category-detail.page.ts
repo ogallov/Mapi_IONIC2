@@ -52,12 +52,12 @@ export class CategoryDetailPage implements OnInit {
   ionViewWillEnter() {
 
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
 
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
       (res: any) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
         this.data = res.data;
         console.log(this.data);
         this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
@@ -67,7 +67,7 @@ export class CategoryDetailPage implements OnInit {
       (err) => {
         console.log(err);
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
 

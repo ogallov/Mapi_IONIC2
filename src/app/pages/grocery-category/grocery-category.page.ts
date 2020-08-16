@@ -22,18 +22,18 @@ export class GroceryCategoryPage implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     // this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api.getDataWithToken("groceryCategory").subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.category = res.data;
         }
       },
      (err) => {
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

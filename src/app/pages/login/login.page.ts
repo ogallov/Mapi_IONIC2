@@ -47,7 +47,7 @@ export class LoginPage implements OnInit {
   gotoSlide() {
     this.user.device_token = this.api.deviceToken ? this.api.deviceToken : null;
 
-    //this.spinnerService.show();
+    this.spinnerService.show();
     // await this.util.startLoad();
     this.api.postData("login", this.user).subscribe(
       (res: any) => {
@@ -88,7 +88,7 @@ export class LoginPage implements OnInit {
           this.ntrl.navigateForward("verify");
         }
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       },
 
       (err) => {
@@ -97,7 +97,7 @@ export class LoginPage implements OnInit {
         }
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        //this.spinnerService.hide();
+        this.spinnerService.hide();
       }
     );
   }

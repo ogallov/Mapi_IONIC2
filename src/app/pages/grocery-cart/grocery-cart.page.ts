@@ -78,7 +78,7 @@ export class GroceryCartPage implements OnInit {
     this.data.toPay = this.toPay;
 
     // this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
@@ -106,7 +106,7 @@ export class GroceryCartPage implements OnInit {
               .subscribe(
                 (res: any) => {
                   if (res.success) {
-                    //this.spinnerService.hide();
+                    this.spinnerService.hide();
                     // this.util.dismissLoader();
                     this.data.Deafult_address = res.data;
                     this.mapData();
@@ -116,14 +116,14 @@ export class GroceryCartPage implements OnInit {
                 },
                 (err) => {
                   // this.util.dismissLoader();
-                  //this.spinnerService.hide();
+                  this.spinnerService.hide();
                 }
               );
           }
         },
         (err) => {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
         }
       );
   }
@@ -143,11 +143,11 @@ export class GroceryCartPage implements OnInit {
               this.mapData();
             }
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
           },
           (err) => {
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
           }
         );
     }

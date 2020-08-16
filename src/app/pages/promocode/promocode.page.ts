@@ -25,24 +25,24 @@ export class PromocodePage implements OnInit {
       this.isfrom = params["id"];
       if (this.isfrom == "menu") {
         // await this.util.startLoad();
-        //this.spinnerService.show();
+        this.spinnerService.show();
         this.api.getDataWithToken("viewCoupon").subscribe((res: any) => {
           if (res.success) {
             this.data = res.data;
             // this.util.dismissLoader();
-            //this.spinnerService.hide();
+            this.spinnerService.hide();
           }
         });
       } else {
         // await this.util.startLoad();
-        //this.spinnerService.show();
+        this.spinnerService.show();
         this.api
           .getDataWithToken("viewShopCoupon/" + this.isfrom)
           .subscribe((res: any) => {
             if (res.success) {
               this.data = res.data;
               // this.util.dismissLoader();
-              //this.spinnerService.hide();
+              this.spinnerService.hide();
             }
           });
       }
@@ -59,18 +59,18 @@ export class PromocodePage implements OnInit {
   aapplyPromocode(item) {
     this.promocode.code = item.code;
     // await this.util.startLoad();
-    //this.spinnerService.show();
+    this.spinnerService.show();
     this.api
       .postDataWithToken("chkCoupon", this.promocode)
       .subscribe(async (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.api.promocode = item;
           this.ntrl.back();
         } else {
           // this.util.dismissLoader();
-          //this.spinnerService.hide();
+          this.spinnerService.hide();
           this.util.presentToast(res.msg);
         }
       });
