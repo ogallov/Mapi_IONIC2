@@ -61,6 +61,9 @@ export class RestaurantDetailPage implements OnInit {
           // this.util.dismissLoader();
           this.spinnerService.hide();
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
 
   }
@@ -222,6 +225,9 @@ export class RestaurantDetailPage implements OnInit {
             this.util.presentToast(res.msg);
           }
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
   }
 

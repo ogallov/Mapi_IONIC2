@@ -34,6 +34,9 @@ export class OrderHistoryPage implements OnInit {
         // this.util.dismissLoader();
         this.spinnerService.hide();
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 
@@ -60,7 +63,7 @@ export class OrderHistoryPage implements OnInit {
             text: val.yes,
             role: "yes",
             cssClass: "secondary",
-            handler:() => {
+            handler: () => {
               // await this.util.startLoad();
               this.spinnerService.show();
               this.api.getDataWithToken("cancelOrder/" + id).subscribe(
@@ -82,7 +85,7 @@ export class OrderHistoryPage implements OnInit {
                     );
                   }
                 },
-               (err) => {
+                (err) => {
                   // this.util.dismissLoader();
                   this.spinnerService.hide();
                 }
@@ -99,6 +102,11 @@ export class OrderHistoryPage implements OnInit {
       });
 
       await alert.present();
+
+    }, errs => {
+      console.log(errs);
+
+      this.spinnerService.hide();
     })
 
 

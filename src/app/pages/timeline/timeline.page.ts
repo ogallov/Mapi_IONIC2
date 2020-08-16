@@ -297,7 +297,12 @@ export class TimelinePage implements OnInit {
             this.status = "6";
           }
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
+        
       });
+
     this.get_duration_interval = setInterval((interval) => {
       if (this.data.order_status == "Delivered") {
         clearInterval(this.get_duration_interval);
@@ -357,6 +362,9 @@ export class TimelinePage implements OnInit {
       });
 
       await alert.present();
+    }, error => {
+      console.log(error);
+      
     });
   }
 
@@ -423,6 +431,7 @@ export class TimelinePage implements OnInit {
       },
       (err) => {
         this.err = err.error;
+        this.spinnerService.hide();
       }
     );
   }

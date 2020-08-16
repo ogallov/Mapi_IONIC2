@@ -13,6 +13,7 @@ export class GrocerySuccessPage implements OnInit {
   ) { }
 
   ngOnInit() { }
+  
   orderStatus() {
     localStorage.removeItem('store-detail')
     this.modalController.dismiss();

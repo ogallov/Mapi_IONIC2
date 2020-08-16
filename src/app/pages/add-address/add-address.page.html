@@ -60,7 +60,7 @@
     </div>
 </ion-content>
 <ion-footer>
-    <ion-button class="otp_btn" mode="md" expand="block" fill="solid" (click)="saveAddress()">
+    <ion-button class="otp_btn" mode="md" expand="block" fill="solid" (click)="saveAddress()" [disabled]="flagControl">
         {{"add_edit_address_page.save_btn" | translate}}
     </ion-button>
 </ion-footer>

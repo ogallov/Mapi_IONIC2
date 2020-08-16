@@ -112,6 +112,9 @@ export class PaymentMethodPage implements OnInit {
         if (this.currencyType == "INR") {
           this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.payment_not_possible);
+          }, error => {
+            console.log(error);
+            this.spinnerService.hide();
           })
         } else {
           this.paypalPay();
@@ -128,7 +131,7 @@ export class PaymentMethodPage implements OnInit {
       this.spinnerService.show();
 
       this.api.postDataWithToken("createOrder", this.data).subscribe(
-        async(res: any) => {
+        (res: any) => {
           if (res.success) {
             this.api.promocode = {};
             // this.util.dismissLoader();
@@ -137,8 +140,7 @@ export class PaymentMethodPage implements OnInit {
             this.presentModal();
           }
         },
-        
-        async(err) => {
+        (err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
           this.spinnerService.hide();
@@ -183,7 +185,7 @@ export class PaymentMethodPage implements OnInit {
       }
     };
 
-    var successCallback = async(payment_id) => {
+    var successCallback = (payment_id) => {
       this.data.payment_token = payment_id;
 
       this.data.payment_status = 1;
@@ -191,7 +193,7 @@ export class PaymentMethodPage implements OnInit {
       // await this.util.startLoad();
       this.spinnerService.show();
       this.api.postDataWithToken("createOrder", this.data).subscribe(
-        async(res: any) => {
+        (res: any) => {
           if (res.success) {
             this.api.promocode = {};
             // this.util.dismissLoader();
@@ -200,7 +202,7 @@ export class PaymentMethodPage implements OnInit {
             this.presentModal();
           }
         },
-        async(err) => {
+        (err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
           this.spinnerService.hide();
@@ -247,7 +249,7 @@ export class PaymentMethodPage implements OnInit {
                     this.api
                       .postDataWithToken("createOrder", this.data)
                       .subscribe(
-                        async(res: any) => {
+                        (res: any) => {
                           if (res.success) {
                             this.api.promocode = {};
                             // this.util.dismissLoader();
@@ -256,7 +258,7 @@ export class PaymentMethodPage implements OnInit {
                             this.presentModal();
                           }
                         },
-                        async(err) => {
+                        (err) => {
                           this.err = err.error.errors;
                           // this.util.dismissLoader();
                           this.spinnerService.hide();

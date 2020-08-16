@@ -60,6 +60,9 @@ export class GroceryPromocodePage implements OnInit {
         this.spinnerService.hide();
         this.util.presentToast(res.msg);
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 }

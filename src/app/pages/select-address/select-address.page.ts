@@ -38,6 +38,9 @@ export class SelectAddressPage implements OnInit {
           });
         }
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 
@@ -68,6 +71,9 @@ export class SelectAddressPage implements OnInit {
                 });
               }
             }
+          }, error => {
+            console.log(error);
+            this.spinnerService.hide();
           });
         }
       }
@@ -111,8 +117,14 @@ export class SelectAddressPage implements OnInit {
                 });
               }
             }
+          }, errs => {
+            console.log(errs);
+            this.spinnerService.hide();
           });
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
   }
 

@@ -66,6 +66,10 @@ export class CartPage implements OnInit {
           this.userlat = res.data.lat;
           this.userlang = res.data.lang;
         }
+      }, error => {
+        console.log(error);
+        
+        this.spinnerService.hide();
       });
   }
 
@@ -84,6 +88,10 @@ export class CartPage implements OnInit {
           if (res.success) {
             this.data.Deafult_address = res.data;
           }
+        }, error => {
+          console.log(error);
+          
+          this.spinnerService.hide();
         });
     }
 
@@ -346,6 +354,10 @@ export class CartPage implements OnInit {
       } else {
         this.translate.get("toasts").subscribe(async (val) => {
           this.util.presentToast(val.order_is_out_range);
+        }, error => {
+          console.log(error);
+          this.spinnerService.hide();
+          
         });
       }
 

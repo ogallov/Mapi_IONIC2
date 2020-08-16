@@ -32,7 +32,11 @@ export class PromocodePage implements OnInit {
             // this.util.dismissLoader();
             this.spinnerService.hide();
           }
+        }, errs => {
+          console.log(errs);
+          this.spinnerService.hide();
         });
+
       } else {
         // await this.util.startLoad();
         this.spinnerService.show();
@@ -44,8 +48,15 @@ export class PromocodePage implements OnInit {
               // this.util.dismissLoader();
               this.spinnerService.hide();
             }
+          }, err => {
+            console.log(err);
+            this.spinnerService.hide();
+
           });
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 
@@ -56,7 +67,7 @@ export class PromocodePage implements OnInit {
     this.ntrl.back();
   }
 
-  aapplyPromocode(item) {
+  applyPromocode(item) {
     this.promocode.code = item.code;
     // await this.util.startLoad();
     this.spinnerService.show();
@@ -73,6 +84,9 @@ export class PromocodePage implements OnInit {
           this.spinnerService.hide();
           this.util.presentToast(res.msg);
         }
+      }, errors => {
+        console.log(errors);
+        this.spinnerService.hide();
       });
   }
 }

@@ -43,10 +43,13 @@ export class CategoryPage implements OnInit {
               this.spinnerService.hide();
               this.data = res.data;
             }
+          }, error => {
+            console.log(error);
+            this.spinnerService.hide();
+
           });
       } else {
 
-        
         // await this.util.startLoad();
         this.api.getDataWithToken("shops").subscribe(
           (res: any) => {
@@ -115,7 +118,11 @@ export class CategoryPage implements OnInit {
                           }
                         });
                       }
+                    }, err => {
+                      console.log(err);
+                      this.spinnerService.hide();
                     });
+
                 } else {
                   this.geolocation
                     .getCurrentPosition()
@@ -141,7 +148,7 @@ export class CategoryPage implements OnInit {
                       });
                     })
                     .catch(error => {
-
+                      this.spinnerService.hide();
                     });
                 }
               }
@@ -149,9 +156,13 @@ export class CategoryPage implements OnInit {
           },
           err => {
             this.err = err.error;
+            this.spinnerService.hide();
           }
         );
       }
+    }, errors => {
+      console.log(errors);
+      this.spinnerService.hide();
     });
   }
 

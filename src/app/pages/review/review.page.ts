@@ -37,6 +37,9 @@ export class ReviewPage implements OnInit {
             element.created_at = moment(element.created_at).fromNow();
           });
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
   }
 
@@ -70,6 +73,9 @@ export class ReviewPage implements OnInit {
             this.util.presentToast(res.msg);
           }
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
   }
 }

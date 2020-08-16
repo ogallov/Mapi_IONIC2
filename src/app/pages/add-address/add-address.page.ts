@@ -41,6 +41,8 @@ export class AddAddressPage implements OnInit {
   TCenterlat: any;
   TCenterlng: any;
 
+  flagControl: boolean = false;
+
   constructor(
     private modalController: ModalController,
     private api: ApiService,
@@ -101,6 +103,8 @@ export class AddAddressPage implements OnInit {
   saveAddress() {
     
     if (this.isEdit == true) {
+      console.log('edit true');
+      
       this.addressType.forEach(element => {
         console.log(element);
         
@@ -140,6 +144,8 @@ export class AddAddressPage implements OnInit {
         );
 
     } else {
+
+     this.flagControl =  true;
       
       this.addressType.forEach(element => {
         if (element.checked) {

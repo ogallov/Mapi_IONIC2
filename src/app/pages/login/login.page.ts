@@ -73,6 +73,10 @@ export class LoginPage implements OnInit {
 
           this.translate.get("toasts").subscribe(async (val) => {
             this.util.presentToast(val.logged_in_success);
+          }, err => {
+            console.log(err);
+            this.spinnerService.hide();
+            
           });
 
           if (res.data.address_id) {
@@ -90,7 +94,6 @@ export class LoginPage implements OnInit {
         // this.util.dismissLoader();
         this.spinnerService.hide();
       },
-
       (err) => {
         if (err.error.msg) {
           this.util.presentToast(err.error.msg);

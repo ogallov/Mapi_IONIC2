@@ -169,6 +169,9 @@ export class HomePage {
       if (res.success) {
         this.banners = res.data;
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 
@@ -234,7 +237,10 @@ export class HomePage {
               this.userAddress.city = result[0].locality;
               this.userAddress.zipcode = result[0].postalCode;
             })
-            .catch((error: any) => console.log(error));
+            .catch((error: any) => {
+              console.log(error);
+              this.spinnerService.hide();
+            });
         })
         .catch((error) => {
           // this.util.dismissLoader();
@@ -352,8 +358,14 @@ export class HomePage {
                         }
                       });
                     })
-                    .catch((error: any) => console.log(error));
+                    .catch((error: any) =>{
+                      console.log(error);
+                      this.spinnerService.hide();
+                    });
                 }
+              }, error => {
+                console.log(error);
+                this.spinnerService.hide();
               });
 
           } else {
@@ -385,7 +397,10 @@ export class HomePage {
                   }
                 });
               })
-              .catch((error: any) => console.log(error));
+              .catch((error: any) => {
+                console.log(error);
+                this.spinnerService.hide();
+              });
           }
         }
       }

@@ -54,7 +54,7 @@ export class SignupPage implements OnInit {
       this.err = {};
       this.util.presentToast(res.msg);
     },
-      async (err) => {
+      (err) => {
         this.err = err.error.errors;
         // this.util.dismissLoader();
         this.spinnerService.hide();

@@ -45,6 +45,9 @@ export class PayMethodPage implements OnInit {
         // this.util.dismissLoader();
         this.spinnerService.hide();
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
   }
 

@@ -36,14 +36,14 @@ export class OrderDetailPage implements OnInit {
     this.currency = this.api.currency;
     // await this.util.startLoad();
     this.spinnerService.show();
-  
+
     this.api.getDataWithToken("singleOrder/" + this.api.orderID).subscribe(
       (res: any) => {
         if (res.success) {
           // this.util.dismissLoader();
           this.spinnerService.hide();
           this.data = res.data;
-  
+
           this.itemtotal = 0;
           this.data.orderItems.forEach(element => {
             this.itemtotal = this.itemtotal + element.price;
@@ -108,11 +108,18 @@ export class OrderDetailPage implements OnInit {
         if (res.success) {
           this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.review_add_success);
+          }, error => {
+            console.log(error);
+            this.spinnerService.hide();
           })
           this.data.review_status = 1;
         }
+      }, err => {
+        console.log(err);
+        this.spinnerService.hide();
       });
   }
+
   shopReiviewData(item) {
     this.shopReview.order_id = this.data.id;
     this.shopReview.customer_id = this.data.customer_id;
@@ -123,9 +130,15 @@ export class OrderDetailPage implements OnInit {
         if (res.success) {
           this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.shop_review_add_success);
+          }, errors => {
+            console.log(errors);
+            this.spinnerService.hide();
           })
           this.data.shopReview_status = 1;
         }
+      }, error => {
+        console.log(error);
+        this.spinnerService.hide();
       });
   }
   orderStatus(id) {
@@ -142,12 +155,17 @@ export class OrderDetailPage implements OnInit {
           this.err = {};
           this.translate.get('toasts').subscribe(async val => {
             this.util.presentToast(val.driver_review_add_success);
-          })
+          }, errors => {
+            console.log(errors);
+            this.spinnerService.hide();
+          }
+          )
           this.data.driverReview_status = 1;
         }
       },
       err => {
         this.err = err.error.errors;
+        this.spinnerService.hide();
       }
     );
   }

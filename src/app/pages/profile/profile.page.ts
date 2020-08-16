@@ -65,6 +65,10 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.data.userAddress.city = res.data.city;
             this.data.userAddress.zipcode = res.data.zipcode;
           }
+        }, error => {
+          console.log(error);
+          this.spinnerService.hide();
+          
         });
     }
   }
@@ -92,8 +96,8 @@ export class ProfilePage implements OnInit, OnDestroy {
         }
 
         this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
-        this.data.address = localStorage.getItem("address");
-        // this.data.address = localStorage.getItem("isaddress");
+        // this.data.address = localStorage.getItem("address");
+        this.data.address = localStorage.getItem("isaddress");
 
         if (this.userDetail.enable_notification == 1) {
           this.userSetting.enable_notification = true;
@@ -113,6 +117,9 @@ export class ProfilePage implements OnInit, OnDestroy {
           this.userSetting.enable_call = false;
         }
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
 
     this.route.params.subscribe((params) => {
@@ -120,6 +127,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       if (this.isfrom == "setting") {
         this.segment = 4;
       }
+    }, error => {
+      console.log(error);
+      this.spinnerService.hide();
     });
 
     if (this.lastIsAdrress !== '') {
@@ -127,6 +137,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       if (this.flagControlBtnOpen) {
         this.translate.get('toasts').subscribe(async val => {
           this.util.presentToast(val.The_selected_address_has_not_been_saved);
+        }, error => {
+          console.log(error);
+          this.spinnerService.hide();
         })
       }
       // set address last
@@ -143,6 +156,9 @@ export class ProfilePage implements OnInit, OnDestroy {
       if (this.flagControlBtnOpen) {
         this.translate.get('toasts').subscribe(async val => {
           this.util.presentToast(val.The_selected_address_has_not_been_saved);
+        }, error => {
+          console.log(error);
+          this.spinnerService.hide();
         })
       }
       // set address last
@@ -282,8 +298,14 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
-            })
+            }, errs => {
+              console.log(errs);
+              this.spinnerService.hide();
+            });
           }
+        }, error => {
+          console.log(error);
+          this.spinnerService.hide();
         });
     }
   }
@@ -424,8 +446,8 @@ export class ProfilePage implements OnInit, OnDestroy {
                   this.userDetail = this.data.userDetail;
                   this.coverImage = this.userDetail.imagePath + this.data.userDetail.cover_image;
                   this.imgProfile = this.userDetail.imagePath + this.userDetail.image;
-                  this.data.address = localStorage.getItem("address");
-                  // this.data.address = localStorage.getItem("isaddress");
+                  // this.data.address = localStorage.getItem("address");
+                  this.data.address = localStorage.getItem("isaddress");
 
                   if (this.userDetail.enable_notification == 1) {
                     this.userSetting.enable_notification = true;
