@@ -103,7 +103,6 @@ export class AddAddressPage implements OnInit {
   saveAddress() {
     
     if (this.isEdit == true) {
-      console.log('edit true');
       
       this.addressType.forEach(element => {
         console.log(element);
@@ -170,12 +169,14 @@ export class AddAddressPage implements OnInit {
             this.api.parseData = {};
             this.ischange = true;
             this.modalController.dismiss(this.ischange);
+            this.flagControl =  false;
           }
         },
         (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
           this.err = err.error.errors;
+          this.flagControl =  false;
         }
       );
     }

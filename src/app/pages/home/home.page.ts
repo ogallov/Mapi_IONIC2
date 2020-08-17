@@ -131,11 +131,12 @@ export class HomePage {
           this.isfood = false;
         }
         this.initData();
+        this.spinnerService.hide();
       },
       (err) => {
         console.log("err", err);
-      }
-    );
+        this.spinnerService.hide();
+      });
   }
 
   private initData() {
@@ -146,11 +147,9 @@ export class HomePage {
     this.spinnerService.show();
     this.api.getDataWithToken("home").subscribe(
       (res: any) => {
-        console.log(res);
         if (res.success) {
           this.data = res.data;
           this.currency = this.api.currency;
-
           this.getGrocery();
         }
       },
@@ -165,7 +164,7 @@ export class HomePage {
   getAdvertisingBanner(): void {
     this.api.getData("banner").subscribe((res: any) => {
       console.log(res);
-      
+
       if (res.success) {
         this.banners = res.data;
       }
@@ -207,12 +206,12 @@ export class HomePage {
 
 
     } else {
-
       // await this.util.startLoad();
       this.spinnerService.show();
       this.geolocation
         .getCurrentPosition()
         .then((resp) => {
+
           resp.coords.latitude;
           resp.coords.longitude;
           this.userAddress.lat = resp.coords.latitude;
@@ -222,6 +221,7 @@ export class HomePage {
             useLocale: true,
             maxResults: 5,
           };
+
           this.nativeGeocoder
             .reverseGeocode(
               resp.coords.latitude,
@@ -230,12 +230,12 @@ export class HomePage {
             )
             .then((result: NativeGeocoderResult[]) => {
               // this.util.dismissLoader();
-              this.spinnerService.hide();
               this.userAddress.address_type = "Current Location";
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
               this.userAddress.city = result[0].locality;
               this.userAddress.zipcode = result[0].postalCode;
+              this.spinnerService.hide();
             })
             .catch((error: any) => {
               console.log(error);
@@ -246,6 +246,8 @@ export class HomePage {
           // this.util.dismissLoader();
           this.spinnerService.hide();
         });
+
+      this.spinnerService.hide();
     }
   }
 
@@ -358,7 +360,7 @@ export class HomePage {
                         }
                       });
                     })
-                    .catch((error: any) =>{
+                    .catch((error: any) => {
                       console.log(error);
                       this.spinnerService.hide();
                     });
@@ -468,13 +470,12 @@ export class HomePage {
           this.api.getDataWithToken("groceryCategory").subscribe(
             (res: any) => {
               console.log(res);
-              
               if (res.success) {
                 // this.util.dismissLoader();
                 this.spinnerService.hide();
                 this.grocery.category = res.data;
                 console.log(this.grocery.category);
-                
+
                 this.grocery.Store.forEach((element) => {
                   element.away = Number(
                     this.distance(
@@ -498,7 +499,7 @@ export class HomePage {
           this.spinnerService.hide();
         }
       },
-       (err) => {
+      (err) => {
         // this.util.dismissLoader();
         this.spinnerService.hide();
         this.err = err;
