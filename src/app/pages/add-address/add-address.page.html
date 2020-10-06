@@ -20,7 +20,7 @@
                 <ion-col class="ion-text-center" *ngFor="let type of addressType" (click)="setAddressType(type)">
                     <div class="back-image-div">
                         <div class="ion-text-center">
-                            {{type.name}}
+                            {{ type.value | translate }}
                         </div>
                     </div>
                     <ion-checkbox class="ion-margin-top" custom-chckbox [disabled]="type.checked"
@@ -39,21 +39,21 @@
         <form #f="ngForm">
             <div class="input-section">
                 <ion-input color="light" input-text name="building" [(ngModel)]="addressData.soc_name"
-                    placeholder="Building/Society Name" type="text" required>
+                    placeholder="{{'add_edit_address_page.building/society_name' | translate}}" type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.soc_name">{{err?.soc_name}}*</p>
-                <ion-input color="light" input-text name="street" [(ngModel)]="addressData.street" placeholder="Street"
+                <ion-input color="light" input-text name="street" [(ngModel)]="addressData.street" placeholder="{{'add_edit_address_page.street' | translate}}"
                     type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.street">{{err?.street}}*</p>
-                <ion-input color="light" input-text name="city" [(ngModel)]="addressData.city" placeholder="City"
+                <ion-input color="light" input-text name="city" [(ngModel)]="addressData.city" placeholder="{{'add_edit_address_page.city' | translate}}"
                     type="text" required>
                 </ion-input>
                 <p class="err" *ngIf="err?.city">{{err?.city}}*</p>
-                <ion-input color="light" input-text name="zipcode" [(ngModel)]="addressData.zipcode"
+                <!-- <ion-input color="light" input-text name="zipcode" [(ngModel)]="addressData.zipcode"
                     placeholder="Zip Code" type="text" required>
                 </ion-input>
-                <p class="err" *ngIf="err?.zipcode">{{err?.zipcode}}*</p>
+                <p class="err" *ngIf="err?.zipcode">{{err?.zipcode}}*</p> -->
             </div>
 
         </form>

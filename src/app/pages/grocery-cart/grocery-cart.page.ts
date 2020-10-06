@@ -382,9 +382,9 @@ export class GroceryCartPage implements OnInit {
       " " +
       this.data.Deafult_address.street +
       " " +
-      this.data.Deafult_address.city +
-      " " +
-      this.data.Deafult_address.zipcode;
+      this.data.Deafult_address.city ;
+      // + " " +
+      // this.data.Deafult_address.zipcode;
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,

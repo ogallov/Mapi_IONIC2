@@ -26,9 +26,9 @@ export class AddAddressPage implements OnInit {
   err: any = {};
   ischange = false;
   addressType: any = [
-    { name: "Home", checked: true },
-    { name: "Office", checked: false },
-    { name: "Other", checked: false }
+    { value: 'add_edit_address_page.home' , name: 'Home', checked: true },
+    { value: 'add_edit_address_page.office' ,name: 'Office', checked: false },
+    { value: 'add_edit_address_page.other' ,name: 'Other', checked: false }
   ];
   geocoder = new google.maps.Geocoder();
   Centerlat = 22.308155;

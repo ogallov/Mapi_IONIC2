@@ -98,7 +98,8 @@ export class CartPage implements OnInit {
   }
 
   initMap() {
-    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city + " " + this.data.Deafult_address.zipcode;
+    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    //  + " " + this.data.Deafult_address.zipcode;
 
     this.geocoder.geocode({ address: this.FindAddress }, (results, status) => {
       if (status == google.maps.GeocoderStatus.OK) {

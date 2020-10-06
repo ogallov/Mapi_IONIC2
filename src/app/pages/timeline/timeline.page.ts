@@ -445,7 +445,8 @@ export class TimelinePage implements OnInit {
         .subscribe(
           (res: any) => {
             if (res.success) {
-              this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city + " " + res.data.zipcode;
+              this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city;
+              //  + " " + res.data.zipcode;
 
               this.geocoder.geocode(
                 { address: this.userAddress },

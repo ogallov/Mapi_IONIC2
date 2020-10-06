@@ -5,7 +5,13 @@
     "add_title": "Add Address",
     "edit_title": "Edit Address",
     "address_type": "Choose your Address Type",
-    "save_btn": "Save"
+    "save_btn": "Save",
+    "city": "City",
+    "street": "Street",
+    "building/society_name": "Building/Society Name",
+    "home": "Home" ,
+    "office": "Office",
+    "other": "Other"
   },
 
   "cancel_order_alert": {
@@ -103,7 +109,7 @@
 
   "invite_Friends_page": {
     "title": "Invite Friends",
-    "text": "When your friend install app with your referral code and one order complete, you will both one order free",
+    "text": "When your friend installs the application with your reference code and places a full order, you both receive a free drink",
     "referral_code": "Referral Code",
     "invite_btn": "Invite Your Friends"
   },

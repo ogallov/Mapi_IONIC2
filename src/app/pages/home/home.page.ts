@@ -234,7 +234,7 @@ export class HomePage {
               this.userAddress.soc_name = result[0].subLocality;
               this.userAddress.street = result[0].thoroughfare;
               this.userAddress.city = result[0].locality;
-              this.userAddress.zipcode = result[0].postalCode;
+              // this.userAddress.zipcode = result[0].postalCode;
               this.spinnerService.hide();
             })
             .catch((error: any) => {
@@ -329,9 +329,9 @@ export class HomePage {
                     " " +
                     res.data.street +
                     " " +
-                    res.data.city +
-                    " " +
-                    res.data.zipcode;
+                    res.data.city 
+                    // + " " +
+                    // res.data.zipcode;
 
                   const options: NativeGeocoderOptions = {
                     useLocale: true,

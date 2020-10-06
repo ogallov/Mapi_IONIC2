@@ -5,7 +5,13 @@
     "add_title": "Agregar direccion",
     "edit_title": "Editar direccion",
     "address_type": "Escoja su direccion",
-    "save_btn": "Guardar"
+    "save_btn": "Guardar",
+    "city": "Ciudad",
+    "street": "Calle",
+    "building/society_name": "Barrio/Apartamento",
+    "home": "Casa",
+    "office": "Oficina",
+    "other": "Otros"
   },
 
   "cancel_order_alert": {
@@ -101,7 +107,7 @@
 
   "invite_Friends_page": {
     "title": "Invite a sus  amigos",
-    "text": "Cuando su amigo instale la aplicación con su código de referencia y realice un pedido completo, ambos recibirán un pedido gratis",
+    "text": "Cuando su amigo instale la aplicación con su código de referencia y realice un pedido completo, ambos recibirán una bebida gratis",
     "referral_code": "Código de referido",
     "invite_btn": "Invitar amigos"
   },

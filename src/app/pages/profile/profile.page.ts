@@ -60,10 +60,10 @@ export class ProfilePage implements OnInit, OnDestroy {
 
           if (res.success) {
             console.log(res.data);
-            this.data.userAddress.soc_name = res.data.soc_name;
-            this.data.userAddress.street = res.data.street;
-            this.data.userAddress.city = res.data.city;
-            this.data.userAddress.zipcode = res.data.zipcode;
+            this.data.userAddress.soc_name = res.data['soc_name'];
+            this.data.userAddress.street = res.data['street'];
+            this.data.userAddress.city = res.data['city'];
+            // this.data.userAddress.zipcode = res.data['zipcode'];
           }
         }, error => {
           console.log(error);
