@@ -126,13 +126,13 @@ export class HomePage {
     this.spinnerService.show();
 
     this.api.getData("keySetting").subscribe(
-      (res: any) => {
+      async(res: any) => {
         this.sellProduct = res.data.sell_product;
         if (this.sellProduct == 2) {
           this.isfood = false;
         }
-        this.initData();
-        // this.spinnerService.hide();
+        await this.initData();
+        await this.spinnerService.hide();
       },
       (err) => {
         console.log("err", err);
@@ -140,17 +140,17 @@ export class HomePage {
       });
   }
 
-  private initData() {
+  private async initData() {
 
     this.getAdvertisingBanner();
 
     // await this.util.startLoad();
     this.api.getDataWithToken("home").subscribe(
-      (res: any) => {
+      async(res: any) => {
         if (res.success) {
           this.data = res.data;
           this.currency = this.api.currency;
-          this.getGrocery();
+          await this.getGrocery();
         }
       },
       (err) => {
@@ -461,7 +461,7 @@ export class HomePage {
     this.navCtrl.navigateForward("/category/" + id);
   }
 
-  getGrocery() {
+  async getGrocery() {
     this.api.getDataWithToken("groceryShop").subscribe(
       (res: any) => {
         if (res.success) {
@@ -488,7 +488,6 @@ export class HomePage {
                     ).toFixed(2)
                   );
                 });
-                await this.spinnerService.hide();
               }
             },
             (err) => {

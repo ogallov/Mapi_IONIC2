@@ -37,7 +37,8 @@
         <!-- <h3 class="tittle">{{data?.itemNames}}</h3> -->
         <p class="address">{{data?.address}}</p>
         <p class="open">
-            {{'restaurant_detail_page.open_now' | translate}} <span>- {{data?.open_time}}-{{data?.close_time}} {{'restaurant_detail_page.mon_to_sun' | translate}} </span>
+            {{'restaurant_detail_page.open_now' | translate}} <span>- {{data?.open_time}}-{{data?.close_time}}
+                {{'restaurant_detail_page.mon_to_sun' | translate}} </span>
         </p>
     </div>
     <div class="rating_div ion-margin-horizontal">
@@ -99,16 +100,18 @@
                 <p class="vote">
                     {{item?.categoryName}}
                     <span (click)="itemReview(item.id)">
-            <ion-icon name="star"></ion-icon>{{item?.rate}} {{'restaurant_detail_page.votes' | translate}}
-          </span>
+                        <ion-icon name="star"></ion-icon>{{item?.rate}} {{'restaurant_detail_page.votes' | translate}}
+                    </span>
                 </p>
                 <div class="add_div">
-                    <p class="price" [ngStyle]="{'color':item.isPopular ? 'var(--ion-color-light)' : 'var(--ion-color-light)'}">
+                    <p class="price"
+                        [ngStyle]="{'color':item.isPopular ? 'var(--ion-color-light)' : 'var(--ion-color-light)'}">
                         {{currency}} {{item?.price}}
                         <span *ngIf="item?.sprice"> ${{item?.sprice}}</span>
                     </p>
                     <div class="ion-float-right btn_store">
-                        <ion-button fill="outline" *ngIf="item.qty == 0" class="ion-text-lowercase" (click)="addtocart(item)">
+                        <ion-button fill="outline" *ngIf="item.qty == 0" class="ion-text-lowercase"
+                            (click)="addtocart(item)">
                             {{'restaurant_detail_page.add' | translate}}
                             <ion-icon name="add"></ion-icon>
                         </ion-button>
@@ -125,6 +128,13 @@
                         </div>
                     </div>
                 </div>
+                <!-- button detail restaurant -->
+                <div class="ion-text-center" style="margin-top: .5rem;">
+                    <ion-button class="menu_btn" (click)="presentPopover($event, item)">
+                        {{'restaurant_detail_page.detail_restaurant' | translate}}
+                    </ion-button>
+                </div>
+                <!-- button detail restaurant -->
             </ion-col>
         </ion-row>
     </div>
@@ -135,7 +145,8 @@
             <div class="add_div">
                 <h3 class="name">{{item?.name}}</h3>
                 <div class="ion-float-right btn_store">
-                    <ion-button fill="outline" *ngIf="item.qty == 0" class="ion-float-right ion-text-lowercase" (click)="addtocart(item)">
+                    <ion-button fill="outline" *ngIf="item.qty == 0" class="ion-float-right ion-text-lowercase"
+                        (click)="addtocart(item)">
                         {{'restaurant_detail_page.add' | translate}}
                         <ion-icon name="add" class="ion-float-right"></ion-icon>
                     </ion-button>
@@ -167,7 +178,8 @@
         </div>
         <div class="ion-text-center">
             <ion-button class="menu_btn" (click)="presentPopover($event)">
-                <ion-icon src="assets/icon-image/restaurant.svg"></ion-icon>&nbsp;&nbsp; {{'restaurant_detail_page.menu' | translate}}
+                <ion-icon src="assets/icon-image/restaurant.svg"></ion-icon>&nbsp;&nbsp;
+                {{'restaurant_detail_page.menu' | translate}}
             </ion-button>
         </div>
     </div>
@@ -177,7 +189,8 @@
         <p>
             {{'restaurant_detail_page.view_cart' | translate}}
             <ion-icon src="assets/icon-image/cart.svg"></ion-icon>
-            <span class="ion-float-right">{{totalItem}} {{'restaurant_detail_page.item' | translate}} | {{currency}} {{totalPrice}}</span>
+            <span class="ion-float-right">{{totalItem}} {{'restaurant_detail_page.item' | translate}} | {{currency}}
+                {{totalPrice}}</span>
         </p>
     </ion-toolbar>
 </ion-footer>

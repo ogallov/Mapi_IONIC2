@@ -14,8 +14,8 @@ import { NgxSpinnerService } from 'ngx-spinner';
 export class LoginPage implements OnInit {
   user: any = {
     provider: "LOCAL",
-    email: "prueba@mapifood.com",
-    password: "123456",
+    email: "",
+    password: "",
   };
 
   err: any = {};

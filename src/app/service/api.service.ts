@@ -25,6 +25,8 @@ export class ApiService {
   currencyType: any;
   filterType: any;
   request_duration: any;
+  item?: any | string;
+
   constructor(private http: HttpClient) {
     if (localStorage.getItem("token")) {
       this.userToken = localStorage.getItem("token");

@@ -108,13 +108,15 @@ export class RestaurantDetailPage implements OnInit {
     }
   }
 
-  async presentPopover(ev: any) {
+  async presentPopover(ev: any, item?: any) {
+
+    this.api.item = item ? item : '';
     const popover = await this.popoverController.create({
       component: PopoverPage,
       event: ev,
       translucent: true,
       backdropDismiss: true,
-      cssClass: "popover"
+      cssClass: "popover",
     });
     return await popover.present();
   }

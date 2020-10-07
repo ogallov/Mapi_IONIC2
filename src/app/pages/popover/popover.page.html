@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="item === ''">
     <div class="main_div ion-margin">
         <div class="p_div" *ngFor="let item of data">
             <div class="simple_div">
@@ -7,6 +7,27 @@
             </div>
             <p class="detail"> {{item?.name}}
                 <span class="ion-float-right">{{item?.items}}</span></p>
+        </div>
+    </div>
+</ion-content>
+
+<ion-content *ngIf="item !== ''">
+    <div class="main_div_detail ion-margin">
+        <div class="p_div_detail">
+            <h3 class="detail_title">{{item?.name}}</h3>
+            <ion-item lines="none" class="ion-item-detail">
+                <ion-thumbnail slot="start" class="image-thumb">
+                    <img [src]="item?.imagePath + item?.image">
+                </ion-thumbnail>
+                <ion-label class="label-detail">
+                    <p class="detail_restaurant_title"> {{'popover_page.category' | translate}}: <span
+                            class="detail_restaurant">{{item?.categoryName}}</span></p>
+                    <p class="detail_restaurant_title"> {{'popover_page.description' | translate}}: <span
+                            class="detail_restaurant">{{item?.description}}</span></p>
+                    <p class="detail_restaurant_title"> {{'popover_page.price' | translate}}: <span
+                            class="detail_restaurant">{{item?.price}}</span></p>
+                </ion-label>
+            </ion-item>
         </div>
     </div>
 </ion-content>

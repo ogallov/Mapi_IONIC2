@@ -72,6 +72,13 @@
     "Cost Low to High": "Precio más bajo"
   },
 
+  "popover_page": {
+    "description": "Descripcion",
+    "restaurant": "Restaurante",
+    "category": "Categoria",
+    "price": "Precio"
+  },
+
   "forgot_password_page": {
     "title": "Olvido su contraseña",
     "text": "Ingrese su correo electrónico y le enviaremos instrucciones sobre cómo restablecerlo",
@@ -245,7 +252,8 @@
     "votes": "votos",
     "menu": "menú",
     "view_cart": "VER CARRITO",
-    "item": "Producto"
+    "item": "Producto",
+    "detail_restaurant": "Detalles"
   },
 
   "review_page": {

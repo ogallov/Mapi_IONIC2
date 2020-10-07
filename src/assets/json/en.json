@@ -74,6 +74,13 @@
     "Cost Low to High": "Cost Low to High"
   },
 
+  "popover_page": {
+    "description": "Description",
+    "restaurant": "Restaurant",
+    "category": "Category",
+    "price": "Price"
+  },
+
   "forgot_password_page": {
     "title": "Forgot Password",
     "text": "Enter your email and will send you instruction on how to reset it",
@@ -253,7 +260,8 @@
     "votes": "votes",
     "menu": "menu",
     "view_cart": "VIEW CART",
-    "item": "item"
+    "item": "item",
+    "detail_restaurant": "Detail"
   },
 
   "review_page": {
