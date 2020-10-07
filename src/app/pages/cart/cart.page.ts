@@ -53,11 +53,7 @@ export class CartPage implements OnInit {
       this.totalItem += element.price * element.qty;
     });
 
-    this.data.toPay =
-      this.totalItem +
-      this.data.rastaurant_charge +
-      this.data.delivery_charge -
-      this.data.discount;
+    this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
     this.api
       .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
       .subscribe((res: any) => {

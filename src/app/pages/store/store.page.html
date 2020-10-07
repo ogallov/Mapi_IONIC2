@@ -5,7 +5,8 @@
         <ion-icon src="./assets/icon-image/close_b.svg">
         </ion-icon>
       </ion-button> -->
-      <ion-back-button color="light" defaultHref="home" icon="./assets/icon-image/close_b.svg" text=""></ion-back-button>
+      <ion-back-button color="light" defaultHref="home" icon="./assets/icon-image/close_b.svg" text="">
+      </ion-back-button>
     </ion-buttons>
     <ion-title color="light">{{"store_detail.store" | translate}} </ion-title>
   </ion-toolbar>
@@ -36,5 +37,9 @@
         {{item?.away}}
       </p> -->
     </div>
+  </div>
+
+  <div class="img_div-no-data" *ngIf="Store.length === 0">
+    <img [src]="'./assets/image/no-data-icon-10.jpg'">
   </div>
 </ion-content>

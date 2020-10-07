@@ -74,7 +74,7 @@
         </div>
     </div>
 
-    <div class="toggle_div ion-margin-horizontal">
+    <!-- <div class="toggle_div ion-margin-horizontal">
         <p class="text">
             {{'restaurant_detail_page.veg_only' | translate}}
             <ion-toggle checked class="ion-float-right" mode="md" [(ngModel)]="vegonly" (ionChange)="vegOnlyItem()">
@@ -85,7 +85,7 @@
             <ion-toggle checked class="last_toggle" mode="md" [(ngModel)]="nonVeg" (ionChange)="vegOnlyItem()">
             </ion-toggle>
         </p>
-    </div>
+    </div> -->
     <div class="best_seller ion-margin-horizontal">
         <p class="best_p">{{'restaurant_detail_page.best_sellers' | translate}}</p>
         <p *ngIf="data?.bestSeller?.length==0" class="no_data_p">{{'restaurant_detail_page.no_data' | translate}}</p>

@@ -38,6 +38,10 @@ export class RestaurantDetailPage implements OnInit {
     private spinnerService: NgxSpinnerService
   ) {
     this.currency = this.api.currency;
+
+  }
+
+  async ngOnInit() {
     // await this.util.startLoad();
     this.spinnerService.show();
     this.api
@@ -65,10 +69,6 @@ export class RestaurantDetailPage implements OnInit {
         console.log(error);
         this.spinnerService.hide();
       });
-
-  }
-
-  async ngOnInit() {
   }
 
   ionViewWillEnter() {

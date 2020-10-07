@@ -33,6 +33,7 @@ export class SignupPage implements OnInit {
   gotologin() {
     // await this.util.startLoad();
     this.spinnerService.show();
+    this.data.role = 1;
     this.api.postData("register", this.data).subscribe((res: any) => {
       if (res.success) {
         if (res.data.address_id) {

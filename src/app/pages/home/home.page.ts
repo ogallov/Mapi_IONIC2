@@ -123,6 +123,7 @@ export class HomePage {
     private spinnerService: NgxSpinnerService,
   ) {
     this.menu.enable(true);
+    this.spinnerService.show();
 
     this.api.getData("keySetting").subscribe(
       (res: any) => {
@@ -131,7 +132,7 @@ export class HomePage {
           this.isfood = false;
         }
         this.initData();
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
       },
       (err) => {
         console.log("err", err);
@@ -144,7 +145,6 @@ export class HomePage {
     this.getAdvertisingBanner();
 
     // await this.util.startLoad();
-    this.spinnerService.show();
     this.api.getDataWithToken("home").subscribe(
       (res: any) => {
         if (res.success) {
@@ -244,6 +244,7 @@ export class HomePage {
         })
         .catch((error) => {
           // this.util.dismissLoader();
+          console.log('Error getting location', error);
           this.spinnerService.hide();
         });
 
@@ -468,7 +469,7 @@ export class HomePage {
           this.grocery.coupon = res.data.coupon;
 
           this.api.getDataWithToken("groceryCategory").subscribe(
-            (res: any) => {
+            async(res: any) => {
               console.log(res);
               if (res.success) {
                 // this.util.dismissLoader();
@@ -487,6 +488,7 @@ export class HomePage {
                     ).toFixed(2)
                   );
                 });
+                await this.spinnerService.hide();
               }
             },
             (err) => {

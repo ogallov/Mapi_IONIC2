@@ -11,7 +11,8 @@
     "building/society_name": "Barrio/Apartamento",
     "home": "Casa",
     "office": "Oficina",
-    "other": "Otros"
+    "other": "Otros",
+    "you_must_allow_access_to_your_location": "Debe permitir acceso a su ubicación"
   },
 
   "cancel_order_alert": {
@@ -174,7 +175,7 @@
     "items": "PRODUCTOS",
     "ordered_on": "ORDERED ON",
     "total_amount": "TOTAL",
-    "cancel_order": "Cancelados",
+    "cancel_order": "Cancelar",
     "past_order": "Pedidos anteriores",
     "no_data": "Sin datos"
   },

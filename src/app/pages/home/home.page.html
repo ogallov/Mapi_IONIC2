@@ -27,7 +27,7 @@
 
     <ion-slides class="margin-top-18" pager="false" [options]="slideOpts">
         <ion-slide *ngFor="let banner of banners" [ngStyle]="{'maxWidth': innerWidth - 80 + 'px'}">
-            <img [src]="banner?.imagePath && banner?.image">
+            <img [src]="(banner?.imagePath && banner?.image) ? banner?.imagePath + banner?.image : './assets/image/default-image.jpg'">
             <h2 *ngIf="banner?.title?.length != 0">{{banner?.title}}</h2>
         </ion-slide>
     </ion-slides>
@@ -43,7 +43,7 @@
 
         <div class="offer_div">
             <div class="img_div" *ngFor="let item of data?.shop |filter:term" (click)="resturantDetail(item?.id)">
-                <img [src]="item.imagePath + item.image" />
+                <img [src]="item?.imagePath + item?.image" />
                 <div class="offer">
                     <span>{{"home_page.offer" | translate}}</span>
                 </div>

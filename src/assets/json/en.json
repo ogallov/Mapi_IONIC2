@@ -11,7 +11,8 @@
     "building/society_name": "Building/Society Name",
     "home": "Home" ,
     "office": "Office",
-    "other": "Other"
+    "other": "Other",
+    "you_must_allow_access_to_your_location": "You must allow access to your location"
   },
 
   "cancel_order_alert": {

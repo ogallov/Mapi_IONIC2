@@ -23,6 +23,18 @@ ion-header {
 ion-content {
   --background: #000;
 
+  .img_div-no-data {
+    text-align: center;
+    padding: 45px 0px 20px 0px;
+
+    img {
+      max-width: 60%;
+      border: 0;
+      margin-left: 20%;
+      margin-top: 20%;
+    }
+  }
+  
   .store_div {
     display: flex;
     flex-wrap: wrap;

@@ -124,6 +124,7 @@ export class CategoryPage implements OnInit {
                     });
 
                 } else {
+
                   this.geolocation
                     .getCurrentPosition()
                     .then(resp => {
@@ -148,6 +149,7 @@ export class CategoryPage implements OnInit {
                       });
                     })
                     .catch(error => {
+                      console.log('Error getting location', error);
                       this.spinnerService.hide();
                     });
                 }
