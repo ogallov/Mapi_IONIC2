@@ -53,6 +53,8 @@ export class LoginPage implements OnInit {
       (res: any) => {
 
         if (res.success) {
+          console.log(res);
+          
           // for remember me
           if (this.remember) {
             let temp: any = {

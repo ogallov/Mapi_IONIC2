@@ -8,10 +8,10 @@
     <div class="segment_div">
         <ion-segment value="upcoming" mode="ios" [(ngModel)]="event" (ionChange)="segmentChanged()">
             <ion-segment-button value="delivery" mode="ios" [disabled]="store?.delivery_type=='Shop'">
-                <ion-label>{{"grocery_cart.delivery" | translate }}</ion-label>
+                <ion-label style="color: white;">{{"grocery_cart.delivery" | translate }}</ion-label>
             </ion-segment-button>
             <ion-segment-button value="pickup" mode="ios" [disabled]="store?.delivery_type=='Home'">
-                <ion-label>{{"grocery_cart.pickup" | translate }}</ion-label>
+                <ion-label style="color: white;">{{"grocery_cart.pickup" | translate }}</ion-label>
             </ion-segment-button>
         </ion-segment>
     </div>

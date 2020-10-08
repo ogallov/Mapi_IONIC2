@@ -89,6 +89,7 @@ export class PayMethodPage implements OnInit {
     rdata.items = rdata.items.join();
 
     if (this.online) {
+
       if (this.payment_type == "RAZOR") {
         this.payWithRazor(rdata);
       } else {
@@ -108,10 +109,13 @@ export class PayMethodPage implements OnInit {
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         (res: any) => {
           if (res.success) {
+            console.log(res);
+            
             // this.util.dismissLoader();
             this.spinnerService.hide();
             this.gpi.promocode = {};
             this.gpi.orderId = res.data.id;
+            localStorage.removeItem("store-detail");
             this.presentModal();
           }
         },
@@ -226,13 +230,20 @@ export class PayMethodPage implements OnInit {
                         }
                       );
                   },
-                  (e) => {}
+                  (e) => {
+                    console.log(e);
+                  }
                 );
               },
-              (e) => {}
+              (e) => {
+                console.log(e);
+              }
             );
         },
-        (e) => {}
+        (e) => {
+          console.log(e);
+          
+        }
       );
   }
 

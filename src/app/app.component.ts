@@ -3,7 +3,7 @@ import { UtilService } from "./service/util.service";
 import { ApiService } from "./service/api.service";
 import { Component } from "@angular/core";
 
-import { Platform, NavController, ToastController } from "@ionic/angular";
+import { Platform, NavController, ToastController, AlertController } from "@ionic/angular";
 import { SplashScreen } from "@ionic-native/splash-screen/ngx";
 import { menuController } from "@ionic/core";
 import { Router } from "@angular/router";
@@ -73,6 +73,7 @@ export class AppComponent {
     private router: Router,
     private translate: TranslateService,
     private geolocation: Geolocation,
+    private alertCtrl: AlertController,
   ) {
     // blocked console.log
     // console.log = function () {};
@@ -125,22 +126,24 @@ export class AppComponent {
           (res: any) => {
             if (res.success) {
               console.log(res);
-              
+
               this.api.currency = res.data.currency_symbol;
               this.api.currencyType = res.data.currency;
               this.api.request_duration = res.data.request_duration;
 
               if (this.platform.is("cordova")) {
 
-                this.oneSignal.startInit(
-                  res.data.onesignal_app_id,
-                  res.data.onesignal_project_number
-                );
+                // this.oneSignal.startInit(
+                //   res.data.onesignal_app_id,
+                //   res.data.onesignal_project_number
+                // );
 
-                this.oneSignal
-                  .getIds()
-                  .then((ids) => (this.api.deviceToken = ids.userId));
-                this.oneSignal.endInit();
+                // this.oneSignal
+                //   .getIds()
+                //   .then((ids) => (this.api.deviceToken = ids.userId));
+                // this.oneSignal.endInit();
+
+                this.setupPush(res);
 
               } else {
                 this.api.deviceToken = null;
@@ -149,7 +152,7 @@ export class AppComponent {
           },
           (err) => { }
         );
-      }, 2000);
+      }, 200);
     });
   }
 
@@ -212,5 +215,70 @@ export class AppComponent {
       duration: 1500,
     });
     toast.present();
+  }
+
+  setupPush(res: any) {
+    // I recommend to put these into your environment.ts
+    this.oneSignal.startInit(
+      res.data.onesignal_app_id,
+      res.data.onesignal_project_number
+    );
+
+    this.oneSignal
+      .getIds()
+      .then((ids) =>{
+        this.api.deviceToken = ids.userId;
+      });
+    this.oneSignal.endInit();
+
+    this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.None);
+
+    // Notifcation was received in general
+    this.oneSignal.handleNotificationReceived().subscribe(data => {
+      console.log(data);
+      
+      let msg = data.payload.body;
+      let title = data.payload.title;
+      let additionalData = data.payload.additionalData;
+
+      setTimeout(() => {
+      // this.showAlert(title, msg, additionalData.task);
+      this.showAlert(title, msg);
+      }, 3000);
+
+    });
+
+    // Notification was really clicked/opened
+    this.oneSignal.handleNotificationOpened().subscribe(data => {
+      console.log(data);
+      // Just a note that the data is a different place here!
+      let additionalData = data.notification.payload.additionalData;
+
+      setTimeout(() => {
+        this.showAlert('Notification opened', 'You already read this before');
+        // this.showAlert('Notification opened', 'You already read this before', additionalData.task);
+      }, 3000);
+
+    });
+
+    this.oneSignal.endInit();
+  }
+
+  // async showAlert(title, msg, task) {
+    async showAlert(title, msg) {
+    const alert = await this.alertCtrl.create({
+      header: title,
+      subHeader: msg,
+      buttons: [
+        {
+          text: 'Ok',
+          // text: `Action: ${task}`,
+          handler: () => {
+            // E.g: Navigate to a specific screen
+          }
+        }
+      ]
+    })
+    alert.present();
   }
 }
