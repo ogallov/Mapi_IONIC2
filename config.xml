@@ -1,5 +1,5 @@
 <?xml version='1.0' encoding='utf-8'?>
-<widget android-versionCode="1002" id="app.saasmonks.mapifood" version="0.0.2" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget android-versionCode="1002" id="app.saasmonks.mapifood" version="0.0.3" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
     <name>Mapifood</name>
     <description>Mapifood user's app.</description>
     <author email="info@saasmonks.in" href="https://www.saasmonks.in/">saasmonks Team</author>
@@ -149,5 +149,5 @@
     <plugin name="cordova-plugin-splashscreen" spec="5.0.2" />
     <plugin name="cordova-plugin-ionic-webview" spec="^4.0.0" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
-    <allow-navigation href="http://localhost:8100" sessionid="f6b8d205" />
+    <allow-navigation href="http://localhost:8100" sessionid="8d59bbe9" />
 </widget>

@@ -10,6 +10,8 @@ import { Router } from "@angular/router";
 import { IonRouterOutlet } from "@ionic/angular";
 import { QueryList, ViewChildren } from "@angular/core";
 import { TranslateService } from "@ngx-translate/core";
+import { Geolocation } from '@ionic-native/geolocation/ngx';
+
 @Component({
   selector: "app-root",
   templateUrl: "app.component.html",
@@ -18,6 +20,11 @@ import { TranslateService } from "@ngx-translate/core";
 export class AppComponent {
   lastTimeBackPress = 0;
   timePeriodToExit = 2000;
+
+  agmMap: any = {
+    lat: '',
+    lng: ''
+  }
 
   @ViewChildren(IonRouterOutlet) routerOutlets: QueryList<IonRouterOutlet>;
 
@@ -64,13 +71,22 @@ export class AppComponent {
     private oneSignal: OneSignal,
     private toastController: ToastController,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private geolocation: Geolocation,
   ) {
     // blocked console.log
     // console.log = function () {};
 
+    this.geolocation.getCurrentPosition().then((resp: any) => {
+      console.log(resp);
+      this.agmMap.lat = resp.coords.latitude;
+      this.agmMap.lng = resp.coords.longitude;
+    }).catch((error) => {
+      console.log('Error getting location', error);
+    });
+
     document.documentElement.dir = localStorage.getItem("app_language") == "ar" ? "rtl" : "ltr";
-    
+
     this.translate.setDefaultLang(
       localStorage.getItem("app_language") ? localStorage.getItem("app_language") : "es"
     );
@@ -108,6 +124,8 @@ export class AppComponent {
         this.api.getData("keySetting").subscribe(
           (res: any) => {
             if (res.success) {
+              console.log(res);
+              
               this.api.currency = res.data.currency_symbol;
               this.api.currencyType = res.data.currency;
               this.api.request_duration = res.data.request_duration;

@@ -41,9 +41,11 @@ export class CartPage implements OnInit {
     private translate: TranslateService,
     private modalController: ModalController,
     private spinnerService: NgxSpinnerService,
-    
+
   ) {
-    
+
+    // open spinner
+    this.spinnerService.show();
     this.currency = this.api.currency;
     this.data = this.api.cartData;
     this.data.cartData = this.api.cartData.cartDetail;
@@ -58,13 +60,16 @@ export class CartPage implements OnInit {
       .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
       .subscribe((res: any) => {
         if (res.success) {
+          console.log(res.data);
+          
           this.data.Deafult_address = res.data;
           this.userlat = res.data.lat;
           this.userlang = res.data.lang;
+          // open spinner
+          this.spinnerService.hide();
         }
       }, error => {
         console.log(error);
-        
         this.spinnerService.hide();
       });
   }
@@ -76,6 +81,8 @@ export class CartPage implements OnInit {
 
     if (this.chaneAddress) {
 
+      // open spinner
+      this.spinnerService.show();
       // await this.util.startLoad();
       this.api
         .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
@@ -83,10 +90,12 @@ export class CartPage implements OnInit {
           console.log(res);
           if (res.success) {
             this.data.Deafult_address = res.data;
+            // open spinner
+            this.spinnerService.hide();
           }
         }, error => {
           console.log(error);
-          
+
           this.spinnerService.hide();
         });
     }
@@ -354,7 +363,7 @@ export class CartPage implements OnInit {
         }, error => {
           console.log(error);
           this.spinnerService.hide();
-          
+
         });
       }
 

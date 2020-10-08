@@ -54,6 +54,9 @@ export class AddAddressPage implements OnInit {
 
   ) {
 
+    // open spinner
+    this.spinnerService.show();
+
     this.geolocation.getCurrentPosition().then((resp: any) => {
       console.log(resp);
       this.agmMap.lat = resp.coords.latitude;
@@ -89,6 +92,9 @@ export class AddAddressPage implements OnInit {
         console.log('Error getting location', error);
       });
     }
+
+    // open spinner
+    this.spinnerService.hide();
   }
 
   ngOnInit() { }
@@ -141,10 +147,14 @@ export class AddAddressPage implements OnInit {
               this.modalController.dismiss(this.ischange);
             }
           },
-          (err) => {
+          async (err) => {
             // this.util.dismissLoader();
             this.spinnerService.hide();
             this.err = err.error.errors;
+
+            if (this.err['lat'] || this.err['lang']) {
+              await this.showToast()
+            }
           }
         );
 
@@ -178,11 +188,11 @@ export class AddAddressPage implements OnInit {
             this.flagControl = false;
           }
         },
-        async(err) => {
+        async (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
           this.err = err.error.errors;
-          
+
           if (this.err['lat'] || this.err['lang']) {
             await this.showToast()
           }
@@ -199,7 +209,7 @@ export class AddAddressPage implements OnInit {
 
   async showToast() {
 
-    this.translate.get('add_edit_address_page.you_must_allow_access_to_your_location').subscribe(async(value) => {
+    this.translate.get('add_edit_address_page.you_must_allow_access_to_your_location').subscribe(async (value) => {
       let message = value;
       const toast = await this.toastController.create({
         message: message,

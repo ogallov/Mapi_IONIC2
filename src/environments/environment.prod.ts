@@ -1,7 +1,8 @@
 export const environment = {
   production: true,
   // baseUrl: "http://App.cidesoft.com.co/api/user/",
-  baseUrl: "http://end.mimapi.club/api/user/"
+  // baseUrl: "http://end.mimapi.club/api/user/"
+  baseUrl: "http://test.mimapi.club/public/api/user/"
 };
 
 export const countryCode = [

@@ -25,7 +25,7 @@
                 </div>
                 <ion-list class="ion-list">
                     <ion-menu-toggle auto-hide="false" *ngFor="let p of appPages">
-                        <ion-item [routerDirection]="'root'" [routerLink]="[p.url]" [routerLinkActive]="['active','']"
+                        <ion-item [routerDirection]="'forward'" [routerLink]="[p.url]" [routerLinkActive]="['active','']"
                             lines="none" detail="false" detail="false">
                             <ion-icon slot="start" [src]="p.icon"></ion-icon>
                             <ion-label class="lbl_tittle">

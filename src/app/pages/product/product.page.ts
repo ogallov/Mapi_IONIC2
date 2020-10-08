@@ -87,8 +87,7 @@ export class ProductPage implements OnInit {
     if (this.gpi.cartData) {
       if (this.gpi.cartData.length >= 0) {
         if (this.Store) {
-          this.cartData =
-            JSON.parse(localStorage.getItem("store-detail")) || [];
+          this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
           this.Store.forEach((el1) => {
             el1.qty = 0;
             const fCart = this.cartData.find((x) => x.id == el1.id);

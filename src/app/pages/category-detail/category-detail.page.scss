@@ -51,7 +51,8 @@ ion-content {
     padding: 10px 0px 10px 16px;
 
     .product_div {
-      width: 145px;
+      // width: 145px;
+      max-width: 160px;
       border-radius: 5px;
       box-shadow: 0px 3px 6px 0px rgba(0, 0, 0, 0.16);
       padding: 10px 7px;

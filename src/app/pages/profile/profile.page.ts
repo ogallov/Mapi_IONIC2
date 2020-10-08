@@ -7,6 +7,7 @@ import * as moment from "moment";
 import { ActivatedRoute } from "@angular/router";
 import { TranslateService } from '@ngx-translate/core';
 import { NgxSpinnerService } from 'ngx-spinner';
+
 @Component({
   selector: "app-profile",
   templateUrl: "./profile.page.html",
@@ -52,8 +53,9 @@ export class ProfilePage implements OnInit, OnDestroy {
   ionViewWillEnter() {
 
     if (this.changeAddressBtn) {
-      console.log(localStorage.getItem("isaddress"));
-      
+
+      this.spinnerService.show();
+
       this.api.getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
         .subscribe((res: any) => {
           console.log(res);
@@ -64,11 +66,13 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.data.userAddress.street = res.data['street'];
             this.data.userAddress.city = res.data['city'];
             // this.data.userAddress.zipcode = res.data['zipcode'];
+
+            this.spinnerService.hide();
           }
         }, error => {
           console.log(error);
           this.spinnerService.hide();
-          
+
         });
     }
   }
@@ -78,6 +82,7 @@ export class ProfilePage implements OnInit, OnDestroy {
     // await this.util.startLoad();
     this.spinnerService.show();
     this.api.getDataWithToken("viewReview").subscribe((res: any) => {
+
       if (res.success) {
         this.data = res.data;
         // this.util.dismissLoader();
@@ -85,6 +90,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.data.review.forEach((element) => {
           element.created_at = moment(element.created_at).fromNow();
         });
+
         this.userName = res.data.userDetail.name;
         this.userLocation = res.data.userDetail.location;
         this.userDetail = this.data.userDetail;
@@ -145,6 +151,8 @@ export class ProfilePage implements OnInit, OnDestroy {
       // set address last
       localStorage.setItem('isaddress', this.lastIsAdrress);
     }
+
+    this.spinnerService.hide();
   }
 
   ngOnDestroy(): void {
@@ -174,14 +182,13 @@ export class ProfilePage implements OnInit, OnDestroy {
 
     if (this.segment == 3) {
 
-      // await this.util.startLoad();
       this.spinnerService.show();
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
         (res: any) => {
 
           if (res.success) {
             this.err = {};
-            // this.util.dismissLoader();
+
             this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.profile_set_success);
@@ -193,8 +200,6 @@ export class ProfilePage implements OnInit, OnDestroy {
 
               if (res.success) {
                 this.data = res.data;
-                // this.util.dismissLoader();
-                this.spinnerService.hide();
 
                 this.data.review.forEach((element) => {
                   element.created_at = moment(element.created_at).fromNow();
@@ -231,6 +236,7 @@ export class ProfilePage implements OnInit, OnDestroy {
                 }
               }
             });
+            this.spinnerService.hide();
           }
         },
         (err) => {
@@ -252,12 +258,11 @@ export class ProfilePage implements OnInit, OnDestroy {
       this.api.postDataWithToken("changePassword", this.passwordData).subscribe(
         (res: any) => {
           if (res.success) {
-            // this.util.dismissLoader();
-            this.spinnerService.hide();
             this.passwordData.password = "";
             this.passwordData.confirmPassword = "";
             this.err = {};
             this.util.presentToast(res.msg);
+            this.spinnerService.hide();
           }
         },
         (err) => {
@@ -268,6 +273,8 @@ export class ProfilePage implements OnInit, OnDestroy {
       );
 
     } else {
+
+      this.spinnerService.show();
 
       if (this.userSetting.enable_notification) {
         this.userSetting.enable_notification = 1;
@@ -317,6 +324,7 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   async chageProfileOption() {
+
     const actionSheet = await this.actionSheetCtrl.create({
       header: "Select method",
       buttons: [
@@ -346,6 +354,10 @@ export class ProfilePage implements OnInit, OnDestroy {
   }
 
   getGallery() {
+
+    // this.util.dismissLoader();
+    this.spinnerService.show();
+
     const cameraOptions = {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -365,15 +377,21 @@ export class ProfilePage implements OnInit, OnDestroy {
           .postDataWithToken("changeImage", this.changeImage)
           .subscribe((res: any) => {
             if (res.success) {
-
+              // this.util.dismissLoader();
+              this.spinnerService.hide();
             }
           });
       },
-      (err) => { }
+      (err) => {
+        console.log(err);
+
+      }
     );
   }
 
   getCamera() {
+    // this.util.dismissLoader();
+    this.spinnerService.show();
 
     const cameraOptions = {
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -386,13 +404,21 @@ export class ProfilePage implements OnInit, OnDestroy {
         this.imgProfile = "data:image/jpg;base64," + fileUri;
         this.imageUri = fileUri;
         this.isNewProfile = true;
+        // this.util.dismissLoader();
+        this.spinnerService.hide();
       },
-      (err) => { }
+      (err) => {
+        console.log(err);
+
+      }
     );
 
   }
 
   editCoverimg() {
+    // this.util.dismissLoader();
+    this.spinnerService.show();
+
     const cameraOptions = {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -413,12 +439,20 @@ export class ProfilePage implements OnInit, OnDestroy {
 
             }
           });
+        // this.util.dismissLoader();
+        this.spinnerService.hide();
       },
-      (err) => { }
+      (err) => {
+        console.log(err);
+
+      }
     );
   }
 
   uploadGalleryimg() {
+    // this.util.dismissLoader();
+    this.spinnerService.show();
+
     const cameraOptions = {
       sourceType: this.camera.PictureSourceType.PHOTOLIBRARY,
       destinationType: this.camera.DestinationType.DATA_URL,
@@ -468,8 +502,13 @@ export class ProfilePage implements OnInit, OnDestroy {
               });
             }
           });
+        // this.util.dismissLoader();
+        this.spinnerService.hide();
       },
-      (err) => { }
+      (err) => {
+        console.log(err);
+        
+       }
     );
   }
 

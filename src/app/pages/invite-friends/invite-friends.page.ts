@@ -41,11 +41,7 @@ export class InviteFriendsPage implements OnInit {
   }
   shareIt() {
     this.socialSharing
-      .share(
-        "please login my referral code " +
-        this.data +
-        " with irest app and get first order free"
-      )
+      .share( "please login my referral code " + this.data + " with irest app and get first order free" )
       .then((res) => {
         console.log("res: ", res);
       })

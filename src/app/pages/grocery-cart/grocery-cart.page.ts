@@ -95,9 +95,7 @@ export class GroceryCartPage implements OnInit {
             } else {
               this.event = "delivery";
             }
-            this.toPay =
-              this.totalItem +
-              (this.store.delivery_charge || 0) - (this.data.discount || 0);
+            this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
             this.data.toPay = this.toPay;
             this.api
               .getDataWithToken(
@@ -228,8 +226,7 @@ export class GroceryCartPage implements OnInit {
     }
 
     this.saving = this.data.discount;
-    this.toPay =
-      this.totalItem + this.store.delivery_charge - this.data.discount;
+    this.toPay = this.totalItem + this.store.delivery_charge - this.data.discount;
     this.data.toPay = this.toPay;
   }
   addtocart(item) {
@@ -256,10 +253,7 @@ export class GroceryCartPage implements OnInit {
     if (this.gpi.promocode) {
       this.countDiscount();
     }
-    this.toPay =
-      this.totalItem +
-      (this.store.delivery_charge || 0) -
-      (this.data.discount || 0);
+    this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
     this.data.toPay = this.toPay;
   }
 
@@ -269,10 +263,7 @@ export class GroceryCartPage implements OnInit {
     if (item.qty != 1) {
       item.qty--;
       this.totalItem -= item.sell_price;
-      this.toPay =
-        this.totalItem +
-        (this.store.delivery_charge || 0) -
-        (this.data.discount || 0);
+      this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
       this.data.toPay = this.toPay;
       item.total = item.qty * item.sell_price;
 
@@ -295,10 +286,7 @@ export class GroceryCartPage implements OnInit {
           this.cartData.splice(equalIndex, 1);
           this.totalItem -= item.sell_price;
           item.total = item.qty * item.sell_price;
-          this.toPay =
-            this.totalItem +
-            (this.store.delivery_charge || 0) -
-            (this.data.discount || 0);
+          this.toPay = this.totalItem + (this.store.delivery_charge || 0) -  (this.data.discount || 0);
           this.data.toPay = this.toPay;
           localStorage.setItem("store-detail", JSON.stringify(this.cartData));
 
@@ -309,7 +297,7 @@ export class GroceryCartPage implements OnInit {
           item.total = item.qty * item.sell_price;
           this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
           this.data.toPay = this.toPay;
-          
+
         }
       }
     }
@@ -331,9 +319,7 @@ export class GroceryCartPage implements OnInit {
       let radlat2 = (Math.PI * lat2) / 180;
       let theta = lon1 - lon2;
       let radtheta = (Math.PI * theta) / 180;
-      let dist =
-        Math.sin(radlat1) * Math.sin(radlat2) +
-        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
       if (dist > 1) {
         dist = 1;
       }
@@ -353,10 +339,7 @@ export class GroceryCartPage implements OnInit {
     if (this.event == "pickup") {
       this.store.delivery_charge = 0;
 
-      this.toPay =
-        this.totalItem +
-        (this.store.delivery_charge || 0) -
-        (this.data.discount || 0);
+      this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
       this.data.toPay = this.toPay;
 
       if (this.gpi.promocode) {
@@ -365,10 +348,7 @@ export class GroceryCartPage implements OnInit {
     } else {
       this.store.delivery_charge = this.charge;
 
-      this.toPay =
-        this.totalItem +
-        (this.store.delivery_charge || 0) -
-        (this.data.discount || 0);
+      this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
       this.data.toPay = this.toPay;
       if (this.gpi.promocode) {
         this.countDiscount();
@@ -377,14 +357,8 @@ export class GroceryCartPage implements OnInit {
   }
 
   mapData() {
-    this.FindAddress =
-      this.data.Deafult_address.soc_name +
-      " " +
-      this.data.Deafult_address.street +
-      " " +
-      this.data.Deafult_address.city ;
-      // + " " +
-      // this.data.Deafult_address.zipcode;
+    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    // + " " + this.data.Deafult_address.zipcode;
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,

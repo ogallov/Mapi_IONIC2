@@ -27,7 +27,8 @@
 
     <ion-slides class="margin-top-18" pager="false" [options]="slideOpts">
         <ion-slide *ngFor="let banner of banners" [ngStyle]="{'maxWidth': innerWidth - 80 + 'px'}">
-            <img [src]="(banner?.imagePath && banner?.image) ? banner?.imagePath + banner?.image : './assets/image/default-image.jpg'">
+            <img
+                [src]="(banner?.imagePath && banner?.image) ? banner?.imagePath + banner?.image : './assets/image/default-image.jpg'">
             <h2 *ngIf="banner?.title?.length != 0">{{banner?.title}}</h2>
         </ion-slide>
     </ion-slides>
@@ -50,6 +51,16 @@
                 <p class="discount_p">
                     {{item?.name}}
                 </p>
+            </div>
+        </div>
+
+        <p class="heading">{{"home_page.pocket_friendly" | translate}}</p>
+        <p class="no_data_p" *ngIf="data?.item?.length==0">{{"home_page.no_data" | translate}}</p>
+        <div class="slider_div">
+            <div class="menu_div pocket_div_img" *ngFor="let item of data?.item |filter:term"
+                (click)="resturantDetail(item.shop_id)">
+                <img [src]="item.imagePath + item.image" />
+                <p class="img_type">{{item?.name | slice:0:18}} <span *ngIf="item.name.length >18 ">...</span></p>
             </div>
         </div>
 
@@ -130,15 +141,6 @@
                 </div>
             </div>
         </ng-container>
-        <p class="heading">{{"home_page.pocket_friendly" | translate}}</p>
-        <p class="no_data_p" *ngIf="data?.item?.length==0">{{"home_page.no_data" | translate}}</p>
-        <div class="slider_div">
-            <div class="menu_div pocket_div_img" *ngFor="let item of data?.item |filter:term"
-                (click)="resturantDetail(item.shop_id)">
-                <img [src]="item.imagePath + item.image" />
-                <p class="img_type">{{item?.name | slice:0:18}} <span *ngIf="item.name.length >18 ">...</span></p>
-            </div>
-        </div>
     </div>
 </ion-content>
 <ion-content class="ion-padding-bottom grocery_content" *ngIf="!isfood">

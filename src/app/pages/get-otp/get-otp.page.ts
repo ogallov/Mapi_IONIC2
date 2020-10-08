@@ -56,13 +56,7 @@ export class GetOtpPage implements OnInit {
   }
 
   goHome() {
-    this.data.otp =
-      this.opt.a +
-      this.opt.b +
-      this.opt.c +
-      this.opt.d +
-      this.opt.e +
-      this.opt.f;
+    this.data.otp = this.opt.a + this.opt.b + this.opt.c + this.opt.d + this.opt.e + this.opt.f;
 
     // await this.util.startLoad();
     this.spinnerService.show();
