@@ -29,6 +29,7 @@ export class HomePage {
 
   // boolean
   isfood = true;
+  flagControl: boolean = false; 
 
   // any
   userAddress: any = {};
@@ -84,6 +85,7 @@ export class HomePage {
   };
 
   data: any = {};
+  dataTemporal: any = {};
   grocery: any = {};
   btnType = "Exclusive";
   currency: any;
@@ -127,43 +129,50 @@ export class HomePage {
     this.menu.enable(true);
     this.spinnerService.show();
 
+    this.flagControl = true;
     this.api.getData("keySetting").subscribe(
       async (res: any) => {
         this.sellProduct = res.data.sell_product;
+
         if (this.sellProduct == 2) {
           this.isfood = false;
         }
+
         this.initData();
-        this.spinnerService.hide();
+        // this.spinnerService.hide();
       },
       (err) => {
         console.log("err", err);
         this.spinnerService.hide();
+        this.flagControl = false;
       });
   }
 
   private async initData() {
 
-    this.getAdvertisingBanner();
-
     this.spinnerService.show();
 
+    await this.getAdvertisingBanner();
+    
     this.api.getDataWithToken("home").subscribe(
       async (res: any) => {
         if (res.success) {
           this.data = res.data;
+          console.log(this.data);
+          
           this.currency = this.api.currency;
-          this.getGrocery();
+          await this.getGrocery();
         }
       },
       (err) => {
         this.spinnerService.hide();
         this.err = err;
+        this.flagControl = false;
       }
     );
   }
 
-  getAdvertisingBanner(): void {
+  async getAdvertisingBanner() {
     this.api.getData("banner").subscribe((res: any) => {
       console.log(res);
 
@@ -179,7 +188,7 @@ export class HomePage {
   ionViewWillEnter() {
 
     if (localStorage.getItem("isaddress") != "false") {
-
+      this.flagControl = true;
       if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
         this.spinnerService.show();
         this.api
@@ -189,7 +198,10 @@ export class HomePage {
               if (res.success) {
                 this.userAddress = res.data;
                 localStorage.setItem("isaddressBD", "false");
-                this.spinnerService.hide();
+
+                if (!this.flagControl) {
+                  this.spinnerService.hide();
+                }
               }
             },
             (err) => {
@@ -414,23 +426,29 @@ export class HomePage {
   }
 
   distance(lat1, lon1, lat2, lon2, unit) {
+
     if (lat1 == lat2 && lon1 == lon2) {
       return 0;
+
     } else {
       const radlat1 = (Math.PI * lat1) / 180;
       const radlat2 = (Math.PI * lat2) / 180;
       const theta = lon1 - lon2;
       const radtheta = (Math.PI * theta) / 180;
       let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      
       if (dist > 1) {
         dist = 1;
       }
+
       dist = Math.acos(dist);
       dist = (dist * 180) / Math.PI;
       dist = dist * 60 * 1.1515;
+
       if (unit == "K") {
         dist = dist * 1.609344;
       }
+      
       if (unit == "N") {
         dist = dist * 0.8684;
       }
@@ -452,6 +470,9 @@ export class HomePage {
   }
 
   async getGrocery() {
+
+    this.spinnerService.show();
+
     this.api.getDataWithToken("groceryShop").subscribe(
       (res: any) => {
         if (res.success) {
@@ -477,11 +498,13 @@ export class HomePage {
                   );
                 });
                 this.spinnerService.hide();
+                this.flagControl = false;
               }
             },
             (err) => {
               this.spinnerService.hide();
               this.err = err;
+              this.flagControl = false;
             }
           );
         }
@@ -490,6 +513,10 @@ export class HomePage {
         this.err = err;
       }
     );
+  }
+
+  filteRestaurantRadius() {
+
   }
 
   storeList() {

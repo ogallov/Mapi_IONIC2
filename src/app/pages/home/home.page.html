@@ -1,3 +1,4 @@
+<!-- init header -->
 <ion-header no-border>
     <ion-toolbar>
         <ion-buttons slot="end">
@@ -15,33 +16,55 @@
             </div>
         </div>
     </ion-toolbar>
+
+    <!-- init search -->
     <ion-searchbar placeholder="Search for Restaurant and dishes" clearIcon="string" [(ngModel)]="term"></ion-searchbar>
+    <!-- end search -->
+
+    <!-- init button header -->
     <ion-button *ngIf="sellProduct != 2" class="trans-btn mode_btn" [class.active]="isfood==true" (click)="isfood=true">
-        {{"home_page.food" | translate}}</ion-button>
+        {{"home_page.food" | translate}}
+    </ion-button>
     <ion-button *ngIf="sellProduct != 1" class="trans-btn mode_btn" [class.active]="isfood==false"
         (click)="isfood=false">
-        {{"home_page.grocery" | translate}}</ion-button>
+        {{"home_page.grocery" | translate}}
+    </ion-button>
+    <!-- end button header -->
 </ion-header>
+<!-- end header -->
 
+<!-- init content -->
 <ion-content *ngIf="isfood" class="food_content">
 
-    <ion-slides class="margin-top-18" pager="false" [options]="slideOpts">
+    <!-- init slider mapirider -->
+    <ion-slides class="margin-top-18" pager="false" [options]="slideOpts" *ngIf="banners.length > 0">
         <ion-slide *ngFor="let banner of banners" [ngStyle]="{'maxWidth': innerWidth - 80 + 'px'}">
             <img
                 [src]="(banner?.imagePath && banner?.image) ? banner?.imagePath + banner?.image : './assets/image/default-image.jpg'">
             <h2 *ngIf="banner?.title?.length != 0">{{banner?.title}}</h2>
         </ion-slide>
     </ion-slides>
+    <!-- end slider mapirider -->
 
     <div class="main_div">
+        <!-- init quantity restaurant and filter -->
         <p class="ion-margin-horizontal filter_p">
             {{data?.totalShop}} {{"home_page.restaurant" | translate}}
+
+            <!-- init filter -->
             <span class="ion-float-right" (click)="presentModal()">
-                <img src="assets/image/controls.png" />{{"home_page.filter" | translate}}</span>
+                <img src="assets/image/controls.png" />
+                {{"home_page.filter" | translate}}
+            </span>
+            <!-- end filter -->
         </p>
+        <!-- end quantity restaurant and filter -->
 
+        <!-- init message no data -->
         <p class="no_data_p" *ngIf="data?.shop?.length==0">{{"home_page.no_data" | translate}}</p>
+        <!-- end message no data -->
 
+        <!-- init overflow-x restaurant -->
         <div class="offer_div">
             <div class="img_div" *ngFor="let item of data?.shop |filter:term" (click)="resturantDetail(item?.id)">
                 <img [src]="item?.imagePath + item?.image" />
@@ -53,17 +76,32 @@
                 </p>
             </div>
         </div>
+        <!-- end overflow-x restaurant -->
 
         <p class="heading">{{"home_page.pocket_friendly" | translate}}</p>
-        <p class="no_data_p" *ngIf="data?.item?.length==0">{{"home_page.no_data" | translate}}</p>
+        <!-- <p class="no_data_p" *ngIf="data?.item?.length == 0">{{"home_page.no_data" | translate}}</p> -->
+
+        <!-- init promos -->
         <div class="slider_div">
             <div class="menu_div pocket_div_img" *ngFor="let item of data?.item |filter:term"
-                (click)="resturantDetail(item.shop_id)">
-                <img [src]="item.imagePath + item.image" />
-                <p class="img_type">{{item?.name | slice:0:18}} <span *ngIf="item.name.length >18 ">...</span></p>
+                (click)="resturantDetail(item?.shop_id)">
+                <img [src]="item?.imagePath + item?.image" />
+                <p class="img_type">{{item.name | slice:0:18}} <span *ngIf="item.name.length > 18 ">...</span></p>
             </div>
         </div>
+        <!-- end promos -->
 
+        <!-- init slider menus -->
+        <div class="slider_div">
+            <div class="menu_div" *ngFor="let item of data?.category |filter:term" (click)="categoryData(item?.id)">
+                <img [src]="item.imagePath + item?.image" />
+                <p class="img_type">{{item?.name}}</p>
+            </div>
+        </div>
+        <!-- end slider menus -->
+
+
+        <!-- init slider diamant -->
         <div class="feature_row">
             <div class="first_div" *ngFor="let item of staticData.feature" (click)="feature(item.type)">
                 <div class="img_row">
@@ -74,7 +112,9 @@
                 </div>
             </div>
         </div>
+        <!-- end slider diamant -->
 
+        <!-- init container card restaurant -->
         <ng-container *ngFor="let item of data?.shop |filter:term">
             <div class="card_div" (click)="resturantDetail(item?.id)">
                 <div class="div_image">
@@ -104,15 +144,14 @@
                 </div>
             </div>
         </ng-container>
+        <!-- end container card restaurant -->
 
-        <div class="slider_div">
-            <div class="menu_div" *ngFor="let item of data?.category |filter:term" (click)="categoryData(item?.id)">
-                <img [src]="item.imagePath + item?.image" />
-                <p class="img_type">{{item?.name}}</p>
-            </div>
-        </div>
+        <!-- init title more populary week -->
         <p class="heading">{{"home_page.popular_this_week" | translate}}</p>
         <p *ngIf="data?.shop?.length==0" class="no_data_p">{{"home_page.no_data" | translate}}</p>
+        <!-- end title more populary week -->
+
+        <!-- init conatiner more populary week -->
         <ng-container *ngFor="let item of data?.shop |filter:term ; let i=index">
             <div class="card_div" (click)="resturantDetail(item?.id)">
                 <div class="div_image">
@@ -141,10 +180,15 @@
                 </div>
             </div>
         </ng-container>
+        <!-- end conatiner more populary week -->
     </div>
 </ion-content>
+<!-- end content -->
+
+<!-- init content -->
 <ion-content class="ion-padding-bottom grocery_content" *ngIf="!isfood">
 
+    <!-- init coupon discount -->
     <div class="offer_div" *ngIf="grocery?.coupon?.length > 0">
         <img [src]="grocery?.coupon[0].imagePath + grocery?.coupon[0].image">
         <div class="detail_div">
@@ -152,6 +196,8 @@
             <p class="text_lbl">{{grocery?.coupon[0].description}}</p>
         </div>
     </div>
+    <!-- end coupon discount -->
+
     <h3 class="main_lbl">{{"home_page.store" | translate}}
         <ion-button class="trans-btn more_btn" (click)="storeList()">{{"home_page.view_more" | translate}}</ion-button>
     </h3>
