@@ -38,6 +38,8 @@ export class HomePage {
   err: any = {};
   currentTime: any;
 
+  totalCategoriesItems = 0;
+
   staticData: any = {
     feature: [
       {
@@ -496,7 +498,8 @@ export class HomePage {
   }
 
   filterRestaurants() {
-    console.log('filter');
+    this.totalCategoriesItems = 0;
+    
     this.data['shop'] = [];
     this.data['item'] = [];
 
@@ -517,6 +520,7 @@ export class HomePage {
     });
 
     let items = [];
+
     for (const shop of shops) {
       for (const item of this.dataTemporal['item']) {
         if (item.shop_id == shop.id) {
@@ -525,8 +529,22 @@ export class HomePage {
       }
     }
 
-    this.data['item'] = _.clone(items);
+    for (const category of this.dataTemporal['category']) {
+      let count = 0;
+      for (const item of items) {
+        if (item.category_id === category.id) {
+          count = count + 1;
+        }
+      }
+      category.totalItems = count;
+
+      if (count > 0) {
+        this.totalCategoriesItems = this.totalCategoriesItems + 1;
+      }
+    }
+
     this.data['shop'] = _.clone(shops);
+    this.data['item'] = _.clone(items);
 
   }
 

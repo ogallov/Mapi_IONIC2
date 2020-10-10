@@ -80,7 +80,7 @@
         <!-- end overflow-x restaurant -->
 
         <p class="heading">{{"home_page.pocket_friendly" | translate}}</p>
-        <!-- <p class="no_data_p" *ngIf="data?.item?.length == 0">{{"home_page.no_data" | translate}}</p> -->
+        <p class="no_data_p" *ngIf="data?.item?.length == 0">{{"home_page.no_data" | translate}}</p>
 
         <!-- init promos -->
         <div class="slider_div">
@@ -92,8 +92,10 @@
         </div>
         <!-- end promos -->
 
+        <p class="heading">{{"home_page.categories" | translate}}</p>
+        <p class="no_data_p" *ngIf="totalCategoriesItems == 0">{{"home_page.no_data" | translate}}</p>
         <!-- init slider menus -->
-        <div class="slider_div">
+        <div class="slider_div" *ngIf="totalCategoriesItems > 0">
             <div class="menu_div" *ngFor="let item of data?.category |filter:term" (click)="categoryData(item?.id)">
                 <img [src]="item.imagePath + item?.image" />
                 <p class="img_type">{{item?.name}}</p>
