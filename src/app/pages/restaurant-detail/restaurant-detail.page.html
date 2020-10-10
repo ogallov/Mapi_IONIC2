@@ -78,7 +78,7 @@
     <!-- end rating and delivery time restaurant -->
 
     <!-- init coupon and discount restaurant -->
-    <div class="coopan_div" *ngIf="data?.coupon.length > 0">
+    <div class="coopan_div" *ngIf="data > 0">
         <div class="container" *ngFor="let item of data?.coupon">
             <section class="left">
                 <p class="left_p">{{item?.discount}}% {{'restaurant_detail_page.off' | translate}}</p>

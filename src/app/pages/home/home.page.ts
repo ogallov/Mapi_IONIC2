@@ -12,6 +12,7 @@ import { ModalController, NavController, MenuController } from "@ionic/angular";
 import { FilterPage } from "../filter/filter.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
+import _ from "lodash";
 
 @Component({
   selector: "app-home",
@@ -29,7 +30,8 @@ export class HomePage {
 
   // boolean
   isfood = true;
-  flagControl: boolean = false; 
+  flagControl: boolean = false;
+  flagControlWillEnter: boolean = false;
 
   // any
   userAddress: any = {};
@@ -84,8 +86,8 @@ export class HomePage {
     },
   };
 
-  data: any = {};
-  dataTemporal: any = {};
+  data: any;
+  dataTemporal: any;
   grocery: any = {};
   btnType = "Exclusive";
   currency: any;
@@ -114,6 +116,8 @@ export class HomePage {
 
   innerWidth: any = window.innerWidth;
   banners: any = Array();
+
+  address: any;
 
   constructor(
     private menu: MenuController,
@@ -152,16 +156,22 @@ export class HomePage {
 
     this.spinnerService.show();
 
-    await this.getAdvertisingBanner();
-    
+    this.getAdvertisingBanner();
+
     this.api.getDataWithToken("home").subscribe(
       async (res: any) => {
         if (res.success) {
-          this.data = res.data;
-          console.log(this.data);
-          
+          this.dataTemporal = res.data;
+          this.data = _.clone(res.data);
+          console.log(this.dataTemporal);
+
           this.currency = this.api.currency;
-          await this.getGrocery();
+
+          if (this.address) {
+            this.filterRestaurants();
+          }
+
+          this.getGrocery();
         }
       },
       (err) => {
@@ -188,18 +198,27 @@ export class HomePage {
   ionViewWillEnter() {
 
     if (localStorage.getItem("isaddress") != "false") {
-      this.flagControl = true;
       if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
+        this.flagControlWillEnter = true;
         this.spinnerService.show();
         this.api
           .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
           .subscribe(
             (res: any) => {
               if (res.success) {
+                console.log(res);
+                this.address = res.data;
                 this.userAddress = res.data;
-                localStorage.setItem("isaddressBD", "false");
+                // filter resturant por coordinate
 
-                if (!this.flagControl) {
+                if (this.dataTemporal) {
+                  this.filterRestaurants();
+                }
+
+                localStorage.setItem("isaddressBD", "false");
+                this.flagControlWillEnter = false;
+
+                if (!this.flagControl && !this.flagControlWillEnter) {
                   this.spinnerService.hide();
                 }
               }
@@ -335,8 +354,15 @@ export class HomePage {
               )
               .subscribe((res: any) => {
                 if (res.success) {
+                  console.log(res);
+                  this.address = res.data;
                   this.Address = res.data.soc_name + " " + res.data.street + " " + res.data.city;
                   // + " " + res.data.zipcode;
+                  // filter resturant por coordinate
+
+                  if (this.dataTemporal) {
+                    this.filterRestaurants();
+                  }
 
                   const options: NativeGeocoderOptions = {
                     useLocale: true,
@@ -436,7 +462,7 @@ export class HomePage {
       const theta = lon1 - lon2;
       const radtheta = (Math.PI * theta) / 180;
       let dist = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
-      
+
       if (dist > 1) {
         dist = 1;
       }
@@ -448,7 +474,7 @@ export class HomePage {
       if (unit == "K") {
         dist = dist * 1.609344;
       }
-      
+
       if (unit == "N") {
         dist = dist * 0.8684;
       }
@@ -467,6 +493,41 @@ export class HomePage {
 
   categoryData(id) {
     this.navCtrl.navigateForward("/category/" + id);
+  }
+
+  filterRestaurants() {
+    console.log('filter');
+    this.data['shop'] = [];
+    this.data['item'] = [];
+
+    let shops = this.dataTemporal['shop'].filter((shop: any) => {
+
+      let radius = this.distance(
+        parseFloat(this.address.lat),
+        parseFloat(this.address.lang),
+        parseFloat(shop.latitude),
+        parseFloat(shop.longitude),
+        "k"
+      );
+
+      if (radius <= shop.radius) {
+        return _.clone(shop);
+      }
+
+    });
+
+    let items = [];
+    for (const shop of shops) {
+      for (const item of this.dataTemporal['item']) {
+        if (item.shop_id == shop.id) {
+          items.push(item);
+        }
+      }
+    }
+
+    this.data['item'] = _.clone(items);
+    this.data['shop'] = _.clone(shops);
+
   }
 
   async getGrocery() {
@@ -497,8 +558,9 @@ export class HomePage {
                     ).toFixed(2)
                   );
                 });
-                this.spinnerService.hide();
+
                 this.flagControl = false;
+                this.spinnerService.hide();
               }
             },
             (err) => {
@@ -513,10 +575,6 @@ export class HomePage {
         this.err = err;
       }
     );
-  }
-
-  filteRestaurantRadius() {
-
   }
 
   storeList() {
