@@ -52,7 +52,7 @@ export class ProfilePage implements OnInit, OnDestroy {
 
   ionViewWillEnter() {
 
-    if (this.changeAddressBtn) {
+    if (this.changeAddressBtn && !this.api.geolocation) {
 
       this.spinnerService.show();
 
@@ -300,6 +300,7 @@ export class ProfilePage implements OnInit, OnDestroy {
         .subscribe((res: any) => {
           if (res.success) {
             this.lastIsAdrress = '';
+            this.api.address_id = Number(localStorage.getItem("isaddress"));
             localStorage.setItem("isaddressBD", "true");
             // this.util.dismissLoader();
             this.spinnerService.hide();

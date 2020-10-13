@@ -18,7 +18,7 @@
             <ion-input required type="text" name="email" [(ngModel)]="data.email">
             </ion-input>
         </ion-item>
-        <p class="err" *ngIf="err?.email">{{err?.email}}*</p>
+        <p class="err" *ngIf="err?.email">{{err?.email | translate}}*</p>
 
         <ion-item lines="none" class="item_div">
             <ion-label position="stacked" class="lbl_name">{{"register_page.placeholder.password" | translate}}</ion-label>

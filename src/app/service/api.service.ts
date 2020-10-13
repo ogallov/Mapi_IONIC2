@@ -26,6 +26,16 @@ export class ApiService {
   filterType: any;
   request_duration: any;
   item?: any | string;
+  lat?: string;
+  lang?: string;
+  soc_name?: string;
+  street?: string;
+  city?: string;
+  address_type?: string;
+  zipcode?: string;
+  geolocation?: boolean;
+  address?: any;
+  address_id?: number;
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem("token")) {

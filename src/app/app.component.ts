@@ -105,7 +105,12 @@ export class AppComponent {
       if (localStorage.getItem("token")) {
         this.api.getDataWithToken("userDetail").subscribe((res: any) => {
           if (res.success) {
+            console.log(res);
             this.userData = res.data;
+
+            if (res.data.address_id) {
+              this.api.address_id = res.data.address_id;
+            }
           }
         });
       }

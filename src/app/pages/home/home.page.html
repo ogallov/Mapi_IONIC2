@@ -4,13 +4,16 @@
         <ion-buttons slot="end">
             <ion-menu-button color="light"></ion-menu-button>
         </ion-buttons>
-        <div class="locationContent">
+        <div class="locationContent" (click)="api.geolocation ? AlertCancelGeolocation() : AlertConfirmGeolocation()">
             <img src="./assets/image/location.png" />
             <div class="textContent">
                 <h2 class="location">
-                    {{userAddress?.address_type ? userAddress?.address_type: 'Loading...'}}
+                    {{api?.address_type ? api?.address_type : 'Loading...'}}
+                    <!-- {{userAddress?.address_type ? userAddress?.address_type : 'Loading...'}} -->
                 </h2>
-                <p class="address">{{userAddress?.soc_name}} {{userAddress?.street}} {{userAddress?.city}}
+                <p class="address">
+                    {{api?.soc_name}} {{api?.street}} {{api?.city}}
+                    <!-- {{userAddress?.soc_name}} {{userAddress?.street}} {{userAddress?.city}} -->
                     <!-- {{userAddress?.zipcode}} -->
                 </p>
             </div>
@@ -62,7 +65,7 @@
         <!-- end quantity restaurant and filter -->
 
         <!-- init message no data -->
-        <p class="no_data_p" *ngIf="data?.shop?.length==0">{{"home_page.no_data" | translate}}</p>
+        <p class="no_data_p" *ngIf="!data?.shop || data?.shop?.length == 0">{{"home_page.no_data" | translate}}</p>
         <!-- end message no data -->
 
         <!-- init overflow-x restaurant -->
@@ -73,14 +76,15 @@
                     <span>{{"home_page.offer" | translate}}</span>
                 </div>
                 <p class="discount_p">
-                    {{item?.name}}
+                    {{item?.name}} <br>
+                    {{ (item?.open ? "home_page.open" : "home_page.close") | translate }}
                 </p>
             </div>
         </div>
         <!-- end overflow-x restaurant -->
 
         <p class="heading">{{"home_page.pocket_friendly" | translate}}</p>
-        <p class="no_data_p" *ngIf="data?.item?.length == 0">{{"home_page.no_data" | translate}}</p>
+        <p class="no_data_p" *ngIf="!data?.item || data?.item?.length == 0">{{"home_page.no_data" | translate}}</p>
 
         <!-- init promos -->
         <div class="slider_div">
@@ -128,6 +132,8 @@
                         {{btnType}}
                     </ion-button>
                     <h3 class="item">{{item?.name}}</h3>
+                    <h3 class="item" [style.color]="item?.open ? 'gold' : 'red'">
+                        {{ (item?.open ? "home_page.open" : "home_page.close") | translate }}</h3>
                     <p class="type">{{item?.description}}</p>
                     <!-- <p class="type">{{item?.itemNames}}</p> -->
 
@@ -165,6 +171,8 @@
                         {{btnType}}
                     </ion-button>
                     <h3 class="item">{{item?.name}}</h3>
+                    <h3 class="item" [style.color]="item?.open ? 'gold' : 'red'">
+                        {{ (item?.open ? 'home_page.open' : "home_page.close") | translate }}</h3>
                     <!-- <p class="type">{{item?.itemNames}}</p> -->
                     <p class="type">{{item?.description}}</p>
                     <div class="rate">

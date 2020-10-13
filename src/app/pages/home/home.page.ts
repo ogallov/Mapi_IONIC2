@@ -1,18 +1,19 @@
 import { GroceryService } from "./../../service/grocery.service";
 import { UtilService } from "../../service/util.service";
 import { ApiService } from "../../service/api.service";
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import * as moment from "moment";
 import {
   NativeGeocoder,
   NativeGeocoderResult,
   NativeGeocoderOptions,
 } from "@ionic-native/native-geocoder/ngx";
-import { ModalController, NavController, MenuController } from "@ionic/angular";
+import { ModalController, NavController, MenuController, AlertController } from "@ionic/angular";
 import { FilterPage } from "../filter/filter.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
 import _ from "lodash";
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-home",
@@ -20,7 +21,7 @@ import _ from "lodash";
   styleUrls: ["home.page.scss"],
 })
 
-export class HomePage {
+export class HomePage implements OnInit {
 
   // string
   term: string;
@@ -88,7 +89,11 @@ export class HomePage {
     },
   };
 
-  data: any;
+  data: any = {
+    items: [],
+    shop: [],
+    category: []
+  };
   dataTemporal: any;
   grocery: any = {};
   btnType = "Exclusive";
@@ -131,8 +136,19 @@ export class HomePage {
     private gpi: GroceryService,
     private geolocation: Geolocation,
     private spinnerService: NgxSpinnerService,
+    private alertController: AlertController,
+    private translate: TranslateService,
+
   ) {
     this.menu.enable(true);
+  }
+
+  async ngOnInit() {
+    //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
+    //Add 'implements OnInit' to the class.
+
+    await this.AlertConfirmGeolocation()
+
     this.spinnerService.show();
 
     this.flagControl = true;
@@ -164,12 +180,10 @@ export class HomePage {
       async (res: any) => {
         if (res.success) {
           this.dataTemporal = res.data;
-          this.data = _.clone(res.data);
-          console.log(this.dataTemporal);
-
+          // this.data = _.clone(res.data);
           this.currency = this.api.currency;
 
-          if (this.address) {
+          if (this.api.address_type !== '') {
             this.filterRestaurants();
           }
 
@@ -197,90 +211,15 @@ export class HomePage {
     });
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
 
-    if (localStorage.getItem("isaddress") != "false") {
-      if (!this.userAddress.soc_name || localStorage.getItem('isaddressBD') === 'true') {
-        this.flagControlWillEnter = true;
-        this.spinnerService.show();
-        this.api
-          .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-          .subscribe(
-            (res: any) => {
-              if (res.success) {
-                console.log(res);
-                this.address = res.data;
-                this.userAddress = res.data;
-                // filter resturant por coordinate
+    if (this.api.address_id && !this.api.geolocation && localStorage.getItem('isaddressBD') === 'true') {
+      await this.getAddressBD();
 
-                if (this.dataTemporal) {
-                  this.filterRestaurants();
-                }
-
-                localStorage.setItem("isaddressBD", "false");
-                this.flagControlWillEnter = false;
-
-                if (!this.flagControl && !this.flagControlWillEnter) {
-                  this.spinnerService.hide();
-                }
-              }
-            },
-            (err) => {
-              this.err = err;
-              this.spinnerService.hide();
-            }
-          );
-
-      } else {
-        this.spinnerService.hide();
-      }
-
-
-    } else {
-      this.spinnerService.show();
-
-      this.geolocation
-        .getCurrentPosition()
-        .then((resp) => {
-
-          resp.coords.latitude;
-          resp.coords.longitude;
-          this.userAddress.lat = resp.coords.latitude;
-          this.userAddress.lang = resp.coords.longitude;
-
-          const options: NativeGeocoderOptions = {
-            useLocale: true,
-            maxResults: 5,
-          };
-
-          this.nativeGeocoder
-            .reverseGeocode(
-              resp.coords.latitude,
-              resp.coords.longitude,
-              options
-            )
-            .then((result: NativeGeocoderResult[]) => {
-              // this.util.dismissLoader();
-              this.userAddress.address_type = "Current Location";
-              this.userAddress.soc_name = result[0].subLocality;
-              this.userAddress.street = result[0].thoroughfare;
-              this.userAddress.city = result[0].locality;
-              // this.userAddress.zipcode = result[0].postalCode;
-              this.spinnerService.hide();
-            })
-            .catch((error: any) => {
-              console.log(error);
-              this.spinnerService.hide();
-            });
-        })
-        .catch((error) => {
-          // this.util.dismissLoader();
-          console.log('Error getting location', error);
-          this.spinnerService.hide();
-        });
-
-      this.spinnerService.hide();
     }
+    // else {
+    //   this.getAddressGeolocation();
+    // }
   }
 
   async presentModal() {
@@ -291,6 +230,7 @@ export class HomePage {
     });
 
     modal.onDidDismiss().then((res) => {
+
       if (res["data"] != undefined) {
         let filetype;
         res.data.forEach((element) => {
@@ -333,7 +273,8 @@ export class HomePage {
             return 0;
           });
 
-        } else if (filetype == "Open Now") {
+        } else if (filetype == "All") {
+
           this.currentTime = moment().format("HH:mm");
           this.data.shop = this.data.shop.filter((a) => {
             a.open_time = moment("2019-07-19 " + a.open_time).format("HH:mm");
@@ -348,19 +289,27 @@ export class HomePage {
 
         } else {
 
-          if (localStorage.getItem("isaddress") != "false") {
+          console.log(this.api.address_id);
+          console.log(this.api.geolocation);
+          
+          if (this.api.address_id && !this.api.geolocation) {
 
             this.api
               .getDataWithToken(
-                "getAddress/" + localStorage.getItem("isaddress")
+                "getAddress/" + this.api.address_id
               )
               .subscribe((res: any) => {
                 if (res.success) {
                   console.log(res);
                   this.address = res.data;
-                  this.Address = res.data.soc_name + " " + res.data.street + " " + res.data.city;
-                  // + " " + res.data.zipcode;
-                  // filter resturant por coordinate
+                  this.api.address = res.data.soc_name + " " + res.data.street + " " + res.data.city;
+                  this.api.address_type = res.data.address_type;
+                  this.api.lat = res.data.lat;
+                  this.api.lang = res.data.lang;
+                  this.api.city = res.data.city;
+                  this.api.street = res.data.street;
+                  this.api.soc_name = res.data.soc_name;
+                  this.api.geolocation = false;
 
                   if (this.dataTemporal) {
                     this.filterRestaurants();
@@ -372,8 +321,10 @@ export class HomePage {
                   };
 
                   this.nativeGeocoder
-                    .forwardGeocode(this.Address, options)
+                    .forwardGeocode(this.api.address, options)
                     .then((result: NativeGeocoderResult[]) => {
+                      console.log(result);
+                      
                       this.data.shop.forEach((element) => {
                         element.distance = this.distance(
                           result[0].latitude,
@@ -403,7 +354,7 @@ export class HomePage {
                 this.spinnerService.hide();
               });
 
-          } else {
+          } else if (this.api.geolocation) {
 
             const options: NativeGeocoderOptions = {
               useLocale: true,
@@ -413,6 +364,8 @@ export class HomePage {
             this.nativeGeocoder
               .forwardGeocode(this.userAddress, options)
               .then((result: NativeGeocoderResult[]) => {
+                console.log(result);
+
                 this.data.shop.forEach((element) => {
                   element.distance = this.distance(
                     result[0].latitude,
@@ -499,21 +452,34 @@ export class HomePage {
 
   filterRestaurants() {
     this.totalCategoriesItems = 0;
-    
     this.data['shop'] = [];
     this.data['item'] = [];
 
     let shops = this.dataTemporal['shop'].filter((shop: any) => {
 
       let radius = this.distance(
-        parseFloat(this.address.lat),
-        parseFloat(this.address.lang),
+        parseFloat(this.api.lat),
+        parseFloat(this.api.lang),
         parseFloat(shop.latitude),
         parseFloat(shop.longitude),
         "k"
       );
 
       if (radius <= shop.radius) {
+        var format = 'HH:mm a'
+        var date = moment().format("HH:mm a");
+
+        // var time = moment() gives you current time. no format required.
+        var time = moment(date, format);
+        var beforeTime = moment(shop.open_time, format);
+        var afterTime = moment(shop.close_time, format);
+
+        if (time.isBetween(beforeTime, afterTime)) {
+          shop.open = true;
+        } else {
+          shop.open = false;
+        }
+
         return _.clone(shop);
       }
 
@@ -529,7 +495,9 @@ export class HomePage {
       }
     }
 
-    for (const category of this.dataTemporal['category']) {
+    this.data['category'] = _.clone(this.dataTemporal['category']);
+
+    for (const category of this.data['category']) {
       let count = 0;
       for (const item of items) {
         if (item.category_id === category.id) {
@@ -543,8 +511,17 @@ export class HomePage {
       }
     }
 
-    this.data['shop'] = _.clone(shops);
-    this.data['item'] = _.clone(items);
+    if (shops.length > 0) {
+      this.data['shop'] = _.clone(shops);
+    }
+
+    if (items.length > 0) {
+      this.data['item'] = _.clone(items);
+    }
+
+    if (this.dataTemporal) {
+      this.spinnerService.hide();
+    }
 
   }
 
@@ -568,8 +545,8 @@ export class HomePage {
                 this.grocery.Store.forEach((element) => {
                   element.away = Number(
                     this.distance(
-                      this.userAddress.lat,
-                      this.userAddress.lang,
+                      this.api.lat,
+                      this.api.lang,
                       element.latitude,
                       element.longitude,
                       "K"
@@ -612,4 +589,170 @@ export class HomePage {
   getCategory() {
     this.navCtrl.navigateForward("/grocery-category");
   }
+
+  async getAddressBD() {
+
+    if (!this.api.address_id) {
+      this.getAddressGeolocation();
+    }
+
+    this.flagControlWillEnter = true;
+    this.spinnerService.show();
+    this.api
+      .getDataWithToken("getAddress/" + this.api.address_id)
+      .subscribe(
+        (res: any) => {
+          if (res.success) {
+            console.log(res);
+            this.address = res.data;
+            this.api.address = res.data;
+            this.api.address_type = res.data.address_type;
+            this.api.lat = res.data.lat;
+            this.api.lang = res.data.lang;
+            this.api.city = res.data.city;
+            this.api.street = res.data.street;
+            this.api.soc_name = res.data.soc_name;
+            this.api.geolocation = false;
+            // filter resturant por coordinate
+
+            if (this.dataTemporal) {
+              this.filterRestaurants();
+            }
+
+            localStorage.setItem("isaddressBD", "false");
+            this.flagControlWillEnter = false;
+
+            if (!this.flagControl && !this.flagControlWillEnter) {
+              this.spinnerService.hide();
+            }
+          }
+        },
+        (err) => {
+          this.err = err;
+          this.spinnerService.hide();
+        }
+      );
+  }
+
+  getAddressGeolocation() {
+
+    this.spinnerService.show();
+
+    this.geolocation
+      .getCurrentPosition()
+      .then((resp) => {
+        resp.coords.latitude;
+        resp.coords.longitude;
+        this.api.lat = (resp.coords.latitude).toString();
+        this.api.lang = (resp.coords.longitude).toString();
+
+        const options: NativeGeocoderOptions = {
+          useLocale: true,
+          maxResults: 5,
+        };
+
+        this.nativeGeocoder
+          .reverseGeocode(
+            resp.coords.latitude,
+            resp.coords.longitude,
+            options
+          )
+          .then((result: NativeGeocoderResult[]) => {
+            console.log(result);
+            // save api
+            this.api.address_type = "Current Location";
+            this.api.soc_name = result[0].subLocality;
+            this.api.street = result[0].thoroughfare;
+            this.api.city = result[0].locality;
+            this.api.zipcode = result[0].postalCode;
+            this.api.geolocation = true;
+
+            if (this.dataTemporal) {
+              this.filterRestaurants();
+            }
+
+            this.spinnerService.hide();
+          })
+          .catch((error: any) => {
+            console.log(error);
+            this.spinnerService.hide();
+          });
+      })
+      .catch((error) => {
+        // this.util.dismissLoader();
+        console.log('Error getting location', error);
+        this.spinnerService.hide();
+      });
+
+    this.spinnerService.hide();
+  }
+
+  async AlertConfirmGeolocation() {
+    this.translate.get(["home_page.Do_you_want_the_application_to_take_your_current_location?", "home_page.no"]).subscribe(async (val) => {
+      console.log(val);
+
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        // header: 'Confirm!',
+        message: val['home_page.Do_you_want_the_application_to_take_your_current_location?'],
+        buttons: [
+          {
+            text: val['home_page.no'],
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async (blah) => {
+              console.log('Confirm Cancel: blah');
+              await this.getAddressBD();
+            }
+          }, {
+            text: 'Ok',
+            handler: () => {
+              console.log('Confirm Okay');
+              this.getAddressGeolocation();
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }, error => {
+      console.log(error);
+
+    });
+  }
+
+  async AlertCancelGeolocation() {
+    this.translate.get(["home_page.Do_you_want_the_application_to_stop_accessing_your_current_location?", "home_page.no"]).subscribe(async (val) => {
+      console.log(val);
+
+      const alert = await this.alertController.create({
+        cssClass: 'my-custom-class',
+        // header: 'Confirm!',
+        message: val['home_page.Do_you_want_the_application_to_stop_accessing_your_current_location?'],
+        buttons: [
+          {
+            text: val['home_page.no'],
+            role: 'cancel',
+            cssClass: 'secondary',
+            handler: async (blah) => {
+              console.log('Confirm Cancel: blah');
+
+            }
+          }, {
+            text: 'Ok',
+            handler: async () => {
+              console.log('Confirm Okay');
+              await this.getAddressBD();
+            }
+          }
+        ]
+      });
+
+      await alert.present();
+    }, error => {
+      console.log(error);
+
+    });
+  }
+
 }

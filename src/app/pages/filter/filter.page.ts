@@ -8,17 +8,20 @@ import { modalController } from "@ionic/core";
   styleUrls: ["./filter.page.scss"]
 })
 export class FilterPage implements OnInit {
+  
   filter: any = [
     { name: "Top Rated", checked: true },
-    { name: "Open Now", checked: false },
+    { name: "All", checked: false },
     { name: "Nearest Me", checked: false },
     { name: "Most Popular", checked: false },
     { name: "Cost High to Low", checked: false },
     { name: "Cost Low to High", checked: false }
   ];
+
   constructor(private ntrl: NavController) {}
 
   ngOnInit() {}
+
   goHome() {
     modalController.dismiss(this.filter);
     this.ntrl.navigateForward(["home"]);
