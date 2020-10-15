@@ -12,6 +12,7 @@ export class SuccessModalPage implements OnInit {
   constructor(private ntrl: NavController) {}
 
   ngOnInit() {}
+  
   orderStatus() {
     modalController.dismiss();
     this.ntrl.navigateRoot(["timeline"]);

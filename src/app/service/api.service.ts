@@ -36,6 +36,15 @@ export class ApiService {
   geolocation?: boolean;
   address?: any;
   address_id?: number;
+  restaurantsFilter?: any;
+  restaurantsAll?: any;
+  filter?: string;
+  grocery?: any;
+  groceryAll?: any;
+  sell_product?: number;
+  banners?: any[];
+  isfood?: boolean;
+  totalCategoriesItems?: number;
 
   constructor(private http: HttpClient) {
     if (localStorage.getItem("token")) {

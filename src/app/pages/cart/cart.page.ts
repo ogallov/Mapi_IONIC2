@@ -20,8 +20,8 @@ export class CartPage implements OnInit {
   avtiveSegment: any = "About";
   icons: any = {};
   data: any = {};
-  userlat: any;
-  userlang: any;
+  // userlat: any;
+  // userlang: any;
   cartData: any = [];
   totalPrice: any = 0;
   totalItem: any = 0;
@@ -56,22 +56,22 @@ export class CartPage implements OnInit {
     });
 
     this.data.toPay = this.totalItem + this.data.rastaurant_charge + this.data.delivery_charge - this.data.discount;
-    this.api
-      .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-      .subscribe((res: any) => {
-        if (res.success) {
-          console.log(res.data);
-          
-          this.data.Deafult_address = res.data;
-          this.userlat = res.data.lat;
-          this.userlang = res.data.lang;
-          // open spinner
-          this.spinnerService.hide();
-        }
-      }, error => {
-        console.log(error);
-        this.spinnerService.hide();
-      });
+    // this.api
+    //   .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+    //   .subscribe((res: any) => {
+    //     if (res.success) {
+    //       console.log(res.data);
+
+    //       this.data.Deafult_address = res.data;
+    //       this.userlat = res.data.lat;
+    //       this.userlang = res.data.lang;
+    //       // open spinner
+    //       this.spinnerService.hide();
+    //     }
+    //   }, error => {
+    //     console.log(error);
+    //     this.spinnerService.hide();
+    //   });
   }
 
   async ionViewWillEnter() {
@@ -79,31 +79,32 @@ export class CartPage implements OnInit {
       this.countDiscount();
     }
 
-    if (this.chaneAddress) {
+    // if (this.chaneAddress) {
 
-      // open spinner
-      this.spinnerService.show();
-      // await this.util.startLoad();
-      this.api
-        .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-        .subscribe((res: any) => {
-          console.log(res);
-          if (res.success) {
-            this.data.Deafult_address = res.data;
-            // open spinner
-            this.spinnerService.hide();
-          }
-        }, error => {
-          console.log(error);
+    //   // open spinner
+    //   this.spinnerService.show();
+    //   // await this.util.startLoad();
+    //   this.api
+    //     .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+    //     .subscribe((res: any) => {
+    //       console.log(res);
+    //       if (res.success) {
+    //         this.data.Deafult_address = res.data;
+    //         // open spinner
+    //         this.spinnerService.hide();
+    //       }
+    //     }, error => {
+    //       console.log(error);
 
-          this.spinnerService.hide();
-        });
-    }
+    //       this.spinnerService.hide();
+    //     });
+    // }
 
   }
 
   initMap() {
-    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    // this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    this.FindAddress = this.api.soc_name + " " + this.api.street + " " + this.api.city;
     //  + " " + this.data.Deafult_address.zipcode;
 
     this.geocoder.geocode({ address: this.FindAddress }, (results, status) => {
@@ -338,34 +339,39 @@ export class CartPage implements OnInit {
         });
       }
     });
+    this.spinnerService.hide();
   }
 
   ngOnInit() {
     if (this.avtiveSegment == "About") setTimeout(() => this.initMap(), 1000);
+    this.spinnerService.hide();
   }
 
   payment_method() {
     if (this.data.cartData.length) {
-      this.radius = this.distance(
-        this.userlat,
-        this.userlang,
-        this.data.latitude,
-        this.data.longitude,
-        "k"
-      );
+      
+      // this.radius = this.distance(
+      //   // this.userlat,
+      //   // this.userlang,
+      //   parseFloat(this.api.lat),
+      //   parseFloat(this.api.lat),
+      //   parseFloat(this.data.latitude),
+      //   parseFloat(this.data.longitude),
+      //   "k"
+      // );
 
-      if (this.radius <= this.data.radius) {
+      // if (this.radius <= this.data.radius) {
         this.ntrl.navigateForward(["payment-method"]);
 
-      } else {
-        this.translate.get("toasts").subscribe(async (val) => {
-          this.util.presentToast(val.order_is_out_range);
-        }, error => {
-          console.log(error);
-          this.spinnerService.hide();
+      // } else {
+      //   this.translate.get("toasts").subscribe(async (val) => {
+      //     this.util.presentToast(val.order_is_out_range);
+      //   }, error => {
+      //     console.log(error);
+      //     this.spinnerService.hide();
 
-        });
-      }
+      //   });
+      // }
 
     } else {
       this.api.promocode = {};

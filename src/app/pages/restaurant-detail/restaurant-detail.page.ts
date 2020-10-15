@@ -122,12 +122,14 @@ export class RestaurantDetailPage implements OnInit {
   }
 
   Gotocart() {
-    if (this.cartData.length) {
-      if (localStorage.getItem("isaddress") == "false") {
+    if (this.cartData && this.cartData.length > 0) {
+      if (!this.api.geolocation && (!this.api.address_id || this.api.address_type === undefined)) {
         this.addAddress();
+
       } else {
         this.ntrl.navigateForward(["cart"]);
       }
+
     } else {
       this.translate.get('toasts').subscribe(async val => {
         this.util.presentToast(val.cart_empty);
@@ -146,7 +148,7 @@ export class RestaurantDetailPage implements OnInit {
   addtocart(item) {
     item.qty += 1;
     item.total;
-    if (this.cartData.length > 0) {
+    if (this.cartData && this.cartData.length > 0) {
       let equalIndex;
       let equalType;
       this.cartData.forEach((element, ind) => {
@@ -162,10 +164,12 @@ export class RestaurantDetailPage implements OnInit {
         this.cartData.push(item);
         item.total = item.price;
       }
+
     } else {
       this.cartData.push(item);
       item.total = item.price;
     }
+
     this.getCartdata();
     this.api.cartData = this.data;
     this.api.cartData.cartDetail = this.cartData;
@@ -174,7 +178,7 @@ export class RestaurantDetailPage implements OnInit {
   minusQty(item) {
     if (item.qty !== 0) {
       item.qty--;
-      if (this.cartData.length > 0) {
+      if (this.cartData && this.cartData.length > 0) {
         let equalIndex;
         let equalType;
         this.cartData.forEach((element, ind) => {
@@ -252,7 +256,7 @@ export class RestaurantDetailPage implements OnInit {
       }
       if (this.nonVeg == false) {
         this.data.bestSeller = this.data.bestSeller.filter(a => {
-          if (a.isVeg > 0) {
+          if (a && a.isVeg > 0) {
             return a;
           }
         });

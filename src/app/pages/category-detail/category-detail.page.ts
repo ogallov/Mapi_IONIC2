@@ -76,7 +76,7 @@ export class CategoryDetailPage implements OnInit {
 
   getdata() {
 
-    if (this.cartData.length > 0) {
+    if (this.cartData && this.cartData.length > 0) {
       this.data.forEach((el1) => {
         const fCart = this.cartData.find((x) => x.id == el1.id);
         if (fCart) {
@@ -91,7 +91,7 @@ export class CategoryDetailPage implements OnInit {
       });
     }
 
-    if (this.cartData.length > 0) {
+    if (this.cartData && this.cartData.length > 0) {
       if (this.data) {
         this.data.forEach((el1) => {
           el1.items.forEach((item) => {

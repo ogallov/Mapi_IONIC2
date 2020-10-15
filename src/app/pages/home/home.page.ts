@@ -1,7 +1,7 @@
 import { GroceryService } from "./../../service/grocery.service";
 import { UtilService } from "../../service/util.service";
 import { ApiService } from "../../service/api.service";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectorRef, Component, OnInit } from "@angular/core";
 import * as moment from "moment";
 import {
   NativeGeocoder,
@@ -24,7 +24,7 @@ import { TranslateService } from '@ngx-translate/core';
 export class HomePage implements OnInit {
 
   // string
-  term: string;
+  term: string = '';
 
   // number
   sellProduct = 0;
@@ -89,13 +89,10 @@ export class HomePage implements OnInit {
     },
   };
 
-  data: any = {
-    items: [],
-    shop: [],
-    category: []
-  };
+  data: any;
   dataTemporal: any;
   grocery: any = {};
+  groceryTemporal: any = {};
   btnType = "Exclusive";
   currency: any;
   Address: any;
@@ -138,36 +135,46 @@ export class HomePage implements OnInit {
     private spinnerService: NgxSpinnerService,
     private alertController: AlertController,
     private translate: TranslateService,
+    private cd: ChangeDetectorRef,
 
   ) {
     this.menu.enable(true);
+    this.api.filter = 'All';
+    this.api.isfood = true;
   }
 
   async ngOnInit() {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
 
-    await this.AlertConfirmGeolocation()
+    if (!this.api.address_type || this.api.address_type === undefined || this.api.address_type === '') {
+      await this.AlertConfirmGeolocation();
 
-    this.spinnerService.show();
+      this.spinnerService.show();
 
-    this.flagControl = true;
-    this.api.getData("keySetting").subscribe(
-      async (res: any) => {
-        this.sellProduct = res.data.sell_product;
+      this.flagControl = true;
 
-        if (this.sellProduct == 2) {
-          this.isfood = false;
-        }
+      this.api.getData("keySetting").subscribe(
+        async (res: any) => {
+          this.sellProduct = res.data.sell_product;
+          this.api.sell_product = res.data.sell_product;
 
-        this.initData();
-        // this.spinnerService.hide();
-      },
-      (err) => {
-        console.log("err", err);
-        this.spinnerService.hide();
-        this.flagControl = false;
-      });
+          if (this.sellProduct == 2) {
+            this.isfood = false;
+            this.api.isfood = false;
+          }
+
+          this.initData();
+
+          // this.spinnerService.hide();
+        },
+        (err) => {
+          console.log("err", err);
+          this.spinnerService.hide();
+          this.flagControl = false;
+        });
+    }
+
   }
 
   private async initData() {
@@ -180,12 +187,9 @@ export class HomePage implements OnInit {
       async (res: any) => {
         if (res.success) {
           this.dataTemporal = res.data;
-          // this.data = _.clone(res.data);
+          this.api.restaurantsAll = _.clone(this.dataTemporal);
+          this.data = _.clone(res.data);
           this.currency = this.api.currency;
-
-          if (this.api.address_type !== '') {
-            this.filterRestaurants();
-          }
 
           this.getGrocery();
         }
@@ -200,10 +204,10 @@ export class HomePage implements OnInit {
 
   async getAdvertisingBanner() {
     this.api.getData("banner").subscribe((res: any) => {
-      console.log(res);
 
       if (res.success) {
         this.banners = res.data;
+        this.api.banners = res.data;
       }
     }, error => {
       console.log(error);
@@ -215,11 +219,20 @@ export class HomePage implements OnInit {
 
     if (this.api.address_id && !this.api.geolocation && localStorage.getItem('isaddressBD') === 'true') {
       await this.getAddressBD();
-
     }
-    // else {
-    //   this.getAddressGeolocation();
-    // }
+
+    if (this.api.address_type && this.api.address_type !== undefined && this.api.address_type !== '') {
+      console.log(this.api);
+
+      this.sellProduct = this.api.sell_product;
+      this.isfood = this.api.isfood;
+      this.dataTemporal = this.api.restaurantsAll;
+      this.totalCategoriesItems = this.api.totalCategoriesItems;
+      this.data = this.api.restaurantsFilter;
+      this.banners = this.api.banners;
+      this.groceryTemporal = this.api.groceryAll;
+      this.grocery = this.api.grocery;
+    }
   }
 
   async presentModal() {
@@ -233,9 +246,11 @@ export class HomePage implements OnInit {
 
       if (res["data"] != undefined) {
         let filetype;
+
         res.data.forEach((element) => {
           if (element.checked == true) {
             filetype = element.name;
+            this.api.filter = _.clone(element.name);
           }
         });
 
@@ -289,9 +304,6 @@ export class HomePage implements OnInit {
 
         } else {
 
-          console.log(this.api.address_id);
-          console.log(this.api.geolocation);
-          
           if (this.api.address_id && !this.api.geolocation) {
 
             this.api
@@ -300,7 +312,6 @@ export class HomePage implements OnInit {
               )
               .subscribe((res: any) => {
                 if (res.success) {
-                  console.log(res);
                   this.address = res.data;
                   this.api.address = res.data.soc_name + " " + res.data.street + " " + res.data.city;
                   this.api.address_type = res.data.address_type;
@@ -311,7 +322,7 @@ export class HomePage implements OnInit {
                   this.api.soc_name = res.data.soc_name;
                   this.api.geolocation = false;
 
-                  if (this.dataTemporal) {
+                  if (this.dataTemporal && this.grocery.category && this.groceryTemporal) {
                     this.filterRestaurants();
                   }
 
@@ -323,14 +334,13 @@ export class HomePage implements OnInit {
                   this.nativeGeocoder
                     .forwardGeocode(this.api.address, options)
                     .then((result: NativeGeocoderResult[]) => {
-                      console.log(result);
-                      
+
                       this.data.shop.forEach((element) => {
                         element.distance = this.distance(
-                          result[0].latitude,
-                          result[0].longitude,
-                          element.latitude,
-                          element.longitude,
+                          parseFloat(result[0].latitude),
+                          parseFloat(result[0].longitude),
+                          parseFloat(element.latitude),
+                          parseFloat(element.longitude),
                           "K"
                         );
                       });
@@ -364,14 +374,13 @@ export class HomePage implements OnInit {
             this.nativeGeocoder
               .forwardGeocode(this.userAddress, options)
               .then((result: NativeGeocoderResult[]) => {
-                console.log(result);
 
                 this.data.shop.forEach((element) => {
                   element.distance = this.distance(
-                    result[0].latitude,
-                    result[0].longitude,
-                    element.latitude,
-                    element.longitude,
+                    parseFloat(result[0].latitude),
+                    parseFloat(result[0].longitude),
+                    parseFloat(element.latitude),
+                    parseFloat(element.longitude),
                     "K"
                   );
                 });
@@ -451,9 +460,6 @@ export class HomePage implements OnInit {
   }
 
   filterRestaurants() {
-    this.totalCategoriesItems = 0;
-    this.data['shop'] = [];
-    this.data['item'] = [];
 
     let shops = this.dataTemporal['shop'].filter((shop: any) => {
 
@@ -489,35 +495,78 @@ export class HomePage implements OnInit {
 
     for (const shop of shops) {
       for (const item of this.dataTemporal['item']) {
+
         if (item.shop_id == shop.id) {
-          items.push(item);
+          items.push(_.clone(item));
         }
       }
     }
 
-    this.data['category'] = _.clone(this.dataTemporal['category']);
+    let categories = [];
 
-    for (const category of this.data['category']) {
+    for (const category of this.dataTemporal['category']) {
       let count = 0;
+
       for (const item of items) {
         if (item.category_id === category.id) {
           count = count + 1;
         }
       }
-      category.totalItems = count;
 
       if (count > 0) {
+        let cat = _.clone(category);
+        cat.totalItems = count;
+        categories.push(cat);
         this.totalCategoriesItems = this.totalCategoriesItems + 1;
       }
     }
 
-    if (shops.length > 0) {
-      this.data['shop'] = _.clone(shops);
+    let store = [];
+    console.log(this.groceryTemporal);
+
+    store = this.groceryTemporal.Store.filter((grocery: any) => {
+
+      var format = 'HH:mm a'
+      var date = moment().format("HH:mm a");
+
+      // var time = moment() gives you current time. no format required.
+      var time = moment(date, format);
+      var beforeTime = moment(grocery.open_time, format);
+      var afterTime = moment(grocery.close_time, format);
+
+      if (time.isBetween(beforeTime, afterTime)) {
+        grocery.open = true;
+      } else {
+        grocery.open = false;
+      }
+
+      return _.clone(grocery);
+
+    });
+
+    let coupons = [];
+
+    for (const shop of shops) {
+      for (const coupon of this.groceryTemporal.coupon) {
+        if (coupon.shop_id == coupon.id) {
+          items.push(_.clone(coupon));
+        }
+      }
     }
 
-    if (items.length > 0) {
-      this.data['item'] = _.clone(items);
-    }
+    // data filters
+    this.data.shop = shops;
+    this.data.item = items;
+    this.data.category = categories;
+
+    // grocery filters
+    this.grocery.Store = store;
+    this.grocery.coupon = coupons;
+    console.log(this.grocery);
+    // save api
+    this.api.grocery = this.grocery;
+    this.api.restaurantsFilter = this.data;
+    this.api.totalCategoriesItems = this.totalCategoriesItems;
 
     if (this.dataTemporal) {
       this.spinnerService.hide();
@@ -537,22 +586,28 @@ export class HomePage implements OnInit {
 
           this.api.getDataWithToken("groceryCategory").subscribe(
             async (res: any) => {
-              console.log(res);
               if (res.success) {
                 this.grocery.category = res.data;
-                console.log(this.grocery.category);
 
                 this.grocery.Store.forEach((element) => {
                   element.away = Number(
                     this.distance(
-                      this.api.lat,
-                      this.api.lang,
-                      element.latitude,
-                      element.longitude,
+                      parseFloat(this.api.lat),
+                      parseFloat(this.api.lang),
+                      parseFloat(element.latitude),
+                      parseFloat(element.longitude),
                       "K"
                     ).toFixed(2)
                   );
                 });
+
+                this.groceryTemporal = _.clone(this.grocery);
+                this.api.grocery = this.grocery;
+                this.api.groceryAll = _.clone(this.grocery);
+
+                if (this.api.address_type && this.api.address_type !== undefined && this.api.address_type !== '') {
+                  this.filterRestaurants();
+                }
 
                 this.flagControl = false;
                 this.spinnerService.hide();
@@ -603,7 +658,6 @@ export class HomePage implements OnInit {
       .subscribe(
         (res: any) => {
           if (res.success) {
-            console.log(res);
             this.address = res.data;
             this.api.address = res.data;
             this.api.address_type = res.data.address_type;
@@ -615,7 +669,7 @@ export class HomePage implements OnInit {
             this.api.geolocation = false;
             // filter resturant por coordinate
 
-            if (this.dataTemporal) {
+            if (this.dataTemporal && this.grocery.category && this.groceryTemporal) {
               this.filterRestaurants();
             }
 
@@ -658,7 +712,6 @@ export class HomePage implements OnInit {
             options
           )
           .then((result: NativeGeocoderResult[]) => {
-            console.log(result);
             // save api
             this.api.address_type = "Current Location";
             this.api.soc_name = result[0].subLocality;
@@ -667,7 +720,7 @@ export class HomePage implements OnInit {
             this.api.zipcode = result[0].postalCode;
             this.api.geolocation = true;
 
-            if (this.dataTemporal) {
+            if (this.dataTemporal && this.grocery.category && this.groceryTemporal) {
               this.filterRestaurants();
             }
 
@@ -689,7 +742,6 @@ export class HomePage implements OnInit {
 
   async AlertConfirmGeolocation() {
     this.translate.get(["home_page.Do_you_want_the_application_to_take_your_current_location?", "home_page.no"]).subscribe(async (val) => {
-      console.log(val);
 
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
@@ -701,13 +753,11 @@ export class HomePage implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: async (blah) => {
-              console.log('Confirm Cancel: blah');
               await this.getAddressBD();
             }
           }, {
             text: 'Ok',
             handler: () => {
-              console.log('Confirm Okay');
               this.getAddressGeolocation();
             }
           }
@@ -723,7 +773,6 @@ export class HomePage implements OnInit {
 
   async AlertCancelGeolocation() {
     this.translate.get(["home_page.Do_you_want_the_application_to_stop_accessing_your_current_location?", "home_page.no"]).subscribe(async (val) => {
-      console.log(val);
 
       const alert = await this.alertController.create({
         cssClass: 'my-custom-class',
@@ -735,13 +784,11 @@ export class HomePage implements OnInit {
             role: 'cancel',
             cssClass: 'secondary',
             handler: async (blah) => {
-              console.log('Confirm Cancel: blah');
 
             }
           }, {
             text: 'Ok',
             handler: async () => {
-              console.log('Confirm Okay');
               await this.getAddressBD();
             }
           }

@@ -105,9 +105,11 @@ export class PaymentMethodPage implements OnInit {
     this.data.package_id = this.data.package_id.join();
 
     if (this.online) {
+
       localStorage.setItem("payment_type", "online");
       if (this.razorPayment) {
         this.payWithRazor();
+
       } else {
         if (this.currencyType == "INR") {
           this.translate.get('toasts').subscribe(async val => {
@@ -115,7 +117,8 @@ export class PaymentMethodPage implements OnInit {
           }, error => {
             console.log(error);
             this.spinnerService.hide();
-          })
+          });
+
         } else {
           this.paypalPay();
         }
@@ -216,6 +219,7 @@ export class PaymentMethodPage implements OnInit {
 
     RazorpayCheckout.open(options, successCallback, cancelCallback);
   }
+
   paypalPay() {
     this.payPal
 

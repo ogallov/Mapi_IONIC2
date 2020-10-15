@@ -1,4 +1,18 @@
+ion-header {
+  background: #000;
+
+  ion-toolbar {
+    --background: transparent;
+  }
+
+  ion-title {
+    color: var(--ion-color-light);
+  }
+}
+
 ion-content {
+  --background: #000;
+
   .main_div {
     .container {
       position: relative;
@@ -16,7 +30,7 @@ ion-content {
     }
     .container .left:before {
       content: "";
-      background-color: var(--ion-color-sky);
+      background-color: var(--ion-color-green);
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -27,7 +41,7 @@ ion-content {
 
     .container .left:after {
       content: "";
-      background-color: var(--ion-color-sky);
+      background-color: var(--ion-color-green);
       width: 10px;
       height: 10px;
       border-radius: 50%;
@@ -42,7 +56,8 @@ ion-content {
       text-align: center;
       letter-spacing: 0px;
       width: 25%;
-      border-right: dashed 1px var(--ion-color-black);
+      // border-right: dashed 1px var(--ion-color-black);
+      border-right: dashed 1px var(--ion-color-light);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -78,18 +93,21 @@ ion-content {
       .last_div {
         display: flex;
         justify-content: space-between;
+
         .coopan_div {
           height: 20px;
           border: dashed 1px var(--ion-color-border-red);
           background-color: var(--ion-color-lbl-color);
           padding: 3px 8px;
-          .coopan {
+          ´ .coopan {
             font-size: 10px;
             font-family: "WorkSans_Regular";
-            color: var(--ion-color-black);
+            // color: var(--ion-color-black);
+            color: var(--ion-color-light);
             margin: 0px;
           }
         }
+
         .trans-btn {
           font-size: 10px;
           font-family: "Poppins-Medium";

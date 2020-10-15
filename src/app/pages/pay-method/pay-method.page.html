@@ -14,7 +14,7 @@
 
 <ion-content>
   <div class="card_div ion-margin-horizontal">
-    <div class="cash" [ngStyle]="{'background-color':cash===1? 'var(--ion-color-green)': 'var(--ion-color-white)' }"
+    <div class="cash" [ngStyle]="{'background-color':cash === 1? 'var(--ion-color-green)': 'var(--ion-color-white)' }"
       (click)="online=0;cash=1;payment_type='LOCAL'">
       <div class="img_div">
         <img [src]="cash==1 ? 'assets/image/cash.png' : 'assets/image/cash-payment.png'" />

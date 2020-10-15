@@ -86,6 +86,7 @@ export class GroceryCartPage implements OnInit {
           if (res.success) {
             this.store = res.data;
             this.charge = this.store.delivery_charge;
+
             if (this.store.delivery_type == "Shop") {
               this.event = "pickup";
               this.store.delivery_charge = 0;
@@ -95,28 +96,32 @@ export class GroceryCartPage implements OnInit {
             } else {
               this.event = "delivery";
             }
+
             this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
             this.data.toPay = this.toPay;
-            this.api
-              .getDataWithToken(
-                "getAddress/" + localStorage.getItem("isaddress")
-              )
-              .subscribe(
-                (res: any) => {
-                  if (res.success) {
-                    this.spinnerService.hide();
-                    // this.util.dismissLoader();
-                    this.data.Deafult_address = res.data;
-                    this.mapData();
-                    this.data.userlat = res.data.lat;
-                    this.data.userlang = res.data.lang;
-                  }
-                },
-                (err) => {
-                  // this.util.dismissLoader();
-                  this.spinnerService.hide();
-                }
-              );
+
+            this.mapData();
+
+            // this.api
+            //   .getDataWithToken(
+            //     "getAddress/" + localStorage.getItem("isaddress")
+            //   )
+            //   .subscribe(
+            //     (res: any) => {
+            //       if (res.success) {
+            //         this.spinnerService.hide();
+            //         // this.util.dismissLoader();
+            //         this.data.Deafult_address = res.data;
+            //         this.mapData();
+            //         this.data.userlat = res.data.lat;
+            //         this.data.userlang = res.data.lang;
+            //       }
+            //     },
+            //     (err) => {
+            //       // this.util.dismissLoader();
+            //       this.spinnerService.hide();
+            //     }
+            //   );
           }
         },
         (err) => {
@@ -130,25 +135,26 @@ export class GroceryCartPage implements OnInit {
     if (this.gpi.promocode) {
       this.countDiscount();
     }
-    if (this.chaneAddress) {
-      this.util.startLoad();
-      this.api
-        .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-        .subscribe(
-          (res: any) => {
-            if (res.success) {
-              this.data.Deafult_address = res.data;
-              this.mapData();
-            }
-            // this.util.dismissLoader();
-            this.spinnerService.hide();
-          },
-          (err) => {
-            // this.util.dismissLoader();
-            this.spinnerService.hide();
-          }
-        );
-    }
+
+    // if (this.chaneAddress) {
+    //   this.util.startLoad();
+    //   this.api
+    //     .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+    //     .subscribe(
+    //       (res: any) => {
+    //         if (res.success) {
+    //           this.data.Deafult_address = res.data;
+    //           this.mapData();
+    //         }
+    //         // this.util.dismissLoader();
+    //         this.spinnerService.hide();
+    //       },
+    //       (err) => {
+    //         // this.util.dismissLoader();
+    //         this.spinnerService.hide();
+    //       }
+    //     );
+    // }
   }
 
   initMap() { }
@@ -160,19 +166,28 @@ export class GroceryCartPage implements OnInit {
 
       if (this.event == "delivery") {
         this.delivery_type = "Home";
+
       } else {
         this.delivery_type = "Shop";
       }
 
       if (this.delivery_type == "Home") {
+
         this.radius = this.distance(
-          this.data.userlat,
-          this.data.userlang,
-          this.store.latitude,
-          this.store.longitude,
+          parseFloat(this.api.lat),
+          parseFloat(this.api.lang),
+          parseFloat(this.store.latitude),
+          parseFloat(this.store.longitude),
           "k"
         );
+
+        console.log(this.radius);
+        console.log(this.store.radius);
+        console.log(this.radius <= this.store.radius);
+        
+
         if (this.radius <= this.store.radius) {
+          
           this.gpi.cartData = this.data;
 
           this.delivery_type = this.event;
@@ -194,7 +209,9 @@ export class GroceryCartPage implements OnInit {
 
           this.nav.navigateForward("/pay-method");
         }
+
       } else {
+
         this.gpi.cartData = this.data;
 
         this.data.delivery_type = this.event;
@@ -203,6 +220,7 @@ export class GroceryCartPage implements OnInit {
         this.gpi.info = this.data;
         this.nav.navigateForward("/pay-method");
       }
+
     } else {
       this.gpi.promocode = {};
       this.nav.back();
@@ -229,19 +247,21 @@ export class GroceryCartPage implements OnInit {
     this.toPay = this.totalItem + this.store.delivery_charge - this.data.discount;
     this.data.toPay = this.toPay;
   }
+
   addtocart(item) {
     item.qty = item.qty + 1;
     item.total = item.qty * item.sell_price;
 
     this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
 
-    if (this.cartData.length > 0) {
+    if (this.cartData && this.cartData.length > 0) {
       this.cartData.forEach((element, index) => {
         if (element.id === item.id) {
           this.cartData.splice(index, 1);
         }
       });
       this.cartData.push(item);
+
     } else {
       this.cartData.push(item);
     }
@@ -286,7 +306,7 @@ export class GroceryCartPage implements OnInit {
           this.cartData.splice(equalIndex, 1);
           this.totalItem -= item.sell_price;
           item.total = item.qty * item.sell_price;
-          this.toPay = this.totalItem + (this.store.delivery_charge || 0) -  (this.data.discount || 0);
+          this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
           this.data.toPay = this.toPay;
           localStorage.setItem("store-detail", JSON.stringify(this.cartData));
 
@@ -306,10 +326,10 @@ export class GroceryCartPage implements OnInit {
     }
   }
 
-  change_Address() {
-    this.chaneAddress = true;
-    this.nav.navigateForward("/select-address");
-  }
+  // change_Address() {
+  //   this.chaneAddress = true;
+  //   this.nav.navigateForward("/select-address");
+  // }
 
   distance(lat1, lon1, lat2, lon2, unit) {
     if (lat1 == lat2 && lon1 == lon2) {
@@ -357,16 +377,17 @@ export class GroceryCartPage implements OnInit {
   }
 
   mapData() {
-    this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    // this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
+    this.FindAddress = this.api.soc_name + " " + this.api.street + " " + this.api.city;
     // + " " + this.data.Deafult_address.zipcode;
     let options: NativeGeocoderOptions = {
       useLocale: true,
       maxResults: 5,
     };
+    
     this.nativeGeocoder
       .forwardGeocode(this.FindAddress, options)
       .then((result: NativeGeocoderResult[]) => {
-        console.log(result);
 
         this.agmMap = {
           lat: parseFloat(result[0].latitude),
@@ -380,10 +401,14 @@ export class GroceryCartPage implements OnInit {
           lat: parseFloat(result[0].latitude),
           lng: parseFloat(result[0].longitude),
         };
+
+        this.spinnerService.hide();
       })
       .catch((error: any) => {
         this.spinnerService.hide();
         console.log(error);
       });
+
+      this.spinnerService.hide();
   }
 }

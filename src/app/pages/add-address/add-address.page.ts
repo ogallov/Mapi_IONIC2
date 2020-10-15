@@ -178,9 +178,11 @@ export class AddAddressPage implements OnInit {
           if (res.success) {
             this.spinnerService.hide();
             // this.util.dismissLoader();
+
             if (localStorage.getItem("isaddress") == "false") {
               localStorage.setItem("isaddress", res.data.id);
             }
+
             this.isEdit = false;
             this.api.parseData = {};
             this.ischange = true;

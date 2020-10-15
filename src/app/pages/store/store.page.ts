@@ -14,7 +14,8 @@ export class StorePage implements OnInit {
   Store: any = [];
   err: any = {};
   term = ""
-  userAddress: any = {};
+  // userAddress: any = {};
+
   constructor(
     private nav: NavController,
     private api: ApiService,
@@ -32,35 +33,36 @@ export class StorePage implements OnInit {
             // this.util.dismissLoader();
             this.Store = res.data;
             this.gpi.catId = undefined;
-            this.api
-              .getDataWithToken(
-                "getAddress/" + localStorage.getItem("isaddress")
-              )
-              .subscribe(
-                (res: any) => {
-                  if (res.success) {
-                    this.userAddress = res.data;
+
+            // this.api
+            //   .getDataWithToken(
+            //     "getAddress/" + localStorage.getItem("isaddress")
+            //   )
+            //   .subscribe(
+            //     (res: any) => {
+            //       if (res.success) {
+                    // this.userAddress = res.data;
                     // this.util.dismissLoader();
                     this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
-                          this.userAddress.lat,
-                          this.userAddress.lang,
-                          element.latitude,
-                          element.longitude,
+                          parseFloat(this.api.lat),
+                          parseFloat(this.api.lang),
+                          parseFloat(element.latitude),
+                          parseFloat(element.longitude),
                           "K"
                         ).toFixed(2)
                       );
                     });
-                  }
-                },
-                (err) => {
-                  this.err = err;
-                  // this.util.dismissLoader();
-                  this.spinnerService.hide();
-                }
-              );
+              //     }
+              //   },
+              //   (err) => {
+              //     this.err = err;
+              //     // this.util.dismissLoader();
+              //     this.spinnerService.hide();
+              //   }
+              // );
           }
         },
         (err) => {
@@ -69,7 +71,9 @@ export class StorePage implements OnInit {
           this.spinnerService.hide();
         }
       );
+
     } else {
+
       // await this.util.startLoad();
       this.spinnerService.show();
       this.api.getDataWithToken("groceryShop").subscribe(
@@ -77,35 +81,36 @@ export class StorePage implements OnInit {
           if (res.success) {
             // this.util.dismissLoader();
             this.Store = res.data.shop;
-            this.api
-              .getDataWithToken(
-                "getAddress/" + localStorage.getItem("isaddress")
-              )
-              .subscribe(
-                (res: any) => {
-                  if (res.success) {
-                    this.userAddress = res.data;
+
+            // this.api
+            //   .getDataWithToken(
+            //     "getAddress/" + localStorage.getItem("isaddress")
+            //   )
+            //   .subscribe(
+            //     (res: any) => {
+            //       if (res.success) {
+                    // this.userAddress = res.data;
                     // this.util.dismissLoader();
                     this.spinnerService.hide();
                     this.Store.forEach((element) => {
                       element.away = Number(
                         this.distance(
-                          this.userAddress.lat,
-                          this.userAddress.lang,
-                          element.latitude,
-                          element.longitude,
+                          parseFloat(this.api.lat),
+                          parseFloat(this.api.lang),
+                          parseFloat(element.latitude),
+                          parseFloat(element.longitude),
                           "K"
                         ).toFixed(2)
                       );
                     });
-                  }
-                },
-                (err) => {
-                  this.err = err;
-                  // this.util.dismissLoader();
-                  this.spinnerService.hide();
-                }
-              );
+              //     }
+              //   },
+              //   (err) => {
+              //     this.err = err;
+              //     // this.util.dismissLoader();
+              //     this.spinnerService.hide();
+              //   }
+              // );
           }
         },
         (err) => {

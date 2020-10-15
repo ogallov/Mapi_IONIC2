@@ -12,11 +12,13 @@ import {
 } from "@ionic-native/paypal/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
 declare var RazorpayCheckout: any;
+
 @Component({
   selector: "app-pay-method",
   templateUrl: "./pay-method.page.html",
   styleUrls: ["./pay-method.page.scss"],
 })
+
 export class PayMethodPage implements OnInit {
   currencyType: any;
   data: any = {};
@@ -25,6 +27,7 @@ export class PayMethodPage implements OnInit {
   err: any;
   payment_type: any = "LOCAL";
   apdata: any = {};
+
   constructor(
     private api: ApiService,
     private util: UtilService,
@@ -105,6 +108,8 @@ export class PayMethodPage implements OnInit {
       rdata.payment_type = this.payment_type;
       // await this.util.startLoad();
 
+      console.log(rdata);
+      
       this.spinnerService.show();
       this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
         (res: any) => {

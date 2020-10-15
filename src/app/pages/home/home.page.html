@@ -219,6 +219,8 @@
                 <img [src]="item?.imagePath + item?.image">
             </div>
             <h3 class="name">{{item?.name}}</h3>
+            <h3 class="status" [style.color]="item?.open ? 'gold' : 'red'">
+                {{ (item?.open ? 'home_page.open' : "home_page.close") | translate }}</h3>
 
             <!-- <p class="away_lbl">
                 <ion-icon src="./assets/icon-image/gro_pin.svg"></ion-icon>

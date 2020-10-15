@@ -32,7 +32,9 @@ export class CategoryPage implements OnInit {
 
     this.route.params.subscribe((params) => {
       this.isfrom = params["id"];
+
       if (this.isfrom) {
+
         this.spinnerService.show();
         // await this.util.startLoad();
         this.api
@@ -48,6 +50,7 @@ export class CategoryPage implements OnInit {
             this.spinnerService.hide();
 
           });
+
       } else {
 
         // await this.util.startLoad();
@@ -73,7 +76,7 @@ export class CategoryPage implements OnInit {
                 // this.util.dismissLoader();
                 this.spinnerService.hide();
                 this.data = this.data.filter(a => {
-                  if (a.veg > 0) {
+                  if (a && a.veg > 0) {
                     return a;
                   }
                 });
@@ -90,38 +93,40 @@ export class CategoryPage implements OnInit {
                   }
                   return 0;
                 });
+
               } else {
                 this.spinnerService.hide();
                 // this.util.dismissLoader();
-                if (localStorage.getItem("isaddress") != "false") {
-                  this.api
-                    .getDataWithToken(
-                      "getAddress/" + localStorage.getItem("isaddress")
-                    )
-                    .subscribe((res: any) => {
-                      if (res.success) {
-                        this.data.forEach(element => {
-                          element.distance = this.distance(
-                            res.data.lat,
-                            res.data.lang,
-                            element.latitude,
-                            element.longitude,
-                            "K"
-                          );
-                        });
-                        this.data.sort((a, b) => {
-                          if (a.distance < b.distance) {
-                            return -1;
-                          }
-                          if (a.distance > b.distance) {
-                            return 1;
-                          }
-                        });
-                      }
-                    }, err => {
-                      console.log(err);
-                      this.spinnerService.hide();
-                    });
+                if (this.api.address_type && this.api.address_type !== '' && this.api.address_type !== undefined) {
+
+                  // this.api
+                  //   .getDataWithToken(
+                  //     "getAddress/" + localStorage.getItem("isaddress")
+                  //   )
+                  //   .subscribe((res: any) => {
+                  //     if (res.success) {
+                  this.data.forEach(element => {
+                    element.distance = this.distance(
+                      parseFloat(this.api.lat),
+                      parseFloat(this.api.lang),
+                      parseFloat(element.latitude),
+                      parseFloat(element.longitude),
+                      "K"
+                    );
+                  });
+                  this.data.sort((a, b) => {
+                    if (a.distance < b.distance) {
+                      return -1;
+                    }
+                    if (a.distance > b.distance) {
+                      return 1;
+                    }
+                  });
+                  //   }
+                  // }, err => {
+                  //   console.log(err);
+                  //   this.spinnerService.hide();
+                  // });
 
                 } else {
 
@@ -134,8 +139,8 @@ export class CategoryPage implements OnInit {
                         element.distance = this.distance(
                           resp.coords.latitude,
                           resp.coords.longitude,
-                          element.latitude,
-                          element.longitude,
+                          parseFloat(element.latitud),
+                          parseFloat(element.longitude),
                           "K"
                         );
                       });

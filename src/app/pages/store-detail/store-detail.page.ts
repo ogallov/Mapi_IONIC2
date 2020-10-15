@@ -56,7 +56,7 @@ export class StoreDetailPage implements OnInit {
                             this.id = res.data.id;
                             this.data.product.forEach((element) => {
                               element.qty = 0;
-                              if (this.cartData.length > 0) {
+                              if (this.cartData && this.cartData.length > 0) {
                                 const fCart = this.cartData.find(
                                   (x) => x.id == element.id
                                 );
@@ -157,8 +157,8 @@ export class StoreDetailPage implements OnInit {
   ionViewWillEnter() {
     this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
 
-    if (this.cartData.length > 0) {
-      if (this.data.product.length > 0) {
+    if (this.cartData && this.cartData.length > 0) {
+      if (this.data && this.data.product && this.data.product.length > 0) {
         this.data.product.forEach((el1) => {
           const fCart = this.cartData.find((x) => x.id == el1.id);
           if (fCart) {

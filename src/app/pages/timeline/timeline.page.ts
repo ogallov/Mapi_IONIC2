@@ -228,28 +228,28 @@ export class TimelinePage implements OnInit {
   ) {
     this.currency = this.api.currency;
     this.data.driver = {};
-    
+
     // await this.util.startLoad();
     this.spinnerService.show();
     this.api
       .getDataWithToken("trackOrder/" + this.api.checkOrderStatus)
-      .subscribe(async(res: any) => {
+      .subscribe(async (res: any) => {
         if (res.success) {
           this.data = res.data;
-  
+
           this.getUserAddress();
           this.getShopAddress();
-  
+
           // this.util.dismissLoader();
           this.spinnerService.hide();
-  
+
           if (this.data.deliveryBoy_id != null) {
             this.isvisible = true;
             this.driver = {
               lat: parseFloat(res.data.driver.lat),
               lng: parseFloat(res.data.driver.lang),
             };
-  
+
             this.driver.name = res.data.driver.name;
             this.driver.imagePath = res.data.driver.imagePath;
             this.driver.image = res.data.driver.image;
@@ -257,7 +257,7 @@ export class TimelinePage implements OnInit {
             this.isvisible = true;
             this.Centerlat = parseFloat(this.driver.lat);
             this.Centerlng = parseFloat(this.driver.lang);
-  
+
             if (
               this.data.order_status == "PickUpFood" ||
               this.data.order_status == "OnTheWay" ||
@@ -271,7 +271,7 @@ export class TimelinePage implements OnInit {
             this.Centerlat = parseFloat(this.origin.lat);
             this.Centerlng = parseFloat(this.origin.lng);
           }
-  
+
           if (
             this.data.order_status == "Pending" ||
             this.data.order_status == "Approved" ||
@@ -300,7 +300,7 @@ export class TimelinePage implements OnInit {
       }, error => {
         console.log(error);
         this.spinnerService.hide();
-        
+
       });
 
     this.get_duration_interval = setInterval((interval) => {
@@ -364,7 +364,7 @@ export class TimelinePage implements OnInit {
       await alert.present();
     }, error => {
       console.log(error);
-      
+
     });
   }
 
@@ -437,41 +437,42 @@ export class TimelinePage implements OnInit {
   }
 
   getUserAddress() {
-    if (localStorage.getItem("isaddress") != "false") {
+    if (this.api.address_type && this.api.address_type !== '' && this.api.address_type !== undefined) {
       // await this.util.startLoad();
       this.spinnerService.show();
-      this.api
-        .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
-        .subscribe(
-          (res: any) => {
-            if (res.success) {
-              this.userAddress = res.data.soc_name + " " + res.data.street + " " + res.data.city;
-              //  + " " + res.data.zipcode;
 
-              this.geocoder.geocode(
-                { address: this.userAddress },
-                (results, status) => {
-                  if (status == google.maps.GeocoderStatus.OK) {
+      // this.api
+      //   .getDataWithToken("getAddress/" + localStorage.getItem("isaddress"))
+      //   .subscribe(
+      //     (res: any) => {
+      //       if (res.success) {
+      this.userAddress = this.api.soc_name + " " + this.api.street + " " + this.api.city;
+      //  + " " + res.data.zipcode;
 
-                    this.destination = {
-                      lat: results[0].geometry.location.lat(),
-                      lng: results[0].geometry.location.lng(),
-                    };
-                  }
-                }
-              );
-              // this.util.dismissLoader();
-              this.spinnerService.hide();
-            }
-          },
-          (err) => {
-            this.err = err;
-            // this.util.dismissLoader();
-            this.spinnerService.hide();
+      this.geocoder.geocode(
+        { address: this.userAddress },
+        (results, status) => {
+          if (status == google.maps.GeocoderStatus.OK) {
+
+            this.destination = {
+              lat: results[0].geometry.location.lat(),
+              lng: results[0].geometry.location.lng(),
+            };
           }
-        );
+        }
+      );
+      // this.util.dismissLoader();
+      this.spinnerService.hide();
     }
+    // },
+    // (err) => {
+    //   this.err = err;
+    //   // this.util.dismissLoader();
+    //   this.spinnerService.hide();
+    // });
+    // }
   }
+
 
   getShopAddress() {
     this.origin = {
