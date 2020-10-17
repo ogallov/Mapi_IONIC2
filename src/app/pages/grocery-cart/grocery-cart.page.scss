@@ -3,7 +3,7 @@ ion-header {
 
   ion-toolbar {
     --background: transparent;
-    
+
     ion-title {
       color: var(--ion-color-light);
       font-family: "fivo-regular";
@@ -43,13 +43,28 @@ ion-header {
 ion-content {
   --background: #000;
 
+  .card_item_group {
+    border-bottom: dotted;
+    border-bottom-width: 1px;
+    border-bottom-color: var(--ion-border-color);
+
+    .name-grocery {
+      font-size: 16px;
+      color: var(--ion-color-light);
+      font-family: "fivo-medium";
+      margin: 0;
+      margin-top: 10px;
+      text-align: center;
+    }
+  }
+
   .card_item {
     display: flex;
     padding-bottom: 10px;
     margin-top: 15px;
-    border-bottom: dotted;
-    border-bottom-width: 1px;
-    border-bottom-color: var(--ion-border-color);
+    // border-bottom: dotted;
+    // border-bottom-width: 1px;
+    // border-bottom-color: var(--ion-border-color);
 
     .img_div {
       height: 56px;
@@ -67,7 +82,8 @@ ion-content {
       width: 100%;
 
       .name {
-        font-size: 16px;
+        font-size: 14px;
+        // font-size: 16px;
         // color: var(--light-black-color);
         color: var(--ion-color-light);
         font-family: "fivo-medium";
@@ -82,7 +98,7 @@ ion-content {
         margin-top: 3px;
         margin-bottom: 2px;
       }
-      
+
       .qty {
         font-size: 12px;
       }
@@ -154,7 +170,7 @@ ion-content {
       }
     }
   }
-  
+
   .couponItem {
     --detail-icon-color: var(--ion-color-light);
     --detail-icon-opacity: 1;
@@ -260,7 +276,7 @@ ion-content {
       .change {
         display: flex;
         width: 24%;
-        
+
         .change_ad {
           font-size: 9px;
           font-family: "Poppins-Regular";

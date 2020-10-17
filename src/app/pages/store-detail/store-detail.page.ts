@@ -19,6 +19,14 @@ export class StoreDetailPage implements OnInit {
   state: any = 1;
   Store: any = [];
   id: any;
+
+  // new
+  latitude;
+  longitude;
+  delivery_charge;
+  delivery_type;
+  radius;
+
   constructor(
     private nav: NavController,
     private api: ApiService,
@@ -37,7 +45,13 @@ export class StoreDetailPage implements OnInit {
       .subscribe(
         (res: any) => {
           if (res.success) {
+            console.log(res.data);
             this.data = res.data;
+            this.latitude = res.data.latitude;
+            this.longitude = res.data.longitude;
+            this.delivery_charge = res.data.delivery_charge;
+            this.delivery_type = res.data.delivery_type;
+            this.radius = res.data.radius;
 
             this.api
               .getDataWithToken("groceryShopCategory/" + this.gpi.storeID)
@@ -52,8 +66,12 @@ export class StoreDetailPage implements OnInit {
                           if (res.success) {
                             // this.util.dismissLoader();
                             this.spinnerService.hide();
-                            this.data.product = res.data;
+                            this.data.product = res.data['item'];
                             this.id = res.data.id;
+
+                            console.log(this.data);
+                            console.log(this.data.product);
+
                             this.data.product.forEach((element) => {
                               element.qty = 0;
                               if (this.cartData && this.cartData.length > 0) {
@@ -65,6 +83,7 @@ export class StoreDetailPage implements OnInit {
                                 }
                               }
                             });
+                            console.log(this.data.category);
                           }
                         },
                         (err) => {
@@ -92,6 +111,12 @@ export class StoreDetailPage implements OnInit {
   }
 
   AddCart(item) {
+    console.log(item);
+    item.shop_latitude = this.latitude;
+    item.shop_longitude = this.longitude;
+    item.delivery_charge = this.delivery_charge;
+    item.delivery_type = this.delivery_type;
+    item.radius = this.radius;
     item.qty = item.qty + 1;
     item.total = item.qty * item.sell_price;
     this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
@@ -169,9 +194,12 @@ export class StoreDetailPage implements OnInit {
         });
       }
     } else {
-      this.data.product.forEach((el1) => {
-        el1.qty = 0;
-      });
+
+      if (this.data && this.data.produc && this.data.produc.length > 0) {
+        this.data.product.forEach((el1) => {
+          el1.qty = 0;
+        });
+      }
     }
   }
 

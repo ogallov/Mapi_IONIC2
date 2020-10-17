@@ -56,6 +56,7 @@ export class CategoryDetailPage implements OnInit {
 
     this.api.getDataWithToken("grocerySubCategory/" + this.gpi.catId).subscribe(
       (res: any) => {
+        console.log(res.data);
         // this.util.dismissLoader();
         this.spinnerService.hide();
         this.data = res.data;
@@ -115,6 +116,9 @@ export class CategoryDetailPage implements OnInit {
   }
 
   AddCart(item) {
+
+    console.log(item);
+    
     item.qty = item.qty + 1;
     item.total = item.qty * item.sell_price;
     this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];

@@ -11,5 +11,6 @@ export class GroceryService {
   cartData: any = [];
   promocode: any;
   info: any;
+  orders?: any[];
   constructor() {}
 }

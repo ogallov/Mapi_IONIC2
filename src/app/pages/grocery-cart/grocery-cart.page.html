@@ -7,10 +7,12 @@
     </ion-toolbar>
     <div class="segment_div">
         <ion-segment value="upcoming" mode="ios" [(ngModel)]="event" (ionChange)="segmentChanged()">
-            <ion-segment-button value="delivery" mode="ios" [disabled]="store?.delivery_type=='Shop'">
+            <!-- <ion-segment-button value="delivery" mode="ios" [disabled]="store?.delivery_type == 'Shop'"> -->
+            <ion-segment-button value="delivery" mode="ios">
                 <ion-label style="color: white;">{{"grocery_cart.delivery" | translate }}</ion-label>
             </ion-segment-button>
-            <ion-segment-button value="pickup" mode="ios" [disabled]="store?.delivery_type=='Home'">
+            <!-- <ion-segment-button value="pickup" mode="ios" [disabled]="store?.delivery_type == 'Home'"> -->
+            <ion-segment-button value="pickup" mode="ios">
                 <ion-label style="color: white;">{{"grocery_cart.pickup" | translate }}</ion-label>
             </ion-segment-button>
         </ion-segment>
@@ -20,63 +22,70 @@
 <ion-content>
     <div [ngSwitch]="event" class="ion-margin-horizontal main_div">
         <div *ngSwitchCase="'delivery'">
-            <div class="card_item" *ngFor="let item of data">
-                <div class="img_div">
-                    <img [src]="item?.imagePath + item?.image">
-                </div>
-                <div class="info_div">
-                    <h3 class="name">{{item?.name}}</h3>
-                    <p class="type">{{item?.brand}}</p>
-                    <div class="price_div">
-                        <p class="type qty">{{item?.weight}}</p>
-                        <div class="add_div">
-                            <p class="price">{{cuurecy}}{{item?.total}}</p>
-                            <div class="btn_div" slot="end">
-                                <ion-button class="add-btn" (click)="minusQty(item)">
-                                    <ion-icon name="remove"></ion-icon>
-                                </ion-button>
-                                <ion-label class="one">
-                                    {{item?.qty}}
-                                </ion-label>
-                                <ion-button class="add-btn" (click)="addtocart(item)">
-                                    <ion-icon name="add" class="add"></ion-icon>
-                                </ion-button>
+            <div class="card_item_group" *ngFor="let items of datagroup">
+                <!-- <div class="card_item" *ngFor="let item of data"> -->
+                <h3 class="name-grocery">{{items?.shopName}}</h3>
+                <div class="card_item" *ngFor="let item of items.orders">
+                    <div class="img_div">
+                        <img [src]="item?.imagePath + item?.image">
+                    </div>
+                    <div class="info_div">
+                        <h3 class="name">{{item?.name}}</h3>
+                        <p class="type">{{item?.brand}}</p>
+                        <div class="price_div">
+                            <p class="type qty">{{item?.weight}}</p>
+                            <div class="add_div">
+                                <p class="price">{{cuurecy}}{{item?.total}}</p>
+                                <div class="btn_div" slot="end">
+                                    <ion-button class="add-btn" (click)="minusQty(item)">
+                                        <ion-icon name="remove"></ion-icon>
+                                    </ion-button>
+                                    <ion-label class="one">
+                                        {{item?.qty}}
+                                    </ion-label>
+                                    <ion-button class="add-btn" (click)="addtocart(item)">
+                                        <ion-icon name="add" class="add"></ion-icon>
+                                    </ion-button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
         </div>
         <div *ngSwitchCase="'pickup'">
-            <div class="card_item" *ngFor="let item of data">
-                <div class="img_div">
-                    <img [src]="item?.imagePath + item?.image">
-                </div>
-                <div class="info_div">
-                    <h3 class="name">{{item?.name}}</h3>
-                    <p class="type">{{item?.brand}}</p>
-                    <div class="price_div">
-                        <p class="type qty">{{item?.weight}}</p>
-                        <div class="add_div">
-                            <p class="price">{{cuurecy}}{{item?.total}}</p>
-                            <div class="btn_div" slot="end">
-                                <ion-button class="add-btn" (click)="minusQty(item)">
-                                    <ion-icon name="remove"></ion-icon>
-                                </ion-button>
-                                <ion-label class="one">
-                                    {{item?.qty}}
-                                </ion-label>
-                                <ion-button class="add-btn" (click)="addtocart(item)">
-                                    <ion-icon name="add" class="add"></ion-icon>
-                                </ion-button>
+            <div class="card_item_group" *ngFor="let items of datagroup">
+                <!-- <div class="card_item" *ngFor="let item of data"> -->
+                <h3 class="name-grocery">{{items?.shopName}}</h3>
+                <div class="card_item" *ngFor="let item of items.orders">
+                    <div class="img_div">
+                        <img [src]="item?.imagePath + item?.image">
+                    </div>
+                    <div class="info_div">
+                        <h3 class="name">{{item?.name}}</h3>
+                        <p class="type">{{item?.brand}}</p>
+                        <div class="price_div">
+                            <p class="type qty">{{item?.weight}}</p>
+                            <div class="add_div">
+                                <p class="price">{{cuurecy}}{{item?.total}}</p>
+                                <div class="btn_div" slot="end">
+                                    <ion-button class="add-btn" (click)="minusQty(item)">
+                                        <ion-icon name="remove"></ion-icon>
+                                    </ion-button>
+                                    <ion-label class="one">
+                                        {{item?.qty}}
+                                    </ion-label>
+                                    <ion-button class="add-btn" (click)="addtocart(item)">
+                                        <ion-icon name="add" class="add"></ion-icon>
+                                    </ion-button>
+                                </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
                 </div>
             </div>
-
-
         </div>
     </div>
     <ion-item lines="none" (click)="applyCoupon()" class="couponItem" detail>
@@ -92,12 +101,12 @@
         <h3 class="combo">
             {{"grocery_cart.bill_details" | translate }}
         </h3>
-        <p class="bill_item" *ngIf="totalItem > 0">
+        <p class="bill_item">
             {{"grocery_cart.total_payable" | translate }}
             <span class="ion-float-right">{{cuurecy}}{{totalItem}}</span>
         </p>
 
-        <p class="total" *ngIf="data?.discount > 0">
+        <p class="total">
             {{"grocery_cart.total_discount" | translate }}<span
                 class="ion-float-right">-{{cuurecy}}{{data?.discount || 0}}</span>
         </p>
@@ -107,7 +116,7 @@
                 class="ion-float-right">{{cuurecy}}{{store?.delivery_charge}}</span>
         </p>
 
-        <p class="bill_item" *ngIf="data?.toPay > 0">
+        <p class="bill_item">
             {{"grocery_cart.to_pay" | translate }}<span class="ion-float-right">{{cuurecy}}{{data?.toPay}}</span>
         </p>
         <div class="saved" *ngIf="data?.discount > 0">
@@ -118,7 +127,7 @@
     <div class="devider_div">
 
     </div>
-    <div class="last_div ion-margin-horizontal">
+    <div class="last_div ion-margin-horizontal" *ngIf="datagroup.length > 0">
         <h3 class="sel_lbl">{{"grocery_cart.select_address" | translate }}</h3>
 
         <div class="address_div">
@@ -129,7 +138,7 @@
                 <p class="adress_p">
                     {{data?.Deafult_address?.soc_name}} {{data?.Deafult_address?.street}}
                     {{data?.Deafult_address?.city}}
-                     <!-- {{data?.Deafult_address?.zipcode}} -->
+                    <!-- {{data?.Deafult_address?.zipcode}} -->
                 </p>
             </div>
             <!-- <div class="change">

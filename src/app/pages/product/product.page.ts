@@ -17,6 +17,8 @@ export class ProductPage implements OnInit {
   data: any = [];
   cartData: any = [];
   sortType: any = "lowtohigh";
+  shop: any;
+
   constructor(
     private nav: NavController,
     private popoverController: PopoverController,
@@ -38,11 +40,12 @@ export class ProductPage implements OnInit {
     this.api.getDataWithToken("groceryItem/" + this.gpi.storeID).subscribe(
       (res: any) => {
         if (res.success) {
+          console.log(res.data['shop']);
+          
           // this.util.dismissLoader();
           this.spinnerService.hide();
-          this.Store = res.data;
-          console.log(this.Store);
-
+          this.Store = res.data['item'];
+          this.shop = res.data['shop'];
           this.cartData = this.gpi.cartData;
           this.getdata();
         }
@@ -58,6 +61,7 @@ export class ProductPage implements OnInit {
     this.gpi.itemId = id;
     this.nav.navigateForward("/product-detail");
   }
+
   async presentPopover(ev: any) {
     const popover = await this.popoverController.create({
       component: ProductFilterPage,
@@ -108,6 +112,11 @@ export class ProductPage implements OnInit {
     }
   }
   AddCart(item) {
+    item.shop_latitude = this.shop.latitude;
+    item.shop_longitude = this.shop.longitude;
+    item.delivery_charge = this.shop.delivery_charge;
+    item.delivery_type = this.shop.delivery_type;
+    item.radius = this.shop.radius;
     item.qty = item.qty + 1;
     item.total = item.qty * item.sell_price;
     this.cartData = JSON.parse(localStorage.getItem("store-detail")) || [];

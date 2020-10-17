@@ -11,6 +11,7 @@ import {
   PayPalConfiguration,
 } from "@ionic-native/paypal/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
+import _ from "lodash";
 declare var RazorpayCheckout: any;
 
 @Component({
@@ -28,6 +29,9 @@ export class PayMethodPage implements OnInit {
   payment_type: any = "LOCAL";
   apdata: any = {};
 
+  // new
+  datagroup = [];
+
   constructor(
     private api: ApiService,
     private util: UtilService,
@@ -39,12 +43,19 @@ export class PayMethodPage implements OnInit {
     this.apdata = this.gpi.info;
 
     this.currencyType = this.api.currencyType;
-    
+
+    // this.getOrdersGrocerys();
+
     // await this.util.startLoad();
     this.spinnerService.show();
     this.api.getDataWithToken("keySetting").subscribe((res: any) => {
       if (res.success) {
         this.data = res.data;
+
+        // new
+        this.datagroup = this.gpi.orders;
+        console.log(this.datagroup);
+
         // this.util.dismissLoader();
         this.spinnerService.hide();
       }
@@ -57,80 +68,98 @@ export class PayMethodPage implements OnInit {
   ngOnInit() {
   }
 
-  paymentMethod() {
+  async paymentMethod() {
     /* 
     return */
-    let rdata: any = {};
-    rdata.items = [];
-    rdata.itemData = [];
-    rdata.shop_id = this.gpi.storeID;
-    rdata.payment = this.gpi.info.toPay;
-    rdata.discount = this.gpi.info.discount;
-    rdata.delivery_charge = this.gpi.info.delivery_charge;
-    rdata.delivery_type = this.gpi.info.delivery_type;
 
-    if (this.gpi.promocode == undefined) {
-    } else {
-      rdata.coupon_id = this.gpi.promocode.id;
-    }
+    for (const dat of this.datagroup) {
 
-    rdata.coupon_price = this.gpi.info.discount;
-
-    if (typeof this.data.items == "string") {
+      let rdata: any = {};
       rdata.items = [];
-    }
+      rdata.itemData = [];
+      rdata.shop_id = dat.shop_id;
+      // rdata.payment = this.gpi.info.toPay;
+      rdata.discount = this.gpi.info.discount;
+      rdata.delivery_charge = dat.delivery_charge;
+      rdata.delivery_type = this.gpi.info.delivery_type;
+      let payment = 0;
 
-    this.gpi.cartData.forEach((element) => {
-      rdata.items.push(element.id);
-      let pusher: any = {
-        item_id: element.id,
-        price: element.total * element.qty,
-        quantity: element.qty,
-      };
-      rdata.itemData.push(pusher);
-    });
-    rdata.items = rdata.items.join();
-
-    if (this.online) {
-
-      if (this.payment_type == "RAZOR") {
-        this.payWithRazor(rdata);
+      if (this.gpi.promocode == undefined) {
       } else {
-        if (this.currencyType == "INR") {
-          this.util.presentToast("payment not possible");
-        } else {
-          this.paypalPay(rdata);
-        }
+        rdata.coupon_id = this.gpi.promocode.id;
       }
 
-    } else {
+      rdata.coupon_price = this.gpi.info.discount;
+
+      // if (typeof this.data.items == "string") {
+      //   rdata.items = [];
+      // }
+
+      dat.orders.forEach((element) => {
+        rdata.items.push(element.id);
+        let pusher: any = {
+          item_id: element.id,
+          price: element.total * element.qty,
+          quantity: element.qty,
+        };
+
+        payment = payment + (element.total * element.qty);
+        rdata.itemData.push(pusher);
+      });
+
+      rdata.items = rdata.items.join();
+
       rdata.payment_status = 0;
       rdata.payment_type = this.payment_type;
-      // await this.util.startLoad();
+      rdata.payment = payment;
 
+      this.sendHttp(rdata)
+      // await this.util.startLoad();
       console.log(rdata);
-      
-      this.spinnerService.show();
-      this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
-        (res: any) => {
-          if (res.success) {
-            console.log(res);
-            
-            // this.util.dismissLoader();
-            this.spinnerService.hide();
-            this.gpi.promocode = {};
-            this.gpi.orderId = res.data.id;
-            localStorage.removeItem("store-detail");
-            this.presentModal();
-          }
-        },
-        (err) => {
-          this.err = err.error.errors;
-          // this.util.dismissLoader();
-          this.spinnerService.hide();
-        }
-      );
     }
+
+    localStorage.removeItem("store-detail");
+    this.presentModal();
+    // if (this.online) {
+
+    //   if (this.payment_type == "RAZOR") {
+    //     this.payWithRazor(rdata);
+    //   } else {
+    //     if (this.currencyType == "INR") {
+    //       this.util.presentToast("payment not possible");
+    //     } else {
+    //       this.paypalPay(rdata);
+    //     }
+    //   }
+
+    // } else {
+    //   rdata.payment_status = 0;
+    //   rdata.payment_type = this.payment_type;
+    //   // await this.util.startLoad();
+
+    //   console.log(rdata);
+
+    //   this.spinnerService.show();
+    //   this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
+    //     (res: any) => {
+    //       if (res.success) {
+    //         console.log(res);
+
+    //         // this.util.dismissLoader();
+    //         this.spinnerService.hide();
+    //         this.gpi.promocode = {};
+    //         this.gpi.orderId = res.data.id;
+    //         localStorage.removeItem("store-detail");
+    //         this.presentModal();
+    //       }
+    //     },
+    //     (err) => {
+    //       this.err = err.error.errors;
+    //       // this.util.dismissLoader();
+    //       this.spinnerService.hide();
+    //     }
+    //   );
+    // }
   }
 
   payWithRazor(rdata) {
@@ -170,7 +199,7 @@ export class PayMethodPage implements OnInit {
             this.presentModal();
           }
         },
-       (err) => {
+        (err) => {
           this.err = err.error.errors;
           // this.util.dismissLoader();
           this.spinnerService.hide();
@@ -213,7 +242,7 @@ export class PayMethodPage implements OnInit {
                     rdata.payment_token = result.response.id;
                     rdata.payment_status = 1;
                     rdata.payment_type = "PAYPAL";
-                    
+
                     // await this.util.startLoad();
                     this.spinnerService.show();
                     this.api
@@ -247,7 +276,7 @@ export class PayMethodPage implements OnInit {
         },
         (e) => {
           console.log(e);
-          
+
         }
       );
   }
@@ -259,5 +288,81 @@ export class PayMethodPage implements OnInit {
       cssClass: "SuccessModal",
     });
     return await modal.present();
+  }
+
+  // getOrdersGrocerys() {
+  //   this.datagroup = [];
+  //   let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
+
+  //   for (const data of dataTemporals) {
+  //     let dataTemporal = _.clone(dataTemporals);
+  //     let shops = [];
+  //     shops = dataTemporal.filter((shop) => {
+  //       if ((data.add === undefined || !data.add) && shop.shop_id == data.shop_id) {
+  //         return _.clone(shop);
+  //       }
+  //     });
+
+  //     if (shops.length > 0) {
+  //       let dataNew = {
+  //         shop_id: shops[0].shop_id,
+  //         shopName: shops[0].shopName,
+  //         orders: shops
+  //       }
+
+  //       this.datagroup.push(dataNew);
+
+  //       for (const data of dataTemporals) {
+  //         if (data.shop_id === shops[0].shop_id) {
+  //           data.add = true;
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+
+  sendHttp(rdata) {
+
+    // this.spinnerService.show();
+
+    this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
+      (res: any) => {
+        if (res.success) {
+          console.log(res);
+
+          // this.util.dismissLoader();
+          this.spinnerService.hide();
+          this.gpi.promocode = {};
+          this.gpi.orderId = res.data.id;
+
+          // let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
+          // let dataTemp = dataTemporals.filter((data) => {
+          //   if (rdata.shop_id !== data.shop_id) {
+          //     return _.clone(data);
+          //   }
+          // });
+
+          // console.log(dataTemp);
+
+          // if (dataTemp.length > 0) {
+          //   localStorage.setItem("store-detail", JSON.stringify(dataTemp));
+
+          //   setTimeout(async () => {
+          //     await this.paymentMethod();
+          //   }, 120000);
+
+          // } else {
+          //   localStorage.removeItem("store-detail");
+          //   this.spinnerService.hide();
+          //   this.presentModal();
+          // }
+        }
+      },
+      (err) => {
+        this.err = err.error.errors;
+        // this.util.dismissLoader();
+        this.spinnerService.hide();
+      });
+
   }
 }
