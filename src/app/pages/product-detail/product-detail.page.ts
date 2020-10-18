@@ -4,6 +4,7 @@ import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NavController } from "@ionic/angular";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-product-detail",
@@ -22,6 +23,7 @@ export class ProductDetailPage implements OnInit {
     private gpi: GroceryService,
     private nav: NavController,
     private spinnerService: NgxSpinnerService,
+    private translate: TranslateService,
 
   ) {
     this.currency = this.api.currency;
@@ -103,7 +105,13 @@ export class ProductDetailPage implements OnInit {
 
   cart() {
     if (this.cartData.length == 0) {
-      this.util.presentToast("cart is empty");
+     
+      this.translate.get(["toasts.cart_empty"]).subscribe(async (val) => {
+        this.util.presentToast(val["toasts.cart_empty"]);
+      }, error => {
+        console.log(error);
+      });
+
     } else {
       this.gpi.cartData = this.cartData;
       this.nav.navigateForward("/grocery-cart");

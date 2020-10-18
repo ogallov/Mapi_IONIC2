@@ -12,6 +12,7 @@ import {
 } from "@ionic-native/paypal/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
 import _ from "lodash";
+import { TranslateService } from '@ngx-translate/core';
 declare var RazorpayCheckout: any;
 
 @Component({
@@ -28,6 +29,7 @@ export class PayMethodPage implements OnInit {
   err: any;
   payment_type: any = "LOCAL";
   apdata: any = {};
+  count: number = 0;
 
   // new
   datagroup = [];
@@ -38,7 +40,9 @@ export class PayMethodPage implements OnInit {
     private gpi: GroceryService,
     private payPal: PayPal,
     private modalController: ModalController,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private translate: TranslateService,
+
   ) {
     this.apdata = this.gpi.info;
 
@@ -71,6 +75,8 @@ export class PayMethodPage implements OnInit {
   async paymentMethod() {
     /* 
     return */
+
+    this.count = 0;
 
     for (const dat of this.datagroup) {
 
@@ -118,8 +124,14 @@ export class PayMethodPage implements OnInit {
       console.log(rdata);
     }
 
-    localStorage.removeItem("store-detail");
-    this.presentModal();
+    // let data = JSON.parse(localStorage.getItem("store-detail"));
+
+    // if (!data) {
+    //   localStorage.removeItem("store-detail");
+    //   this.presentModal();
+    // }
+
+
     // if (this.online) {
 
     //   if (this.payment_type == "RAZOR") {
@@ -335,27 +347,32 @@ export class PayMethodPage implements OnInit {
           this.gpi.promocode = {};
           this.gpi.orderId = res.data.id;
 
-          // let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
-          // let dataTemp = dataTemporals.filter((data) => {
-          //   if (rdata.shop_id !== data.shop_id) {
-          //     return _.clone(data);
-          //   }
-          // });
+          this.count = this.count + 1;
+          let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
+          let dataTemp = dataTemporals.filter((data) => {
+            if (rdata.shop_id !== data.shop_id) {
+              return _.clone(data);
+            }
+          });
 
-          // console.log(dataTemp);
+          console.log(dataTemp);
+          this.translate.get(["toasts.Order_form(s)_not_completed"]).subscribe(async (val) => {
+            
+            if (dataTemp.length > 0) {
+              localStorage.setItem("store-detail", JSON.stringify(dataTemp));
+              this.util.presentToast(val['toasts.Order_form(s)_not_completed']);
 
-          // if (dataTemp.length > 0) {
-          //   localStorage.setItem("store-detail", JSON.stringify(dataTemp));
+            } else {
 
-          //   setTimeout(async () => {
-          //     await this.paymentMethod();
-          //   }, 120000);
+              localStorage.removeItem("store-detail");
+              this.spinnerService.hide();
+              this.presentModal();
+            }
 
-          // } else {
-          //   localStorage.removeItem("store-detail");
-          //   this.spinnerService.hide();
-          //   this.presentModal();
-          // }
+          }, error => {
+            console.log(error);
+
+          });
         }
       },
       (err) => {

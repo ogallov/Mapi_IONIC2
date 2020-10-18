@@ -4,6 +4,7 @@ import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
 import { Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-grocery-promocode",
@@ -18,7 +19,9 @@ export class GroceryPromocodePage implements OnInit {
     private util: UtilService,
     private gpi: GroceryService,
     private ntrl: NavController,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private translate: TranslateService,
+    
   ) {
     // await this.util.startLoad();
     this.spinnerService.show();
@@ -35,7 +38,12 @@ export class GroceryPromocodePage implements OnInit {
         (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
-          this.util.presentToast("somethig went wrong");
+          this.translate.get(["toasts.something_went_wrong"]).subscribe(async (val) => {
+            this.util.presentToast(val['toasts.something_went_wrong']);
+          }, error => {
+            console.log(error);
+          });
+          // this.util.presentToast("somethig went wrong");
         }
       );
   }

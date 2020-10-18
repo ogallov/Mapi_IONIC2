@@ -339,7 +339,11 @@
     "profile_set_success": "successfully save your profile",
     "cart_empty": "The cart is empty",
     "select_default_address": "Select Default Address",
-    "The_selected_address_has_not_been_saved": "The selected address was not saved"
+    "The_selected_address_has_not_been_saved": "The selected address was not saved",
+    "Order(s)_placed_successfully!": "Order(s) placed successfully!",
+    "Order_form(s)_not_completed": "Order form(s) not completed",
+    "Thanks_for_review": "Thanks for review",
+    "something_went_wrong": "Something went wrong"
   },
   "store_detail": {
     "today": "Today",

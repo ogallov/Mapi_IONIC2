@@ -5,6 +5,7 @@ import { Component, OnInit } from "@angular/core";
 import { ModalController } from "@ionic/angular";
 import { OtpmodalpagePage } from "../otpmodalpage/otpmodalpage.page";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-grocery-order-detail",
@@ -24,7 +25,9 @@ export class GroceryOrderDetailPage implements OnInit {
     private api: ApiService,
     private gpi: GroceryService,
     private modalController: ModalController,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private translate: TranslateService,
+    
   ) {
     this.currency = this.api.currency;
     // await this.util.startLoad();
@@ -82,7 +85,13 @@ export class GroceryOrderDetailPage implements OnInit {
     this.api.postDataWithToken("addGroceryReview", this.shopReview).subscribe(
       (res: any) => {
         if (res.success) {
-          this.util.presentToast("Thanks for review");
+
+          this.translate.get(["toasts.Thanks_for_review"]).subscribe(async (val) => {
+            this.util.presentToast(val['toasts.Thanks_for_review']);
+          }, error => {
+            console.log(error);
+          });
+          // this.util.presentToast("Thanks for review");
           this.api
             .getDataWithToken("singleGroceryOrder/" + this.gpi.orderId)
             .subscribe(
@@ -109,7 +118,12 @@ export class GroceryOrderDetailPage implements OnInit {
       (err) => {
         // this.util.dismissLoader();
         this.spinnerService.hide();
-        this.util.presentToast("something went wrong");
+        this.translate.get(["toasts.something_went_wrong"]).subscribe(async (val) => {
+          this.util.presentToast(val['toasts.something_went_wrong']);
+        }, error => {
+          console.log(error);
+        });
+        // this.util.presentToast("something went wrong");
       }
     );
   }

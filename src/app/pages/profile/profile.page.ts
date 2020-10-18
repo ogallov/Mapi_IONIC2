@@ -183,6 +183,8 @@ export class ProfilePage implements OnInit, OnDestroy {
     if (this.segment == 3) {
 
       this.spinnerService.show();
+      console.log(this.userDetail);
+      
       this.api.postDataWithToken("editProfile", this.userDetail).subscribe(
         (res: any) => {
 
@@ -303,6 +305,7 @@ export class ProfilePage implements OnInit, OnDestroy {
             this.api.address_id = Number(localStorage.getItem("isaddress"));
             localStorage.setItem("isaddressBD", "true");
             // this.util.dismissLoader();
+
             this.spinnerService.hide();
             this.translate.get('toasts').subscribe(async val => {
               this.util.presentToast(val.setting_set_success);
@@ -311,6 +314,7 @@ export class ProfilePage implements OnInit, OnDestroy {
               this.spinnerService.hide();
             });
           }
+          
         }, error => {
           console.log(error);
           this.spinnerService.hide();

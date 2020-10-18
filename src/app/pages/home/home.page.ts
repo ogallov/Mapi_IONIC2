@@ -136,6 +136,7 @@ export class HomePage implements OnInit {
     private alertController: AlertController,
     private translate: TranslateService,
     private cd: ChangeDetectorRef,
+    private nav: NavController,
 
   ) {
     this.menu.enable(true);
@@ -222,8 +223,6 @@ export class HomePage implements OnInit {
     }
 
     if (this.api.address_type && this.api.address_type !== undefined && this.api.address_type !== '') {
-      console.log(this.api);
-
       this.sellProduct = this.api.sell_product;
       this.isfood = this.api.isfood;
       this.dataTemporal = this.api.restaurantsAll;
@@ -800,6 +799,24 @@ export class HomePage implements OnInit {
       console.log(error);
 
     });
+  }
+
+  cart() {
+    let cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
+
+    if (cartData.length == 0) {
+      
+      this.translate.get(["toasts.cart_empty"]).subscribe(async (val) => {
+        this.util.presentToast(val['toasts.cart_empty']);
+      }, error => {
+        console.log(error);
+
+      });
+
+    } else {
+      this.gpi.cartData = cartData;
+      this.nav.navigateForward("/grocery-cart");
+    }
   }
 
 }

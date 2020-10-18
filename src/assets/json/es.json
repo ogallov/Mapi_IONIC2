@@ -339,7 +339,11 @@
     "profile_set_success": "Perfil actualizado",
     "cart_empty": "No ha pedido aun",
     "select_default_address": "Seleccione su dirección principal",
-    "The_selected_address_has_not_been_saved": "La dirección seleccionada no se guardo"
+    "The_selected_address_has_not_been_saved": "La dirección seleccionada no se guardo",
+    "Order(s)_placed_successfully!": "Pedido(s) realizados con exito!!!",
+    "Order form(s)_not_completed": "Error no se completo la solicitud de pedido(s)",
+    "Thanks_for_review": "Gracias por la reseña",
+    "something_went_wrong": "Algo salió mal"
   },
   "store_detail": {
     "today": "Hoy",

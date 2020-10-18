@@ -32,6 +32,10 @@
         (click)="isfood=false">
         {{"home_page.grocery" | translate}}
     </ion-button>
+
+    <ion-button style="margin-left: 4rem;" class="trans-btn mode_btn" (click)="cart()" slot="end" *ngIf="isfood == false">
+        <ion-icon src="./assets/icon-image/white_cart.svg"></ion-icon>
+    </ion-button>
     <!-- end button header -->
 </ion-header>
 <!-- end header -->

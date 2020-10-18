@@ -4,6 +4,7 @@ import { ApiService } from "./../../service/api.service";
 import { NavController } from "@ionic/angular";
 import { Component, OnInit } from "@angular/core";
 import { NgxSpinnerService } from 'ngx-spinner';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: "app-grocery-status",
@@ -19,7 +20,9 @@ export class GroceryStatusPage implements OnInit {
     private api: ApiService,
     private util: UtilService,
     private gpi: GroceryService,
-    private spinnerService: NgxSpinnerService
+    private spinnerService: NgxSpinnerService,
+    private translate: TranslateService,
+    
   ) {
     // await this.util.startLoad();
     this.spinnerService.show();
@@ -58,7 +61,12 @@ export class GroceryStatusPage implements OnInit {
         (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
-          this.util.presentToast("something went wrong");
+          this.translate.get(["toasts.something_went_wrong"]).subscribe(async (val) => {
+            this.util.presentToast(val['toasts.something_went_wrong']);
+          }, error => {
+            console.log(error);
+          });
+          // this.util.presentToast("something went wrong");
         }
       );
 
@@ -112,7 +120,12 @@ export class GroceryStatusPage implements OnInit {
         (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
-          this.util.presentToast("something went wrong");
+          this.translate.get(["toasts.something_went_wrong"]).subscribe(async (val) => {
+            this.util.presentToast(val['toasts.something_went_wrong']);
+          }, error => {
+            console.log(error);
+          });
+          // this.util.presentToast("something went wrong");
         }
       );
   }
