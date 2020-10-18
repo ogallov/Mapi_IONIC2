@@ -53,8 +53,11 @@ export class LoginPage implements OnInit {
       (res: any) => {
 
         if (res.success) {
-          console.log(res);
-          
+
+          if (!res.data.device_token && this.api.deviceToken) {
+            this.updateDeviceToken();
+          }
+
           // for remember me
           if (this.remember) {
             let temp: any = {
@@ -78,7 +81,7 @@ export class LoginPage implements OnInit {
           }, err => {
             console.log(err);
             this.spinnerService.hide();
-            
+
           });
 
           if (res.data.address_id) {
@@ -106,9 +109,33 @@ export class LoginPage implements OnInit {
       }
     );
   }
+
+  updateDeviceToken() {
+    this.user.device_token = this.api.deviceToken ? this.api.deviceToken : null;
+
+    this.spinnerService.show();
+    // await this.util.startLoad();
+    this.api.postDataWithToken("updateDeviceToken", this.user).subscribe(
+      (res: any) => {
+        if (res.success) {
+          console.log(res.data);
+        }
+        this.spinnerService.hide();
+      },
+      (err) => {
+        if (err.error.msg) {
+          this.util.presentToast(err.error.msg);
+        }
+        this.err = err.error.errors;
+        this.spinnerService.hide();
+      }
+    );
+  }
+
   forgotPassword() {
     this.ntrl.navigateForward(["forgot"]);
   }
+
   rememberToggle(ev: any) {
     ev.stopPropagation();
     this.remember = !this.remember;
