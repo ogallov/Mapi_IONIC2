@@ -8,7 +8,7 @@ import {
   NativeGeocoderResult,
   NativeGeocoderOptions,
 } from "@ionic-native/native-geocoder/ngx";
-import { ModalController, NavController, MenuController, AlertController } from "@ionic/angular";
+import { ModalController, NavController, MenuController, AlertController, Platform } from "@ionic/angular";
 import { FilterPage } from "../filter/filter.page";
 import { Geolocation } from "@ionic-native/geolocation/ngx";
 import { NgxSpinnerService } from 'ngx-spinner';
@@ -128,7 +128,7 @@ export class HomePage implements OnInit {
     private modalController: ModalController,
     private navCtrl: NavController,
     private nativeGeocoder: NativeGeocoder,
-    private api: ApiService,
+    public api: ApiService,
     private util: UtilService,
     private gpi: GroceryService,
     private geolocation: Geolocation,
@@ -137,6 +137,7 @@ export class HomePage implements OnInit {
     private translate: TranslateService,
     private cd: ChangeDetectorRef,
     private nav: NavController,
+    private platform: Platform,
 
   ) {
     this.menu.enable(true);
@@ -220,6 +221,10 @@ export class HomePage implements OnInit {
 
     if (this.api.address_id && !this.api.geolocation && localStorage.getItem('isaddressBD') === 'true') {
       await this.getAddressBD();
+    }
+
+    if (!this.api.address_id && !this.api.geolocation && this.dataTemporal && this.grocery.category && this.groceryTemporal) {
+      await this.AlertConfirmGeolocation();
     }
 
     if (this.api.address_type && this.api.address_type !== undefined && this.api.address_type !== '') {
@@ -645,18 +650,25 @@ export class HomePage implements OnInit {
   }
 
   async getAddressBD() {
+    console.log('address');
+    this.spinnerService.show();
 
     if (!this.api.address_id) {
-      this.getAddressGeolocation();
+      this.translate.get(["toasts.you_must_add_an_address"]).subscribe(async (val) => {
+        this.util.presentToast(val['toasts.you_must_add_an_address']);
+        this.navCtrl.navigateForward("/profile");
+      }, error => {
+        console.log(error);
+      });
     }
 
     this.flagControlWillEnter = true;
-    this.spinnerService.show();
     this.api
       .getDataWithToken("getAddress/" + this.api.address_id)
       .subscribe(
         (res: any) => {
           if (res.success) {
+            console.log(res.data);
             this.address = res.data;
             this.api.address = res.data;
             this.api.address_type = res.data.address_type;
@@ -687,56 +699,61 @@ export class HomePage implements OnInit {
       );
   }
 
-  getAddressGeolocation() {
+  async getAddressGeolocation() {
+    console.log('geolocation');
 
-    this.spinnerService.show();
+      this.spinnerService.show();
 
-    this.geolocation
-      .getCurrentPosition()
-      .then((resp) => {
-        resp.coords.latitude;
-        resp.coords.longitude;
-        this.api.lat = (resp.coords.latitude).toString();
-        this.api.lang = (resp.coords.longitude).toString();
+      this.geolocation
+        .getCurrentPosition()
+        .then((resp) => {
+          resp.coords.latitude;
+          resp.coords.longitude;
+          this.api.lat = (resp.coords.latitude).toString();
+          this.api.lang = (resp.coords.longitude).toString();
 
-        const options: NativeGeocoderOptions = {
-          useLocale: true,
-          maxResults: 5,
-        };
+          const options: NativeGeocoderOptions = {
+            useLocale: true,
+            maxResults: 5,
+          };
 
-        this.nativeGeocoder
-          .reverseGeocode(
-            resp.coords.latitude,
-            resp.coords.longitude,
-            options
-          )
-          .then((result: NativeGeocoderResult[]) => {
-            // save api
-            this.api.address_type = "Current Location";
-            this.api.soc_name = result[0].subLocality;
-            this.api.street = result[0].thoroughfare;
-            this.api.city = result[0].locality;
-            this.api.zipcode = result[0].postalCode;
-            this.api.geolocation = true;
+          this.nativeGeocoder
+            .reverseGeocode(
+              resp.coords.latitude,
+              resp.coords.longitude,
+              options
+            )
+            .then((result: NativeGeocoderResult[]) => {
+              // save api
+              this.api.address_type = "Current Location";
+              this.api.soc_name = result[0].subLocality;
+              this.api.street = result[0].thoroughfare;
+              this.api.city = result[0].locality;
+              this.api.zipcode = result[0].postalCode;
+              this.api.geolocation = true;
 
-            if (this.dataTemporal && this.grocery.category && this.groceryTemporal) {
-              this.filterRestaurants();
-            }
+              if (this.dataTemporal && this.grocery.category && this.groceryTemporal) {
+                this.filterRestaurants();
+              }
 
-            this.spinnerService.hide();
-          })
-          .catch((error: any) => {
-            console.log(error);
-            this.spinnerService.hide();
-          });
-      })
-      .catch((error) => {
-        // this.util.dismissLoader();
-        console.log('Error getting location', error);
-        this.spinnerService.hide();
-      });
+              this.spinnerService.hide();
+            })
+            .catch((error: any) => {
+              console.log(error);
+              this.spinnerService.hide();
+            });
+        },
+        (error) =>{
+          console.log('error geolocation');
+          console.log(error)
+        })
+        .catch((error) => {
+          // this.util.dismissLoader();
+          console.log('Error getting location', error);
+          this.spinnerService.hide();
+        });
 
-    this.spinnerService.hide();
+      this.spinnerService.hide();
   }
 
   async AlertConfirmGeolocation() {
@@ -755,7 +772,7 @@ export class HomePage implements OnInit {
               await this.getAddressBD();
             }
           }, {
-            text: 'Ok',
+            text: 'Okey',
             handler: () => {
               this.getAddressGeolocation();
             }
@@ -786,7 +803,7 @@ export class HomePage implements OnInit {
 
             }
           }, {
-            text: 'Ok',
+            text: 'Okey',
             handler: async () => {
               await this.getAddressBD();
             }
@@ -805,12 +822,11 @@ export class HomePage implements OnInit {
     let cartData = JSON.parse(localStorage.getItem("store-detail")) || [];
 
     if (cartData.length == 0) {
-      
+
       this.translate.get(["toasts.cart_empty"]).subscribe(async (val) => {
         this.util.presentToast(val['toasts.cart_empty']);
       }, error => {
         console.log(error);
-
       });
 
     } else {

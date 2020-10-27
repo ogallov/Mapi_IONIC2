@@ -87,12 +87,20 @@ export class GroceryCartPage implements OnInit {
 
     // this.util.startLoad();
     this.spinnerService.show();
-    this.api
+    console.log(this.gpi.storeID);
+    
+    if (this.gpi.storeID != undefined) {
+      this.api
       .getDataWithToken("groceryShopDetail/" + this.gpi.storeID)
       .subscribe(
         (res: any) => {
           if (res.success) {
             this.store = res.data;
+            
+            this.mapData();
+            this.flagControl = false;
+            this.getOrdersGrocerys('113');
+            
             // this.charge = this.store.delivery_charge;
 
             // if (this.store.delivery_type == "Shop") {
@@ -107,10 +115,6 @@ export class GroceryCartPage implements OnInit {
 
             // this.toPay = this.totalItem + (this.store.delivery_charge || 0) - (this.data.discount || 0);
             // this.data.toPay = this.toPay;
-
-            this.mapData();
-            this.flagControl = false;
-            this.getOrdersGrocerys('113');
 
             // this.api
             //   .getDataWithToken(
@@ -137,8 +141,14 @@ export class GroceryCartPage implements OnInit {
         (err) => {
           // this.util.dismissLoader();
           this.spinnerService.hide();
-        }
-      );
+        });
+
+    } else {
+      this.mapData();
+      this.flagControl = false;
+      this.getOrdersGrocerys('113');
+    }
+
   }
 
   ionViewWillEnter() {
@@ -361,6 +371,7 @@ export class GroceryCartPage implements OnInit {
   }
 
   mapData() {
+    let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
     // this.FindAddress = this.data.Deafult_address.soc_name + " " + this.data.Deafult_address.street + " " + this.data.Deafult_address.city;
     this.FindAddress = this.api.soc_name + " " + this.api.street + " " + this.api.city;
     // + " " + this.data.Deafult_address.zipcode;
@@ -378,8 +389,10 @@ export class GroceryCartPage implements OnInit {
           lng: parseFloat(result[0].longitude),
         };
         this.destination = {
-          lat: parseFloat(this.store.latitude),
-          lng: parseFloat(this.store.longitude),
+          lat: dataTemporals[0].shop_latitude,
+          lng: dataTemporals[0].longitude,
+          // lat: parseFloat(this.store.latitude),
+          // lng: parseFloat(this.store.longitude),
         };
         this.origin = {
           lat: parseFloat(result[0].latitude),
@@ -456,6 +469,7 @@ export class GroceryCartPage implements OnInit {
     this.toPay = this.totalItem + (delivery_charge || 0) - (this.data.discount || 0);
     this.data.toPay = (this.toPay || 0);
     this.gpi.orders = this.datagroup;
+    this.spinnerService.hide();
   }
 
   deliveryHome() {

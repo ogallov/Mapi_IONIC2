@@ -343,7 +343,8 @@
     "Order(s)_placed_successfully!": "Order(s) placed successfully!",
     "Order_form(s)_not_completed": "Order form(s) not completed",
     "Thanks_for_review": "Thanks for review",
-    "something_went_wrong": "Something went wrong"
+    "something_went_wrong": "Something went wrong",
+    "you_must_add_an_address": "You must add an address"
   },
   "store_detail": {
     "today": "Today",

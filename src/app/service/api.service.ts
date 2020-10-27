@@ -73,4 +73,11 @@ export class ApiService {
     header = header.set("Accept", "application/json");
     return this.http.post(this.baseUrl + url, data, { headers: header });
   }
+
+  async postDataWithTokenOrders(url, data) {
+    let header = new HttpHeaders();
+    header = header.set("Authorization", "Bearer " + this.userToken);
+    header = header.set("Accept", "application/json");
+    return await this.http.post(this.baseUrl + url, data, { headers: header }).toPromise();
+  }
 }

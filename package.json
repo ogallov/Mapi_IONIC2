@@ -24,7 +24,7 @@
     "@angular/router": "~8.1.2",
     "@ionic-native/camera": "^5.19.0",
     "@ionic-native/core": "^5.0.0",
-    "@ionic-native/geolocation": "^5.18.0",
+    "@ionic-native/geolocation": "^5.29.0",
     "@ionic-native/native-geocoder": "^5.18.0",
     "@ionic-native/onesignal": "^5.19.1",
     "@ionic-native/paypal": "^5.19.1",
@@ -102,7 +102,6 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-geolocation": {},
       "cordova-plugin-nativegeocoder": {},
       "cordova-plugin-camera": {
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
@@ -113,7 +112,8 @@
       "com.razorpay.cordova": {},
       "com.paypal.cordova.mobilesdk": {},
       "onesignal-cordova-plugin": {},
-      "cordova-plugin-android-permissions": {}
+      "cordova-plugin-android-permissions": {},
+      "cordova-plugin-geolocation": {}
     },
     "platforms": [
       "android"

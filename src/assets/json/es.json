@@ -343,7 +343,8 @@
     "Order(s)_placed_successfully!": "Pedido(s) realizados con exito!!!",
     "Order form(s)_not_completed": "Error no se completo la solicitud de pedido(s)",
     "Thanks_for_review": "Gracias por la reseña",
-    "something_went_wrong": "Algo salió mal"
+    "something_went_wrong": "Algo salió mal",
+    "you_must_add_an_address": "Debe agregar una dirección"
   },
   "store_detail": {
     "today": "Hoy",

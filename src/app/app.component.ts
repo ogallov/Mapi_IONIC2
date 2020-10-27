@@ -78,14 +78,6 @@ export class AppComponent {
     // blocked console.log
     // console.log = function () {};
 
-    this.geolocation.getCurrentPosition().then((resp: any) => {
-      console.log(resp);
-      this.agmMap.lat = resp.coords.latitude;
-      this.agmMap.lng = resp.coords.longitude;
-    }).catch((error) => {
-      console.log('Error getting location', error);
-    });
-
     document.documentElement.dir = localStorage.getItem("app_language") == "ar" ? "rtl" : "ltr";
 
     this.translate.setDefaultLang(
@@ -127,6 +119,17 @@ export class AppComponent {
     this.platform.ready().then(() => {
       setTimeout(() => {
         this.splashScreen.hide();
+
+        this.geolocation.getCurrentPosition().then((resp: any) => {
+          console.log(resp);
+        },
+        (error) =>{
+          console.log('error get location');
+          console.log(error)
+        }).catch((error) => {
+          console.log('Error getting location', error);
+        });
+
         this.api.getData("keySetting").subscribe(
           (res: any) => {
             if (res.success) {
@@ -231,7 +234,7 @@ export class AppComponent {
 
     this.oneSignal
       .getIds()
-      .then((ids) =>{
+      .then((ids) => {
         this.api.deviceToken = ids.userId;
       });
     this.oneSignal.endInit();
@@ -241,14 +244,14 @@ export class AppComponent {
     // Notifcation was received in general
     this.oneSignal.handleNotificationReceived().subscribe(data => {
       console.log(data);
-      
+
       let msg = data.payload.body;
       let title = data.payload.title;
       let additionalData = data.payload.additionalData;
 
       setTimeout(() => {
-      // this.showAlert(title, msg, additionalData.task);
-      this.showAlert(title, msg);
+        // this.showAlert(title, msg, additionalData.task);
+        this.showAlert(title, msg);
       }, 3000);
 
     });
@@ -270,7 +273,7 @@ export class AppComponent {
   }
 
   // async showAlert(title, msg, task) {
-    async showAlert(title, msg) {
+  async showAlert(title, msg) {
     const alert = await this.alertCtrl.create({
       header: title,
       subHeader: msg,

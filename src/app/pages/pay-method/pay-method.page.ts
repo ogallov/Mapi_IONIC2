@@ -1,6 +1,6 @@
 import { GrocerySuccessPage } from "./../grocery-success/grocery-success.page";
 import { SuccessModalPage } from "./../success-modal/success-modal.page";
-import { ModalController } from "@ionic/angular";
+import { ModalController, NavController } from "@ionic/angular";
 import { GroceryService } from "./../../service/grocery.service";
 import { UtilService } from "./../../service/util.service";
 import { ApiService } from "./../../service/api.service";
@@ -30,6 +30,7 @@ export class PayMethodPage implements OnInit {
   payment_type: any = "LOCAL";
   apdata: any = {};
   count: number = 0;
+  totalCount: number = 0;
 
   // new
   datagroup = [];
@@ -42,6 +43,7 @@ export class PayMethodPage implements OnInit {
     private modalController: ModalController,
     private spinnerService: NgxSpinnerService,
     private translate: TranslateService,
+    private nav: NavController,
 
   ) {
     this.apdata = this.gpi.info;
@@ -75,8 +77,9 @@ export class PayMethodPage implements OnInit {
   async paymentMethod() {
     /* 
     return */
-
+    this.spinnerService.show();
     this.count = 0;
+    this.totalCount = 0;
 
     for (const dat of this.datagroup) {
 
@@ -119,9 +122,8 @@ export class PayMethodPage implements OnInit {
       rdata.payment_type = this.payment_type;
       rdata.payment = payment;
 
-      this.sendHttp(rdata)
+      let response = await this.sendHttp(rdata);
       // await this.util.startLoad();
-      console.log(rdata);
     }
 
     // let data = JSON.parse(localStorage.getItem("store-detail"));
@@ -333,21 +335,19 @@ export class PayMethodPage implements OnInit {
   //   }
   // }
 
-  sendHttp(rdata) {
+  async sendHttp(rdata) {
 
     // this.spinnerService.show();
-
     this.api.postDataWithToken("createGroceryOrder", rdata).subscribe(
       (res: any) => {
         if (res.success) {
+          this.totalCount = this.totalCount + 1;
           console.log(res);
-
+          this.count = this.count + 1;
           // this.util.dismissLoader();
           this.spinnerService.hide();
           this.gpi.promocode = {};
           this.gpi.orderId = res.data.id;
-
-          this.count = this.count + 1;
           let dataTemporals = _.clone(JSON.parse(localStorage.getItem("store-detail")));
           let dataTemp = dataTemporals.filter((data) => {
             if (rdata.shop_id !== data.shop_id) {
@@ -355,31 +355,63 @@ export class PayMethodPage implements OnInit {
             }
           });
 
-          console.log(dataTemp);
-          this.translate.get(["toasts.Order_form(s)_not_completed"]).subscribe(async (val) => {
-            
-            if (dataTemp.length > 0) {
-              localStorage.setItem("store-detail", JSON.stringify(dataTemp));
-              this.util.presentToast(val['toasts.Order_form(s)_not_completed']);
+          if (dataTemp.length > 0) {
+            localStorage.setItem("store-detail", JSON.stringify(dataTemp));
+          } else {
+            localStorage.removeItem("store-detail");
+            // this.spinnerService.hide();
+            // this.presentModal();
+          }
 
-            } else {
+          if (res.data.shop_id == this.datagroup[this.datagroup.length - 1].shop_id && this.count > 0) {
+            this.presentModal();
 
-              localStorage.removeItem("store-detail");
-              this.spinnerService.hide();
-              this.presentModal();
+          } else {
+            if (res.data.shop_id === this.datagroup[this.datagroup.length - 1].shop_id && this.count === 0) {
+              this.translate.get(["toasts.Order_form(s)_not_completed"]).subscribe(async (val) => {
+                this.util.presentToast(val['toasts.Order_form(s)_not_completed']);
+                this.nav.navigateRoot("home");
+              }, error => {
+                console.log(error);
+
+              });
             }
+          }
 
-          }, error => {
-            console.log(error);
-
-          });
+          if (this.totalCount == this.datagroup.length) {
+            this.spinnerService.hide();
+          }
         }
       },
       (err) => {
+        this.totalCount = this.totalCount + 1;
         this.err = err.error.errors;
         // this.util.dismissLoader();
-        this.spinnerService.hide();
-      });
+          // this.spinnerService.hide();
 
+          if (this.totalCount == this.datagroup.length) {
+            this.spinnerService.hide();
+          }
+      });
   }
+
+  // countHttp() {
+  //   console.log(this.count);
+  //   if (this.count === this.datagroup.length) {
+  //     let orders = _.clone(JSON.parse(localStorage.getItem("store-detail")));
+  //     console.log(orders);
+  //     if (orders.length > 0) {
+
+  //       this.translate.get(["toasts.Order_form(s)_not_completed"]).subscribe(async (val) => {
+  //         this.util.presentToast(val['toasts.Order_form(s)_not_completed']);
+  //       }, error => {
+  //         console.log(error);
+
+  //       });
+
+  //     } else {
+  //       this.gpi.orders = null;
+  //     }
+  //   }
+  // }
 }
